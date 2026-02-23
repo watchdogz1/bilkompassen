@@ -21,7 +21,6 @@
   --shadow: 0 18px 55px rgba(10,18,32,.10);
   --radius:16px;
 }
-
 *{ box-sizing:border-box; }
 body{
   margin:0;
@@ -47,7 +46,9 @@ body{
 }
 .logo-wrap{ display:flex; align-items:center; text-decoration:none; }
 .logo-img{
-  height:78px; width:auto; display:block;
+  height:74px;
+  width:auto;
+  display:block;
   filter: drop-shadow(0 10px 24px rgba(30,53,87,.12));
 }
 .nav{ display:flex; align-items:center; gap:10px; }
@@ -74,13 +75,8 @@ body{
 .burger-lines{ display:flex; flex-direction:column; gap:5px; }
 .burger-lines span{ width:22px; height:2px; background:var(--brand); border-radius:2px; display:block; }
 
-.mobile-nav{
-  display:none;
-  border-top:1px solid var(--line);
-  background:#fff;
-}
+.mobile-nav{ display:none; border-top:1px solid var(--line); background:#fff; }
 .mobile-nav.open{ display:block; }
-
 .mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
 .mobile-nav a{
   text-decoration:none; color:var(--muted); font-weight:800;
@@ -109,6 +105,7 @@ body{
 }
 
 .form-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
+
 input{
   padding:12px 12px;
   font-size:16px;
@@ -134,34 +131,38 @@ button{
 button:hover{ transform: translateY(-1px); }
 
 .helper{ margin:0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.6; }
-.result{ margin-top:12px; font-weight:1000; color:var(--brand); min-height:44px; line-height:1.35; }
+
+/* Structured result box */
+.result{
+  margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#fff,#f6f9ff);
+  font-weight:700;
+  line-height:1.45;
+  min-height:70px;
+}
+.result small{ display:block; margin-top:6px; color:var(--muted); font-weight:600; }
 
 /* COMPASS */
 .compass-wrap{ display:flex; flex-direction:column; gap:12px; align-items:center; }
+
 .compass{
   width:280px; height:280px; border-radius:50%;
   position:relative;
   background:
-    radial-gradient(circle at center, #ffffff 0%, #ffffff 50%, #f0f4fb 100%);
+    conic-gradient(
+      #7cc98f 0deg 120deg,
+      #f0d37a 120deg 240deg,
+      #e58a8a 240deg 360deg
+    ),
+    radial-gradient(circle at center,#fff 0%,#fff 50%,#f0f4fb 100%);
   border:1px solid var(--line);
   box-shadow: 0 22px 60px rgba(10,18,32,.12);
   overflow:hidden;
 }
-.compass::before{
-  content:"";
-  position:absolute; inset:12px;
-  border-radius:50%;
-  border:2px solid rgba(30,53,87,.12);
-}
-.compass::after{
-  content:"";
-  position:absolute; inset:0;
-  background:
-    linear-gradient(to right, transparent 49.65%, rgba(30,53,87,.10) 49.65%, rgba(30,53,87,.10) 50.35%, transparent 50.35%),
-    linear-gradient(to bottom, transparent 49.65%, rgba(30,53,87,.10) 49.65%, rgba(30,53,87,.10) 50.35%, transparent 50.35%);
-  pointer-events:none;
-  opacity:.9;
-}
+
 .hub{
   position:absolute; left:50%; top:50%;
   width:18px; height:18px; transform:translate(-50%,-50%);
@@ -170,11 +171,12 @@ button:hover{ transform: translateY(-1px); }
   box-shadow: 0 12px 28px rgba(30,53,87,.25);
   z-index:5;
 }
+
 .needle{
   position:absolute; top:50%; left:50%;
   width:130px; height:10px;
   transform-origin:0% 50%;
-  transform:rotate(30deg);
+  transform:rotate(0deg);
   border-radius:999px;
   z-index:4;
   background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 70%, rgba(230,162,60,.22) 100%);
@@ -192,22 +194,9 @@ button:hover{ transform: translateY(-1px); }
 
 /* FOOTER */
 .footer{ border-top:1px solid var(--line); background: rgba(255,255,255,.86); padding:28px 0; }
-.footer-grid{ display:grid; grid-template-columns: 1.4fr .6fr .6fr; gap:16px; }
-.footer h4{ margin:0 0 8px; color:var(--brand); font-size:14px; font-weight:1000; }
-.footer a{ color:var(--muted); text-decoration:none; font-weight:800; display:block; padding:6px 0; }
-.footer a:hover{ color:var(--brand); }
-.footer small{ display:block; margin-top:10px; opacity:.92; line-height:1.55; color:var(--muted); }
 
-@media (max-width: 920px){ .tool-grid{ grid-template-columns:1fr; } }
-@media (max-width: 860px){
-  .nav{ display:none; } .burger{ display:inline-flex; }
-  .logo-img{ height:72px; }
-  .compass{ width:260px; height:260px; }
-}
-@media (max-width: 420px){
-  .logo-img{ height:68px; }
-  .compass{ width:240px; height:240px; }
-}
+@media (max-width:920px){ .tool-grid{ grid-template-columns:1fr; } }
+@media (max-width:860px){ .nav{ display:none; } .burger{ display:inline-flex; } }
 </style>
 </head>
 
@@ -254,6 +243,7 @@ button:hover{ transform: translateY(-1px); }
           <input id="reg" placeholder="ABC123">
           <button id="anBtn">Analysera</button>
         </div>
+
         <div id="result" class="result"></div>
       </section>
 
@@ -268,50 +258,95 @@ button:hover{ transform: translateY(-1px); }
 </main>
 
 <footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <h4>Bilkompassen</h4>
-      <small>© <span id="year"></span> Bilkompassen</small>
-    </div>
+  <div class="container">
+    <small>© <span id="year"></span> Bilkompassen</small>
   </div>
 </footer>
 
 <script>
-const burgerBtn = document.getElementById("burgerBtn");
-const mobileNav = document.getElementById("mobileNav");
-if(burgerBtn && mobileNav){
-  burgerBtn.addEventListener("click",()=>{
-    mobileNav.classList.toggle("open");
-  });
+/* Safe mobile nav */
+const burgerBtn=document.getElementById("burgerBtn");
+const mobileNav=document.getElementById("mobileNav");
+if(burgerBtn&&mobileNav){
+  burgerBtn.addEventListener("click",()=>mobileNav.classList.toggle("open"));
 }
 
-const yearEl = document.getElementById("year");
+/* Year */
+const yearEl=document.getElementById("year");
 if(yearEl){ yearEl.textContent=new Date().getFullYear(); }
+
+/* Compass v1 deterministic logic */
 
 const regInput=document.getElementById("reg");
 const btn=document.getElementById("anBtn");
 const needle=document.getElementById("needle");
 const result=document.getElementById("result");
 
-function analyze(){
-  if(!regInput || !needle || !result) return;
-  let reg=regInput.value.replace(/\s+/g,"").toUpperCase();
-  if(!reg){ result.textContent="Skriv in ett regnr först."; return; }
+function hashReg(str){
+  let h=0;
+  for(let i=0;i<str.length;i++){
+    h=(h<<5)-h+str.charCodeAt(i);
+    h|=0;
+  }
+  return Math.abs(h);
+}
 
-  const angle=(Math.random()*360)+720;
+function analyze(){
+  if(!regInput||!needle||!result) return;
+
+  let reg=regInput.value.replace(/\s+/g,"").toUpperCase();
+  if(!reg){
+    result.innerHTML="Enter a plate number first.";
+    return;
+  }
+
+  const h=hashReg(reg);
+
+  const zone=h%3; // 0=green 1=yellow 2=red
+
+  let angleBase=0;
+  if(zone===0) angleBase=30+(h%60);        // green zone
+  if(zone===1) angleBase=150+(h%60);       // yellow zone
+  if(zone===2) angleBase=270+(h%60);       // red zone
+
+  /* small fake scan spin first */
+  const scanAngle=angleBase+720;
   needle.style.transition="transform 1s ease";
-  needle.style.transform="rotate("+angle+"deg)";
+  needle.style.transform="rotate("+scanAngle+"deg)";
 
   setTimeout(()=>{
-    const r=Math.random();
-    if(r<0.33) result.textContent="🟢 Ser lovande ut.";
-    else if(r<0.66) result.textContent="🟡 Kontrollera mer.";
-    else result.textContent="🔴 Undersök noggrant.";
-  },800);
+    needle.style.transition="transform .6s ease";
+    needle.style.transform="rotate("+angleBase+"deg)";
+  },1000);
+
+  /* structured result */
+  let title="",text="";
+
+  if(zone===0){
+    title="🟢 Looks promising";
+    text="Initial signals look positive. Still verify service history and inspection data.";
+  }
+  if(zone===1){
+    title="🟡 Needs checking";
+    text="Some uncertainty detected. Review ownership history, mileage, and recent work.";
+  }
+  if(zone===2){
+    title="🔴 Investigate carefully";
+    text="Higher risk signals. Inspect documentation, damage history, and total costs before deciding.";
+  }
+
+  result.innerHTML=
+    "<strong>"+title+"</strong><br>"+
+    "<small>"+text+"</small>"+
+    "<small>→ <a href='guider.html'>Open buying checklist</a></small>";
 }
 
 if(btn){ btn.addEventListener("click",analyze); }
-if(regInput){ regInput.addEventListener("keypress",e=>{ if(e.key==="Enter") analyze(); }); }
+if(regInput){
+  regInput.addEventListener("keypress",e=>{
+    if(e.key==="Enter") analyze();
+  });
+}
 </script>
 
 </body>
