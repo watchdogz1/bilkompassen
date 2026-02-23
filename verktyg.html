@@ -12,6 +12,7 @@ body{
   background:#fff;
   color:#111;
 }
+
 header{
   padding:18px 24px;
   border-bottom:1px solid #eee;
@@ -19,23 +20,42 @@ header{
   justify-content:space-between;
   align-items:center;
 }
-.logo{
+
+/* NEW LOGO STYLES */
+.logo-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+
+.logo-img{
+  height:42px;
+  width:auto;
+}
+
+.logo-text{
   font-weight:700;
   color:#1E3557;
+  font-size:20px;
 }
+
 nav a{
   margin-left:16px;
   text-decoration:none;
   color:#555;
 }
+
 .container{
   max-width:900px;
   margin:40px auto;
   padding:20px;
 }
+
 h1{
   color:#1E3557;
 }
+
 input{
   padding:12px;
   font-size:16px;
@@ -43,6 +63,7 @@ input{
   border-radius:8px;
   width:220px;
 }
+
 button{
   padding:12px 18px;
   margin-left:8px;
@@ -52,6 +73,7 @@ button{
   border-radius:8px;
   cursor:pointer;
 }
+
 .compass{
   width:220px;
   height:220px;
@@ -60,6 +82,7 @@ button{
   position:relative;
   margin-top:30px;
 }
+
 .needle{
   width:100px;
   height:6px;
@@ -71,6 +94,7 @@ button{
   transform:rotate(30deg);
   border-radius:4px;
 }
+
 .result{
   margin-top:20px;
   font-weight:600;
@@ -82,7 +106,13 @@ button{
 <body>
 
 <header>
-  <div class="logo">🧭 Bilkompassen</div>
+
+  <!-- LOGO -->
+  <a href="index.html" class="logo-wrap">
+    <img src="logo_trimmed.png" alt="Bilkompassen logo" class="logo-img">
+    <div class="logo-text">Bilkompassen</div>
+  </a>
+
   <nav>
     <a href="index.html">Start</a>
     <a href="verktyg.html">Verktyg</a>
@@ -90,6 +120,7 @@ button{
     <a href="about.html">Om</a>
     <a href="contact.html">Kontakt</a>
   </nav>
+
 </header>
 
 <div class="container">
