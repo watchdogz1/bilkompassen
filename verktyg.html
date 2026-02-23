@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Verktyg – Bilkompassen</title>
 
-<link rel="icon" href="favicon.ico">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="manifest" href="site.webmanifest">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1E3557">
 
 <style>
 :root{
@@ -72,7 +74,13 @@ body{
 .burger-lines{ display:flex; flex-direction:column; gap:5px; }
 .burger-lines span{ width:22px; height:2px; background:var(--brand); border-radius:2px; display:block; }
 
-.mobile-nav{ display:none; border-top:1px solid var(--line); background:#fff; }
+.mobile-nav{
+  display:none;
+  border-top:1px solid var(--line);
+  background:#fff;
+}
+.mobile-nav.open{ display:block; }
+
 .mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
 .mobile-nav a{
   text-decoration:none; color:var(--muted); font-weight:800;
@@ -128,7 +136,7 @@ button:hover{ transform: translateY(-1px); }
 .helper{ margin:0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.6; }
 .result{ margin-top:12px; font-weight:1000; color:var(--brand); min-height:44px; line-height:1.35; }
 
-/* COMPASS (logo-ish) */
+/* COMPASS */
 .compass-wrap{ display:flex; flex-direction:column; gap:12px; align-items:center; }
 .compass{
   width:280px; height:280px; border-radius:50%;
@@ -190,7 +198,6 @@ button:hover{ transform: translateY(-1px); }
 .footer a:hover{ color:var(--brand); }
 .footer small{ display:block; margin-top:10px; opacity:.92; line-height:1.55; color:var(--muted); }
 
-/* Responsive */
 @media (max-width: 920px){ .tool-grid{ grid-template-columns:1fr; } }
 @media (max-width: 860px){
   .nav{ display:none; } .burger{ display:inline-flex; }
@@ -208,11 +215,11 @@ button:hover{ transform: translateY(-1px); }
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo-wrap" aria-label="Bilkompassen hem">
+    <a href="index.html" class="logo-wrap">
       <img src="logo_trimmed.png" alt="Bilkompassen" class="logo-img">
     </a>
 
-    <nav class="nav" aria-label="Huvudmeny">
+    <nav class="nav">
       <a href="index.html">Start</a>
       <a href="verktyg.html">Verktyg</a>
       <a href="guider.html">Guider</a>
@@ -220,10 +227,8 @@ button:hover{ transform: translateY(-1px); }
       <a href="contact.html">Kontakt</a>
     </nav>
 
-    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
-      <span class="burger-lines" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </span>
+    <button class="burger" id="burgerBtn">
+      <span class="burger-lines"><span></span><span></span><span></span></span>
     </button>
   </div>
 
@@ -241,33 +246,22 @@ button:hover{ transform: translateY(-1px); }
 <main class="page">
   <div class="container">
     <h1 class="page-title">Verktyg</h1>
-    <p class="lead">Skriv in ett registreringsnummer och få en snabb riktning. (Just nu är resultatet slumpmässigt – vi gör det deterministiskt per regnr senare.)</p>
+    <p class="lead">Skriv in ett registreringsnummer och få en snabb riktning.</p>
 
     <div class="tool-grid">
       <section class="panel">
-        <h2 style="margin:0 0 8px; color:var(--brand); font-size:16px; font-weight:1000;">Analysera regnr</h2>
-        <p class="helper">Tips: Efter resultatet – gå direkt till köpchecklistan och följ punkterna innan du bestämmer dig.</p>
-
         <div class="form-row">
-          <input id="reg" placeholder="ABC123" inputmode="text" autocomplete="off" aria-label="Registreringsnummer">
-          <button onclick="analysera()">Analysera</button>
+          <input id="reg" placeholder="ABC123">
+          <button id="anBtn">Analysera</button>
         </div>
-
         <div id="result" class="result"></div>
-
-        <p class="helper" style="margin-top:8px;">
-          Nästa steg: <a href="guider.html" style="color:var(--brand); font-weight:1000; text-decoration:none;">Öppna köpchecklistan</a>.
-        </p>
       </section>
 
       <section class="panel compass-wrap">
-        <div class="compass" aria-label="Bilkompassen">
+        <div class="compass">
           <div id="needle" class="needle"></div>
           <div class="hub"></div>
         </div>
-        <p class="helper" style="text-align:center; max-width:380px;">
-          Kompassen är visuellt beslutsstöd – ersätter inte kontroll av historik, besiktning, skulder eller provkörning.
-        </p>
       </section>
     </div>
   </div>
@@ -277,21 +271,7 @@ button:hover{ transform: translateY(-1px); }
   <div class="container footer-grid">
     <div>
       <h4>Bilkompassen</h4>
-      <small>Svensk beslutshjälp för begagnatköp. Inga listningar – bara guider och verktyg.</small>
       <small>© <span id="year"></span> Bilkompassen</small>
-    </div>
-    <div>
-      <h4>Sidor</h4>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
-    </div>
-    <div>
-      <h4>Snabbt</h4>
-      <a href="guider.html">Köpchecklista</a>
-      <a href="index.html">Start</a>
-      <a href="contact.html">Tipsa oss</a>
     </div>
   </div>
 </footer>
@@ -299,38 +279,39 @@ button:hover{ transform: translateY(-1px); }
 <script>
 const burgerBtn = document.getElementById("burgerBtn");
 const mobileNav = document.getElementById("mobileNav");
-burgerBtn.addEventListener("click", () => {
-  const isOpen = mobileNav.style.display === "block";
-  mobileNav.style.display = isOpen ? "none" : "block";
-  burgerBtn.setAttribute("aria-expanded", String(!isOpen));
-});
+if(burgerBtn && mobileNav){
+  burgerBtn.addEventListener("click",()=>{
+    mobileNav.classList.toggle("open");
+  });
+}
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl = document.getElementById("year");
+if(yearEl){ yearEl.textContent=new Date().getFullYear(); }
 
-function analysera(){
-  const reg = document.getElementById("reg").value.trim();
-  const result = document.getElementById("result");
-  if(!reg){
-    result.innerText="Skriv in ett regnr först.";
-    return;
-  }
+const regInput=document.getElementById("reg");
+const btn=document.getElementById("anBtn");
+const needle=document.getElementById("needle");
+const result=document.getElementById("result");
 
-  const needle = document.getElementById("needle");
-  const angle = Math.floor(Math.random()*360)+720;
+function analyze(){
+  if(!regInput || !needle || !result) return;
+  let reg=regInput.value.replace(/\s+/g,"").toUpperCase();
+  if(!reg){ result.textContent="Skriv in ett regnr först."; return; }
+
+  const angle=(Math.random()*360)+720;
   needle.style.transition="transform 1s ease";
   needle.style.transform="rotate("+angle+"deg)";
 
   setTimeout(()=>{
     const r=Math.random();
-    if(r<0.33){
-      result.innerText="🟢 Ser lovande ut – kolla checklistan innan köp.";
-    }else if(r<0.66){
-      result.innerText="🟡 Kolla historik och skick först.";
-    }else{
-      result.innerText="🔴 Risk – undersök noggrant innan du går vidare.";
-    }
+    if(r<0.33) result.textContent="🟢 Ser lovande ut.";
+    else if(r<0.66) result.textContent="🟡 Kontrollera mer.";
+    else result.textContent="🔴 Undersök noggrant.";
   },800);
 }
+
+if(btn){ btn.addEventListener("click",analyze); }
+if(regInput){ regInput.addEventListener("keypress",e=>{ if(e.key==="Enter") analyze(); }); }
 </script>
 
 </body>
