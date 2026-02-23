@@ -5,325 +5,157 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kontakt – Bilkompassen</title>
 
-<!-- FAVICON (add files later: favicon.ico + icon-192.png + icon-512.png) -->
 <link rel="icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="site.webmanifest">
 
 <style>
 :root{
-  --ink:#0f172a;
-  --muted:#475569;
+  --ink:#0b1220;
+  --muted:#516078;
   --brand:#1E3557;
   --accent:#E6A23C;
-  --line:#e8edf3;
-  --bg:#ffffff;
-  --soft:#f6f8fb;
-  --card:#ffffff;
-  --shadow: 0 10px 30px rgba(15,23,42,.08);
-  --radius:14px;
+  --line:rgba(15,23,42,.10);
+  --shadow: 0 18px 55px rgba(10,18,32,.10);
+  --radius:16px;
 }
 
 *{ box-sizing:border-box; }
 body{
   margin:0;
-  font-family:system-ui,Segoe UI,Arial;
-  background:linear-gradient(180deg, var(--soft) 0%, var(--bg) 45%);
+  font-family:system-ui,-apple-system,Segoe UI,Arial;
   color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 15% -10%, rgba(30,53,87,.12), transparent 60%),
+    radial-gradient(900px 420px at 85% -10%, rgba(230,162,60,.10), transparent 60%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 50%);
 }
-
-.container{
-  max-width:1080px;
-  margin:0 auto;
-  padding:0 20px;
-}
+.container{ max-width:1120px; margin:0 auto; padding:0 20px; }
 
 /* HEADER */
 .site-header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(255,255,255,.9);
-  backdrop-filter:saturate(140%) blur(10px);
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:saturate(160%) blur(12px);
   border-bottom:1px solid var(--line);
 }
-
 .header-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 0;
-  gap:14px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 0; gap:14px;
 }
-
-.logo-wrap{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-decoration:none;
-  min-width: 180px;
-}
-
+.logo-wrap{ display:flex; align-items:center; text-decoration:none; }
 .logo-img{
-  height:64px;
-  width:auto;
-  display:block;
+  height:78px; width:auto; display:block;
+  filter: drop-shadow(0 10px 24px rgba(30,53,87,.12));
 }
-
-.logo-text{
-  font-weight:800;
-  color:var(--brand);
-  font-size:18px;
-  line-height:1;
-  letter-spacing:.2px;
-}
-
-.nav{
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-
+.nav{ display:flex; align-items:center; gap:10px; }
 .nav a{
   text-decoration:none;
   color:var(--muted);
-  font-weight:600;
+  font-weight:700;
   font-size:14px;
-  padding:10px 10px;
-  border-radius:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  transition:.15s ease;
 }
+.nav a:hover{ background: rgba(30,53,87,.08); color:var(--brand); transform: translateY(-1px); }
 
-.nav a:hover{
-  background:var(--soft);
-  color:var(--brand);
-}
-
-/* Burger */
 .burger{
   display:none;
   border:1px solid var(--line);
   background:#fff;
-  border-radius:12px;
+  border-radius:14px;
   padding:10px 12px;
   cursor:pointer;
-  box-shadow:0 6px 18px rgba(15,23,42,.06);
+  box-shadow: 0 10px 26px rgba(10,18,32,.08);
 }
+.burger-lines{ display:flex; flex-direction:column; gap:5px; }
+.burger-lines span{ width:22px; height:2px; background:var(--brand); border-radius:2px; display:block; }
 
-.burger-lines{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-}
-
-.burger-lines span{
-  width:22px;
-  height:2px;
-  background:var(--brand);
-  display:block;
-  border-radius:2px;
-}
-
-/* Mobile menu panel */
-.mobile-nav{
-  display:none;
-  border-top:1px solid var(--line);
-  background:#fff;
-}
-
-.mobile-nav-inner{
-  padding:12px 0;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
+.mobile-nav{ display:none; border-top:1px solid var(--line); background:#fff; }
+.mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
 .mobile-nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:700;
-  padding:12px 12px;
-  border-radius:12px;
+  text-decoration:none; color:var(--muted); font-weight:800;
+  padding:12px 12px; border-radius:14px;
 }
-
-.mobile-nav a:hover{
-  background:var(--soft);
-  color:var(--brand);
-}
+.mobile-nav a:hover{ background:rgba(30,53,87,.08); color:var(--brand); }
 
 /* PAGE */
-.page{
-  padding:34px 0 44px;
-}
+.page{ padding:34px 0 44px; }
+.page-title{ margin:0 0 10px; color:var(--brand); font-weight:1000; letter-spacing:-.4px; font-size:30px; }
+.lead{ margin:0 0 18px; color:var(--muted); line-height:1.65; font-weight:650; }
 
-.page-title{
-  margin:0 0 10px;
-  color:var(--brand);
-  font-weight:900;
-  letter-spacing:-.4px;
-  font-size:30px;
-}
-
-.lead{
-  margin:0 0 18px;
-  color:var(--muted);
-  line-height:1.6;
-  font-weight:600;
-}
-
-.grid-2{
-  display:grid;
-  grid-template-columns: 1.05fr .95fr;
-  gap:16px;
-  align-items:start;
-}
-
+.grid-2{ display:grid; grid-template-columns: 1.05fr .95fr; gap:14px; align-items:start; }
 .card{
-  background:var(--card);
+  background: rgba(255,255,255,.92);
   border:1px solid var(--line);
   border-radius:var(--radius);
   padding:18px;
-  box-shadow:var(--shadow);
+  box-shadow: var(--shadow);
 }
-
-.card h2{
-  margin:0 0 10px;
-  color:var(--brand);
-  font-size:16px;
-  font-weight:900;
-}
-
-.card p{
-  margin:0 0 12px;
-  color:var(--muted);
-  line-height:1.65;
-  font-weight:600;
-  font-size:14px;
-}
-
+.card h2{ margin:0 0 10px; color:var(--brand); font-size:16px; font-weight:1000; }
+.card p{ margin:0 0 12px; color:var(--muted); line-height:1.65; font-weight:650; font-size:14px; }
 .card p:last-child{ margin-bottom:0; }
 
-.label{
-  font-size:12px;
-  font-weight:900;
-  color:var(--muted);
-  margin:10px 0 6px;
-}
-
+.label{ font-size:12px; font-weight:900; color:var(--muted); margin:10px 0 6px; }
 .input{
   width:100%;
   max-width:520px;
   padding:12px 12px;
   font-size:15px;
   border:1px solid rgba(15,23,42,.14);
-  border-radius:12px;
+  border-radius:14px;
   outline:none;
   background:#fff;
 }
-
-textarea.input{
-  min-height:120px;
-  resize:vertical;
-}
-
-.input:focus{
-  border-color: rgba(30,53,87,.35);
-  box-shadow: 0 0 0 4px rgba(30,53,87,.10);
-}
-
-.helper{
-  color:var(--muted);
-  font-weight:600;
-  font-size:12px;
-  line-height:1.6;
-  margin:8px 0 0;
-}
+textarea.input{ min-height:120px; resize:vertical; }
+.input:focus{ border-color: rgba(30,53,87,.35); box-shadow:0 0 0 4px rgba(30,53,87,.10); }
 
 .btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
   margin-top:12px;
   padding:12px 16px;
-  background:var(--brand);
+  background: var(--brand);
   color:#fff;
   text-decoration:none;
-  border-radius:12px;
+  border-radius:14px;
   font-weight:900;
-  box-shadow:0 10px 22px rgba(30,53,87,.22);
+  box-shadow: 0 16px 34px rgba(30,53,87,.22);
   border:none;
   cursor:pointer;
+  transition: transform .15s ease;
 }
+.btn:hover{ transform: translateY(-1px); }
 
 .btn-ghost{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
   margin-top:12px;
   padding:12px 16px;
-  background:#fff;
-  color:var(--brand);
+  background: rgba(255,255,255,.85);
+  color: var(--brand);
   text-decoration:none;
-  border-radius:12px;
+  border-radius:14px;
   font-weight:900;
   border:1px solid rgba(30,53,87,.18);
 }
 
+.helper{ margin:10px 0 0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.6; }
+
 /* FOOTER */
-.footer{
-  border-top:1px solid var(--line);
-  background:#fff;
-  padding:26px 0;
-  color:var(--muted);
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns: 1.4fr .6fr .6fr;
-  gap:16px;
-  align-items:start;
-}
-
-.footer h4{
-  margin:0 0 8px;
-  color:var(--brand);
-  font-size:14px;
-  font-weight:900;
-}
-
-.footer a{
-  color:var(--muted);
-  text-decoration:none;
-  font-weight:700;
-  display:block;
-  padding:6px 0;
-}
-
+.footer{ border-top:1px solid var(--line); background: rgba(255,255,255,.86); padding:28px 0; }
+.footer-grid{ display:grid; grid-template-columns: 1.4fr .6fr .6fr; gap:16px; }
+.footer h4{ margin:0 0 8px; color:var(--brand); font-size:14px; font-weight:1000; }
+.footer a{ color:var(--muted); text-decoration:none; font-weight:800; display:block; padding:6px 0; }
 .footer a:hover{ color:var(--brand); }
-
-.footer small{
-  display:block;
-  margin-top:10px;
-  opacity:.9;
-  line-height:1.5;
-}
+.footer small{ display:block; margin-top:10px; opacity:.92; line-height:1.55; color:var(--muted); }
 
 /* Responsive */
-@media (max-width: 920px){
-  .grid-2{ grid-template-columns:1fr; }
-}
-
+@media (max-width: 920px){ .grid-2{ grid-template-columns:1fr; } }
 @media (max-width: 860px){
-  .nav{ display:none; }
-  .burger{ display:inline-flex; align-items:center; justify-content:center; }
-  .logo-img{ height:58px; }
+  .nav{ display:none; } .burger{ display:inline-flex; }
+  .logo-img{ height:72px; }
 }
-
-@media (max-width: 420px){
-  .logo-text{ display:none; }
-  .logo-img{ height:56px; }
-}
+@media (max-width: 420px){ .logo-img{ height:68px; } }
 </style>
 </head>
 
@@ -331,9 +163,8 @@ textarea.input{
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo-wrap">
-      <img src="logo_trimmed.png" alt="Bilkompassen logo" class="logo-img">
-      <div class="logo-text">Bilkompassen</div>
+    <a href="index.html" class="logo-wrap" aria-label="Bilkompassen hem">
+      <img src="logo_trimmed.png" alt="Bilkompassen" class="logo-img">
     </a>
 
     <nav class="nav" aria-label="Huvudmeny">
@@ -365,37 +196,29 @@ textarea.input{
 <main class="page">
   <div class="container">
     <h1 class="page-title">Kontakt</h1>
-    <p class="lead">Vill du tipsa om en guide, en funktion eller ett vanligt problem vid bilköp? Skriv det här. Vi bygger bara det som behövs – enkelt och tydligt.</p>
+    <p class="lead">Tipsa om en guide eller funktion du vill se. Vi bygger bara det som behövs – enkelt och tydligt.</p>
 
     <div class="grid-2">
       <section class="card">
         <h2>Tipsa oss</h2>
-
-        <!-- Placeholder form (no backend yet) -->
-        <p>Just nu sparas inget automatiskt (ingen backend). Kopiera gärna texten och mejla senare när vi sätter upp en kontaktadress.</p>
+        <p>Just nu har vi ingen backend. Du kan skriva här och kopiera texten (så kan du mejla senare när vi lägger in riktig adress).</p>
 
         <div class="label">Din e-post (valfritt)</div>
-        <input class="input" placeholder="kontakt@bilkompassen.se (senare)" autocomplete="off">
+        <input class="input" id="email" placeholder="kontakt@bilkompassen.se (senare)" autocomplete="off">
 
-        <div class="label">Vad vill du att vi ska bygga eller skriva?</div>
-        <textarea class="input" placeholder="Ex: Guide: Bästa bilar under 100 000 kr. Eller: verktyg för ägandekostnad..."></textarea>
+        <div class="label">Meddelande</div>
+        <textarea class="input" id="msg" placeholder="Ex: Gör en guide om billigaste bilarna att äga. Eller: verktyg för ägandekostnad..."></textarea>
 
-        <button class="btn" type="button" onclick="kopieraMeddelande()">Kopiera text</button>
+        <button class="btn" type="button" onclick="kopiera()">Kopiera text</button>
         <a class="btn-ghost" href="guider.html">Se guider</a>
 
-        <p class="helper" id="copyStatus"></p>
+        <p class="helper" id="status"></p>
       </section>
 
       <aside class="card">
         <h2>Kontaktinfo (kommer snart)</h2>
-        <p>
-          Vi håller allt 0 kr tills sidan bevisar att den kan bära sig själv.
-          Därför väntar vi med e-post och system tills vi har riktig trafik.
-        </p>
-
-        <p>
-          Exempel (senare): <strong>kontakt@bilkompassen.se</strong>
-        </p>
+        <p>Vi håller det 0 kr tills sidan bevisar att den kan bära sig själv. Därför väntar vi med e-post och system tills det behövs.</p>
+        <p>Exempel (senare): <strong>kontakt@bilkompassen.se</strong></p>
 
         <h2 style="margin-top:16px;">Snabbt</h2>
         <p>Om du ska köpa bil nu: börja med verktyget och följ checklistan.</p>
@@ -410,13 +233,9 @@ textarea.input{
   <div class="container footer-grid">
     <div>
       <h4>Bilkompassen</h4>
-      <small>
-        En svensk beslutshjälp för dig som vill köpa begagnad bil tryggare.
-        Inga listningar – bara guider och enkla verktyg.
-      </small>
+      <small>Svensk beslutshjälp för begagnatköp. Inga listningar – bara guider och verktyg.</small>
       <small>© <span id="year"></span> Bilkompassen</small>
     </div>
-
     <div>
       <h4>Sidor</h4>
       <a href="verktyg.html">Verktyg</a>
@@ -424,7 +243,6 @@ textarea.input{
       <a href="about.html">Om</a>
       <a href="contact.html">Kontakt</a>
     </div>
-
     <div>
       <h4>Snabbt</h4>
       <a href="guider.html">Köpchecklista</a>
@@ -435,23 +253,18 @@ textarea.input{
 </footer>
 
 <script>
-/* Burger toggle */
 const burgerBtn = document.getElementById("burgerBtn");
 const mobileNav = document.getElementById("mobileNav");
-
 burgerBtn.addEventListener("click", () => {
   const isOpen = mobileNav.style.display === "block";
   mobileNav.style.display = isOpen ? "none" : "block";
   burgerBtn.setAttribute("aria-expanded", String(!isOpen));
 });
-
-/* Footer year */
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* Copy helper (no backend yet) */
-function kopieraMeddelande(){
-  const email = document.querySelectorAll(".input")[0].value.trim();
-  const msg = document.querySelectorAll(".input")[1].value.trim();
+function kopiera(){
+  const email = document.getElementById("email").value.trim();
+  const msg = document.getElementById("msg").value.trim();
   const text =
 `Bilkompassen tips
 E-post: ${email || "(inte angivet)"}
@@ -459,11 +272,10 @@ E-post: ${email || "(inte angivet)"}
 Meddelande:
 ${msg || "(tomt)"}
 `;
-
   navigator.clipboard.writeText(text).then(()=>{
-    document.getElementById("copyStatus").textContent = "✅ Kopierat! Spara texten och mejla senare när vi har en adress.";
+    document.getElementById("status").textContent = "✅ Kopierat! Spara texten och mejla senare när vi har en adress.";
   }).catch(()=>{
-    document.getElementById("copyStatus").textContent = "⚠️ Kunde inte kopiera automatiskt. Markera och kopiera manuellt.";
+    document.getElementById("status").textContent = "⚠️ Kunde inte kopiera automatiskt. Kopiera manuellt.";
   });
 }
 </script>
