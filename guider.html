@@ -5,120 +5,437 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Guider – Bilkompassen</title>
 
+<!-- FAVICON (add files later: favicon.ico + icon-192.png + icon-512.png) -->
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+
 <style>
+:root{
+  --ink:#0f172a;
+  --muted:#475569;
+  --brand:#1E3557;
+  --accent:#E6A23C;
+  --line:#e8edf3;
+  --bg:#ffffff;
+  --soft:#f6f8fb;
+  --card:#ffffff;
+  --shadow: 0 10px 30px rgba(15,23,42,.08);
+  --radius:14px;
+}
+
+*{ box-sizing:border-box; }
 body{
   margin:0;
   font-family:system-ui,Segoe UI,Arial;
-  background:#fff;
-  color:#111;
+  background:linear-gradient(180deg, var(--soft) 0%, var(--bg) 45%);
+  color:var(--ink);
 }
 
-header{
-  padding:18px 24px;
-  border-bottom:1px solid #eee;
+.container{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* HEADER */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+
+.header-inner{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
+  padding:14px 0;
+  gap:14px;
 }
 
-/* LOGO */
 .logo-wrap{
   display:flex;
   align-items:center;
   gap:12px;
   text-decoration:none;
+  min-width: 180px;
 }
 
 .logo-img{
-  height:42px;
+  height:64px;
   width:auto;
+  display:block;
 }
 
 .logo-text{
-  font-weight:700;
-  color:#1E3557;
-  font-size:20px;
+  font-weight:800;
+  color:var(--brand);
+  font-size:18px;
+  line-height:1;
+  letter-spacing:.2px;
 }
 
-nav a{
-  margin-left:16px;
+.nav{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.nav a{
   text-decoration:none;
-  color:#555;
+  color:var(--muted);
+  font-weight:600;
+  font-size:14px;
+  padding:10px 10px;
+  border-radius:10px;
 }
 
-.container{
-  max-width:900px;
-  margin:40px auto;
-  padding:20px;
+.nav a:hover{
+  background:var(--soft);
+  color:var(--brand);
 }
 
-h1,h2{
-  color:#1E3557;
+/* Burger */
+.burger{
+  display:none;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(15,23,42,.06);
+}
+
+.burger-lines{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.burger-lines span{
+  width:22px;
+  height:2px;
+  background:var(--brand);
+  display:block;
+  border-radius:2px;
+}
+
+/* Mobile menu panel */
+.mobile-nav{
+  display:none;
+  border-top:1px solid var(--line);
+  background:#fff;
+}
+
+.mobile-nav-inner{
+  padding:12px 0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.mobile-nav a{
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:700;
+  padding:12px 12px;
+  border-radius:12px;
+}
+
+.mobile-nav a:hover{
+  background:var(--soft);
+  color:var(--brand);
+}
+
+/* PAGE */
+.page{
+  padding:34px 0 44px;
+}
+
+.page-title{
+  margin:0 0 10px;
+  color:var(--brand);
+  font-weight:900;
+  letter-spacing:-.4px;
+  font-size:30px;
+}
+
+.lead{
+  margin:0 0 18px;
+  color:var(--muted);
+  line-height:1.6;
+  font-weight:600;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:16px;
+  align-items:start;
 }
 
 .card{
-  border:1px solid #eee;
-  padding:20px;
-  border-radius:10px;
-  margin-top:20px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.card h2{
+  margin:0 0 10px;
+  color:var(--brand);
+  font-size:16px;
+  font-weight:900;
+}
+
+.card p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.6;
+  font-weight:600;
+  font-size:14px;
 }
 
 ul{
+  margin:10px 0 0;
+  padding-left:18px;
   line-height:1.7;
+  color:var(--muted);
+  font-weight:600;
+}
+
+.checklist li{
+  margin:6px 0;
+}
+
+.tag{
+  display:inline-block;
+  font-size:12px;
+  font-weight:900;
+  color:var(--brand);
+  background:rgba(30,53,87,.08);
+  border:1px solid rgba(30,53,87,.12);
+  padding:7px 10px;
+  border-radius:999px;
+  margin:0 8px 8px 0;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:12px;
+  padding:12px 16px;
+  background:var(--brand);
+  color:#fff;
+  text-decoration:none;
+  border-radius:12px;
+  font-weight:900;
+  box-shadow:0 10px 22px rgba(30,53,87,.22);
+}
+
+.btn-ghost{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:12px;
+  padding:12px 16px;
+  background:#fff;
+  color:var(--brand);
+  text-decoration:none;
+  border-radius:12px;
+  font-weight:900;
+  border:1px solid rgba(30,53,87,.18);
+}
+
+/* FOOTER */
+.footer{
+  border-top:1px solid var(--line);
+  background:#fff;
+  padding:26px 0;
+  color:var(--muted);
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.4fr .6fr .6fr;
+  gap:16px;
+  align-items:start;
+}
+
+.footer h4{
+  margin:0 0 8px;
+  color:var(--brand);
+  font-size:14px;
+  font-weight:900;
+}
+
+.footer a{
+  color:var(--muted);
+  text-decoration:none;
+  font-weight:700;
+  display:block;
+  padding:6px 0;
+}
+
+.footer a:hover{ color:var(--brand); }
+
+.footer small{
+  display:block;
+  margin-top:10px;
+  opacity:.9;
+  line-height:1.5;
+}
+
+/* Responsive */
+@media (max-width: 920px){
+  .grid-2{ grid-template-columns:1fr; }
+}
+
+@media (max-width: 860px){
+  .nav{ display:none; }
+  .burger{ display:inline-flex; align-items:center; justify-content:center; }
+  .logo-img{ height:58px; }
+}
+
+@media (max-width: 420px){
+  .logo-text{ display:none; }
+  .logo-img{ height:56px; }
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo-wrap">
+      <img src="logo_trimmed.png" alt="Bilkompassen logo" class="logo-img">
+      <div class="logo-text">Bilkompassen</div>
+    </a>
 
-  <!-- LOGO -->
-  <a href="index.html" class="logo-wrap">
-    <img src="logo_trimmed.png" alt="Bilkompassen logo" class="logo-img">
-    <div class="logo-text">Bilkompassen</div>
-  </a>
+    <nav class="nav" aria-label="Huvudmeny">
+      <a href="index.html">Start</a>
+      <a href="verktyg.html">Verktyg</a>
+      <a href="guider.html">Guider</a>
+      <a href="about.html">Om</a>
+      <a href="contact.html">Kontakt</a>
+    </nav>
 
-  <nav>
-    <a href="index.html">Start</a>
-    <a href="verktyg.html">Verktyg</a>
-    <a href="guider.html">Guider</a>
-    <a href="about.html">Om</a>
-    <a href="contact.html">Kontakt</a>
-  </nav>
+    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
+      <span class="burger-lines" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+  </div>
 
+  <div class="mobile-nav" id="mobileNav">
+    <div class="container mobile-nav-inner">
+      <a href="index.html">Start</a>
+      <a href="verktyg.html">Verktyg</a>
+      <a href="guider.html">Guider</a>
+      <a href="about.html">Om</a>
+      <a href="contact.html">Kontakt</a>
+    </div>
+  </div>
 </header>
 
-<div class="container">
+<main class="page">
+  <div class="container">
+    <h1 class="page-title">Guider</h1>
+    <p class="lead">Här samlar vi tydliga guider som hjälper dig köpa rätt bil i Sverige – utan fluff. Börja med köpchecklistan och fortsätt sedan med guiderna som passar din budget.</p>
 
-<h1>Guider</h1>
-<p>Här hittar du guider som hjälper dig köpa rätt bil i Sverige.</p>
+    <div style="margin:8px 0 14px;">
+      <span class="tag">Köpchecklista</span>
+      <span class="tag">Provkörning</span>
+      <span class="tag">Historik</span>
+      <span class="tag">Ägandekostnad</span>
+    </div>
 
-<div class="card">
-<h2>Köpchecklista – steg för steg</h2>
+    <div class="grid-2">
+      <section class="card">
+        <h2>Köpchecklista – steg för steg</h2>
+        <p>Följ denna innan du betalar. Den är byggd för att minska risken att köpa en problem-bil.</p>
 
-<ul>
-<li>Kontrollera om bilen har skulder</li>
-<li>Kolla besiktning och körförbud</li>
-<li>Be om servicehistorik</li>
-<li>Inspektera rost, bromsar och däck</li>
-<li>Provkör i olika hastigheter</li>
-<li>Skriv alltid köpeavtal</li>
-<li>Gör ägarbyte direkt</li>
-</ul>
+        <ul class="checklist">
+          <li>Kontrollera om bilen har skulder</li>
+          <li>Kolla besiktning och körförbud</li>
+          <li>Be om servicehistorik</li>
+          <li>Inspektera rost, bromsar och däck</li>
+          <li>Provkör i olika hastigheter</li>
+          <li>Skriv alltid köpeavtal</li>
+          <li>Gör ägarbyte direkt</li>
+        </ul>
 
-</div>
+        <a class="btn" href="verktyg.html">Testa verktyget</a>
+      </section>
 
-<div class="card">
-<h2>Kommande guider</h2>
-<ul>
-<li>Bästa bilar under 100 000 kr</li>
-<li>Billigaste bilarna att äga</li>
-<li>Första bil för unga förare</li>
-</ul>
-</div>
+      <aside class="card">
+        <h2>Kommande guider</h2>
+        <p>Vi fyller på med guider som ger beslutshjälp, inte bara “tips”.</p>
 
-</div>
+        <ul>
+          <li>Bästa bilar under 100 000 kr</li>
+          <li>Billigaste bilarna att äga</li>
+          <li>Första bil för unga förare</li>
+          <li>Vad du ska fråga säljaren</li>
+          <li>Så undviker du rostfällor</li>
+        </ul>
+
+        <a class="btn-ghost" href="contact.html">Tipsa om en guide</a>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <h4>Bilkompassen</h4>
+      <small>
+        En svensk beslutshjälp för dig som vill köpa begagnad bil tryggare.
+        Inga listningar – bara guider och enkla verktyg.
+      </small>
+      <small>© <span id="year"></span> Bilkompassen</small>
+    </div>
+
+    <div>
+      <h4>Sidor</h4>
+      <a href="verktyg.html">Verktyg</a>
+      <a href="guider.html">Guider</a>
+      <a href="about.html">Om</a>
+      <a href="contact.html">Kontakt</a>
+    </div>
+
+    <div>
+      <h4>Snabbt</h4>
+      <a href="guider.html">Köpchecklista</a>
+      <a href="verktyg.html">Testa kompassen</a>
+      <a href="contact.html">Tipsa oss</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Burger toggle */
+const burgerBtn = document.getElementById("burgerBtn");
+const mobileNav = document.getElementById("mobileNav");
+
+burgerBtn.addEventListener("click", () => {
+  const isOpen = mobileNav.style.display === "block";
+  mobileNav.style.display = isOpen ? "none" : "block";
+  burgerBtn.setAttribute("aria-expanded", String(!isOpen));
+});
+
+/* Footer year */
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
