@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kontakt – Bilkompassen</title>
 
-<link rel="icon" href="favicon.ico">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="manifest" href="site.webmanifest">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1E3557">
 
 <style>
 :root{
@@ -72,7 +74,13 @@ body{
 .burger-lines{ display:flex; flex-direction:column; gap:5px; }
 .burger-lines span{ width:22px; height:2px; background:var(--brand); border-radius:2px; display:block; }
 
-.mobile-nav{ display:none; border-top:1px solid var(--line); background:#fff; }
+.mobile-nav{
+  display:none;
+  border-top:1px solid var(--line);
+  background:#fff;
+}
+.mobile-nav.open{ display:block; }
+
 .mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
 .mobile-nav a{
   text-decoration:none; color:var(--muted); font-weight:800;
@@ -149,7 +157,6 @@ textarea.input{ min-height:120px; resize:vertical; }
 .footer a:hover{ color:var(--brand); }
 .footer small{ display:block; margin-top:10px; opacity:.92; line-height:1.55; color:var(--muted); }
 
-/* Responsive */
 @media (max-width: 920px){ .grid-2{ grid-template-columns:1fr; } }
 @media (max-width: 860px){
   .nav{ display:none; } .burger{ display:inline-flex; }
@@ -163,11 +170,11 @@ textarea.input{ min-height:120px; resize:vertical; }
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo-wrap" aria-label="Bilkompassen hem">
+    <a href="index.html" class="logo-wrap">
       <img src="logo_trimmed.png" alt="Bilkompassen" class="logo-img">
     </a>
 
-    <nav class="nav" aria-label="Huvudmeny">
+    <nav class="nav">
       <a href="index.html">Start</a>
       <a href="verktyg.html">Verktyg</a>
       <a href="guider.html">Guider</a>
@@ -175,10 +182,8 @@ textarea.input{ min-height:120px; resize:vertical; }
       <a href="contact.html">Kontakt</a>
     </nav>
 
-    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
-      <span class="burger-lines" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </span>
+    <button class="burger" id="burgerBtn">
+      <span class="burger-lines"><span></span><span></span><span></span></span>
     </button>
   </div>
 
@@ -196,35 +201,21 @@ textarea.input{ min-height:120px; resize:vertical; }
 <main class="page">
   <div class="container">
     <h1 class="page-title">Kontakt</h1>
-    <p class="lead">Tipsa om en guide eller funktion du vill se. Vi bygger bara det som behövs – enkelt och tydligt.</p>
+    <p class="lead">Tipsa om en guide eller funktion du vill se.</p>
 
     <div class="grid-2">
       <section class="card">
         <h2>Tipsa oss</h2>
-        <p>Just nu har vi ingen backend. Du kan skriva här och kopiera texten (så kan du mejla senare när vi lägger in riktig adress).</p>
 
         <div class="label">Din e-post (valfritt)</div>
-        <input class="input" id="email" placeholder="kontakt@bilkompassen.se (senare)" autocomplete="off">
+        <input class="input" id="email">
 
         <div class="label">Meddelande</div>
-        <textarea class="input" id="msg" placeholder="Ex: Gör en guide om billigaste bilarna att äga. Eller: verktyg för ägandekostnad..."></textarea>
+        <textarea class="input" id="msg"></textarea>
 
-        <button class="btn" type="button" onclick="kopiera()">Kopiera text</button>
-        <a class="btn-ghost" href="guider.html">Se guider</a>
-
+        <button class="btn" id="copyBtn">Kopiera text</button>
         <p class="helper" id="status"></p>
       </section>
-
-      <aside class="card">
-        <h2>Kontaktinfo (kommer snart)</h2>
-        <p>Vi håller det 0 kr tills sidan bevisar att den kan bära sig själv. Därför väntar vi med e-post och system tills det behövs.</p>
-        <p>Exempel (senare): <strong>kontakt@bilkompassen.se</strong></p>
-
-        <h2 style="margin-top:16px;">Snabbt</h2>
-        <p>Om du ska köpa bil nu: börja med verktyget och följ checklistan.</p>
-        <a class="btn" href="verktyg.html">Testa verktyget</a>
-        <a class="btn-ghost" href="guider.html">Köpchecklista</a>
-      </aside>
     </div>
   </div>
 </main>
@@ -233,49 +224,35 @@ textarea.input{ min-height:120px; resize:vertical; }
   <div class="container footer-grid">
     <div>
       <h4>Bilkompassen</h4>
-      <small>Svensk beslutshjälp för begagnatköp. Inga listningar – bara guider och verktyg.</small>
       <small>© <span id="year"></span> Bilkompassen</small>
-    </div>
-    <div>
-      <h4>Sidor</h4>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
-    </div>
-    <div>
-      <h4>Snabbt</h4>
-      <a href="guider.html">Köpchecklista</a>
-      <a href="verktyg.html">Testa kompassen</a>
-      <a href="index.html">Start</a>
     </div>
   </div>
 </footer>
 
 <script>
-const burgerBtn = document.getElementById("burgerBtn");
-const mobileNav = document.getElementById("mobileNav");
-burgerBtn.addEventListener("click", () => {
-  const isOpen = mobileNav.style.display === "block";
-  mobileNav.style.display = isOpen ? "none" : "block";
-  burgerBtn.setAttribute("aria-expanded", String(!isOpen));
-});
-document.getElementById("year").textContent = new Date().getFullYear();
+const burgerBtn=document.getElementById("burgerBtn");
+const mobileNav=document.getElementById("mobileNav");
+if(burgerBtn && mobileNav){
+  burgerBtn.addEventListener("click",()=>{
+    mobileNav.classList.toggle("open");
+  });
+}
 
-function kopiera(){
-  const email = document.getElementById("email").value.trim();
-  const msg = document.getElementById("msg").value.trim();
-  const text =
-`Bilkompassen tips
-E-post: ${email || "(inte angivet)"}
+const yearEl=document.getElementById("year");
+if(yearEl){ yearEl.textContent=new Date().getFullYear(); }
 
-Meddelande:
-${msg || "(tomt)"}
-`;
-  navigator.clipboard.writeText(text).then(()=>{
-    document.getElementById("status").textContent = "✅ Kopierat! Spara texten och mejla senare när vi har en adress.";
-  }).catch(()=>{
-    document.getElementById("status").textContent = "⚠️ Kunde inte kopiera automatiskt. Kopiera manuellt.";
+const btn=document.getElementById("copyBtn");
+if(btn){
+  btn.addEventListener("click",()=>{
+    const email=document.getElementById("email")?.value.trim()||"(inte angivet)";
+    const msg=document.getElementById("msg")?.value.trim()||"(tomt)";
+    const text=`Bilkompassen tips\nE-post: ${email}\n\nMeddelande:\n${msg}`;
+
+    navigator.clipboard.writeText(text).then(()=>{
+      document.getElementById("status").textContent="✅ Kopierat!";
+    }).catch(()=>{
+      document.getElementById("status").textContent="⚠️ Kopiera manuellt.";
+    });
   });
 }
 </script>
