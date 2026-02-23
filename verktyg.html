@@ -21,6 +21,7 @@
   --shadow: 0 18px 55px rgba(10,18,32,.10);
   --radius:16px;
 }
+
 *{ box-sizing:border-box; }
 body{
   margin:0;
@@ -130,8 +131,6 @@ button{
 }
 button:hover{ transform: translateY(-1px); }
 
-.helper{ margin:0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.6; }
-
 /* Structured result box */
 .result{
   margin-top:14px;
@@ -139,11 +138,14 @@ button:hover{ transform: translateY(-1px); }
   border-radius:14px;
   border:1px solid var(--line);
   background:linear-gradient(180deg,#fff,#f6f9ff);
-  font-weight:700;
+  font-weight:800;
   line-height:1.45;
-  min-height:70px;
+  min-height:84px;
 }
-.result small{ display:block; margin-top:6px; color:var(--muted); font-weight:600; }
+.result strong{ display:block; color:var(--brand); }
+.result small{ display:block; margin-top:6px; color:var(--muted); font-weight:650; }
+.result a{ color:var(--brand); font-weight:900; text-decoration:underline; text-underline-offset:3px; }
+.result a:hover{ opacity:.9; }
 
 /* COMPASS */
 .compass-wrap{ display:flex; flex-direction:column; gap:12px; align-items:center; }
@@ -161,6 +163,15 @@ button:hover{ transform: translateY(-1px); }
   border:1px solid var(--line);
   box-shadow: 0 22px 60px rgba(10,18,32,.12);
   overflow:hidden;
+}
+
+.compass::before{
+  content:"";
+  position:absolute; inset:12px;
+  border-radius:50%;
+  border:2px solid rgba(30,53,87,.12);
+  background: radial-gradient(circle at center, rgba(255,255,255,.82) 0%, rgba(255,255,255,.92) 55%, rgba(255,255,255,.0) 100%);
+  pointer-events:none;
 }
 
 .hub{
@@ -196,7 +207,16 @@ button:hover{ transform: translateY(-1px); }
 .footer{ border-top:1px solid var(--line); background: rgba(255,255,255,.86); padding:28px 0; }
 
 @media (max-width:920px){ .tool-grid{ grid-template-columns:1fr; } }
-@media (max-width:860px){ .nav{ display:none; } .burger{ display:inline-flex; } }
+@media (max-width:860px){
+  .nav{ display:none; }
+  .burger{ display:inline-flex; }
+  .logo-img{ height:70px; }
+  .compass{ width:260px; height:260px; }
+}
+@media (max-width:420px){
+  .logo-img{ height:66px; }
+  .compass{ width:240px; height:240px; }
+}
 </style>
 </head>
 
@@ -216,7 +236,7 @@ button:hover{ transform: translateY(-1px); }
       <a href="contact.html">Kontakt</a>
     </nav>
 
-    <button class="burger" id="burgerBtn">
+    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
       <span class="burger-lines"><span></span><span></span><span></span></span>
     </button>
   </div>
@@ -240,15 +260,19 @@ button:hover{ transform: translateY(-1px); }
     <div class="tool-grid">
       <section class="panel">
         <div class="form-row">
-          <input id="reg" placeholder="ABC123">
-          <button id="anBtn">Analysera</button>
+          <input id="reg" placeholder="ABC123" inputmode="text" autocomplete="off" aria-label="Registreringsnummer">
+          <button id="anBtn" type="button">Analysera</button>
         </div>
 
-        <div id="result" class="result"></div>
+        <div id="result" class="result">
+          <strong>Redo.</strong>
+          <small>Skriv in ett regnr och tryck på “Analysera”.</small>
+          <small>Det här är en snabb riktning – inte en garanti.</small>
+        </div>
       </section>
 
       <section class="panel compass-wrap">
-        <div class="compass">
+        <div class="compass" aria-label="Kompass med riskzoner">
           <div id="needle" class="needle"></div>
           <div class="hub"></div>
         </div>
@@ -264,89 +288,135 @@ button:hover{ transform: translateY(-1px); }
 </footer>
 
 <script>
-/* Safe mobile nav */
-const burgerBtn=document.getElementById("burgerBtn");
-const mobileNav=document.getElementById("mobileNav");
-if(burgerBtn&&mobileNav){
-  burgerBtn.addEventListener("click",()=>mobileNav.classList.toggle("open"));
-}
+/* Safe mobile nav (toggle via .open class only) */
+(() => {
+  const burgerBtn = document.getElementById("burgerBtn");
+  const mobileNav = document.getElementById("mobileNav");
+  if(!burgerBtn || !mobileNav) return;
+
+  const setExpanded = (v) => burgerBtn.setAttribute("aria-expanded", v ? "true" : "false");
+
+  burgerBtn.addEventListener("click", () => {
+    const isOpen = mobileNav.classList.toggle("open");
+    setExpanded(isOpen);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && mobileNav.classList.contains("open")){
+      mobileNav.classList.remove("open");
+      setExpanded(false);
+    }
+  });
+})();
 
 /* Year */
-const yearEl=document.getElementById("year");
-if(yearEl){ yearEl.textContent=new Date().getFullYear(); }
+(() => {
+  const yearEl = document.getElementById("year");
+  if(yearEl) yearEl.textContent = new Date().getFullYear();
+})();
 
 /* Compass v1 deterministic logic */
+(() => {
+  const regInput = document.getElementById("reg");
+  const btn = document.getElementById("anBtn");
+  const needle = document.getElementById("needle");
+  const result = document.getElementById("result");
+  if(!regInput || !btn || !needle || !result) return;
 
-const regInput=document.getElementById("reg");
-const btn=document.getElementById("anBtn");
-const needle=document.getElementById("needle");
-const result=document.getElementById("result");
-
-function hashReg(str){
-  let h=0;
-  for(let i=0;i<str.length;i++){
-    h=(h<<5)-h+str.charCodeAt(i);
-    h|=0;
-  }
-  return Math.abs(h);
-}
-
-function analyze(){
-  if(!regInput||!needle||!result) return;
-
-  let reg=regInput.value.replace(/\s+/g,"").toUpperCase();
-  if(!reg){
-    result.innerHTML="Enter a plate number first.";
-    return;
+  function normalizeReg(v){
+    return String(v || "")
+      .replace(/\s+/g,"")
+      .toUpperCase()
+      .replace(/[^A-Z0-9]/g,"");
   }
 
-  const h=hashReg(reg);
-
-  const zone=h%3; // 0=green 1=yellow 2=red
-
-  let angleBase=0;
-  if(zone===0) angleBase=30+(h%60);        // green zone
-  if(zone===1) angleBase=150+(h%60);       // yellow zone
-  if(zone===2) angleBase=270+(h%60);       // red zone
-
-  /* small fake scan spin first */
-  const scanAngle=angleBase+720;
-  needle.style.transition="transform 1s ease";
-  needle.style.transform="rotate("+scanAngle+"deg)";
-
-  setTimeout(()=>{
-    needle.style.transition="transform .6s ease";
-    needle.style.transform="rotate("+angleBase+"deg)";
-  },1000);
-
-  /* structured result */
-  let title="",text="";
-
-  if(zone===0){
-    title="🟢 Looks promising";
-    text="Initial signals look positive. Still verify service history and inspection data.";
-  }
-  if(zone===1){
-    title="🟡 Needs checking";
-    text="Some uncertainty detected. Review ownership history, mileage, and recent work.";
-  }
-  if(zone===2){
-    title="🔴 Investigate carefully";
-    text="Higher risk signals. Inspect documentation, damage history, and total costs before deciding.";
+  function hashReg(str){
+    let h = 0;
+    for(let i=0;i<str.length;i++){
+      h = (h<<5) - h + str.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h);
   }
 
-  result.innerHTML=
-    "<strong>"+title+"</strong><br>"+
-    "<small>"+text+"</small>"+
-    "<small>→ <a href='guider.html'>Open buying checklist</a></small>";
-}
+  function zoneText(zone){
+    if(zone === 0){
+      return {
+        title: "🟢 Grön zon",
+        body: "Läget ser ofta okej ut på ytan. Verifiera ändå servicehistorik, besiktning och ägarbild.",
+        tip: "Fortsätt med checklistan innan du bestämmer dig."
+      };
+    }
+    if(zone === 1){
+      return {
+        title: "🟡 Gul zon",
+        body: "Det finns saker att kontrollera extra noga. Gå igenom miltal, dokumentation och senaste åtgärder.",
+        tip: "Ta hjälp av guiden och kolla vanliga fallgropar."
+      };
+    }
+    return {
+      title: "🔴 Röd zon",
+      body: "Högre risk-signal. Granska skadehistorik, kostnadsbild och papper noggrant innan du går vidare.",
+      tip: "Överväg oberoende test/inspektion."
+    };
+  }
 
-if(btn){ btn.addEventListener("click",analyze); }
-if(regInput){
-  regInput.addEventListener("keypress",e=>{
-    if(e.key==="Enter") analyze();
+  function computeAngleWithinZone(zone, h){
+    // conic-gradient segments:
+    // Green: 0–120, Yellow: 120–240, Red: 240–360
+    const margin = 18; // keep needle away from borders
+    let start = 0, end = 120;
+    if(zone === 1){ start = 120; end = 240; }
+    if(zone === 2){ start = 240; end = 360; }
+
+    const span = (end - start) - margin*2;
+    const offset = (h % 1000) / 1000; // 0..0.999 deterministic
+    return start + margin + (span * offset);
+  }
+
+  function analyze(){
+    const reg = normalizeReg(regInput.value);
+    if(!reg){
+      result.innerHTML =
+        "<strong>Skriv in ett regnr först.</strong>" +
+        "<small>Exempel: ABC123</small>" +
+        "<small>Det här är en snabb riktning – inte en garanti.</small>";
+      return;
+    }
+
+    // show processing while scan happens (keeps result/needle synced)
+    result.innerHTML =
+      "<strong>Analyserar…</strong>" +
+      "<small>Det här är en snabb riktning – inte en garanti.</small>";
+
+    const h = hashReg(reg);
+    const zone = h % 3; // 0 green, 1 yellow, 2 red
+    const finalAngle = computeAngleWithinZone(zone, h);
+
+    // scan animation (deterministic end state)
+    const scanAngle = finalAngle + 720;
+    needle.style.transition = "transform 1s ease";
+    needle.style.transform = "rotate(" + scanAngle + "deg)";
+
+    // update result after needle settles
+    window.setTimeout(() => {
+      needle.style.transition = "transform .55s ease";
+      needle.style.transform = "rotate(" + finalAngle + "deg)";
+
+      const t = zoneText(zone);
+      result.innerHTML =
+        "<strong>" + t.title + "</strong>" +
+        "<small>" + t.body + "</small>" +
+        "<small>" + t.tip + "</small>" +
+        "<small>→ <a href='guider.html'>Öppna köpar-checklista</a></small>";
+    }, 950);
+  }
+
+  btn.addEventListener("click", analyze);
+  regInput.addEventListener("keydown", (e) => {
+    if(e.key === "Enter") analyze();
   });
-}
+})();
 </script>
 
 </body>
