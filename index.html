@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html lang="sv">
 <head>
 <meta charset="utf-8">
@@ -12,6 +12,7 @@ body{
   background:#fff;
   color:#111;
 }
+
 header{
   padding:18px 24px;
   border-bottom:1px solid #eee;
@@ -19,29 +20,48 @@ header{
   justify-content:space-between;
   align-items:center;
 }
-.logo{
+
+.logo-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+
+.logo-img{
+  height:42px;
+  width:auto;
+}
+
+.logo-text{
   font-weight:700;
   color:#1E3557;
+  font-size:20px;
 }
+
 nav a{
   margin-left:16px;
   text-decoration:none;
   color:#555;
 }
+
 .hero{
   max-width:800px;
   margin:60px auto;
   padding:20px;
 }
+
 .hero h1{
   font-size:40px;
   margin-bottom:12px;
   color:#1E3557;
 }
+
 .hero p{
   color:#555;
   font-size:18px;
 }
+
 .btn{
   display:inline-block;
   margin-top:18px;
@@ -57,14 +77,21 @@ nav a{
 <body>
 
 <header>
-  <div class="logo">🧭 Bilkompassen</div>
+
+  <!-- LOGO (clickable) -->
+  <a href="index.html" class="logo-wrap">
+    <img src="logo_trimmed.png" alt="Bilkompassen logo" class="logo-img">
+    <div class="logo-text">Bilkompassen</div>
+  </a>
+
   <nav>
-    <a href="#">Start</a>
-    <a href="#">Verktyg</a>
-    <a href="#">Guider</a>
-    <a href="#">Om</a>
-    <a href="#">Kontakt</a>
+    <a href="index.html">Start</a>
+    <a href="verktyg.html">Verktyg</a>
+    <a href="guider.html">Guider</a>
+    <a href="about.html">Om</a>
+    <a href="contact.html">Kontakt</a>
   </nav>
+
 </header>
 
 <section class="hero">
@@ -74,7 +101,7 @@ nav a{
   Guider och verktyg som gör bilköpet tryggare.
   </p>
 
-  <a class="btn" href="#">Testa verktyget</a>
+  <a class="btn" href="verktyg.html">Testa verktyget</a>
 </section>
 
 </body>
