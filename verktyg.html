@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verktyg – Bilkompassen</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Arial;
+  background:#fff;
+  color:#111;
+}
+header{
+  padding:18px 24px;
+  border-bottom:1px solid #eee;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-weight:700;
+  color:#1E3557;
+}
+nav a{
+  margin-left:16px;
+  text-decoration:none;
+  color:#555;
+}
+.container{
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
+}
+h1{
+  color:#1E3557;
+}
+input{
+  padding:12px;
+  font-size:16px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  width:220px;
+}
+button{
+  padding:12px 18px;
+  margin-left:8px;
+  background:#1E3557;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+.compass{
+  width:220px;
+  height:220px;
+  border:3px solid #eee;
+  border-radius:50%;
+  position:relative;
+  margin-top:30px;
+}
+.needle{
+  width:100px;
+  height:6px;
+  background:#E6A23C;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-origin:0% 50%;
+  transform:rotate(30deg);
+  border-radius:4px;
+}
+.result{
+  margin-top:20px;
+  font-weight:600;
+  color:#1E3557;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🧭 Bilkompassen</div>
+  <nav>
+    <a href="index.html">Start</a>
+    <a href="verktyg.html">Verktyg</a>
+    <a href="guider.html">Guider</a>
+    <a href="about.html">Om</a>
+    <a href="contact.html">Kontakt</a>
+  </nav>
+</header>
+
+<div class="container">
+
+<h1>Bilkompassen – Verktyg</h1>
+<p>Skriv in ett registreringsnummer och klicka analysera.</p>
+
+<input id="reg" placeholder="ABC123">
+<button onclick="analysera()">Analysera</button>
+
+<div class="compass">
+  <div id="needle" class="needle"></div>
+</div>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+function analysera(){
+  const reg = document.getElementById("reg").value.trim();
+  if(!reg){
+    document.getElementById("result").innerText="Skriv in ett regnr först.";
+    return;
+  }
+
+  const needle = document.getElementById("needle");
+  const result = document.getElementById("result");
+
+  // random direction for now
+  const angle = Math.floor(Math.random()*360)+720;
+  needle.style.transition="transform 1s ease";
+  needle.style.transform="rotate("+angle+"deg)";
+
+  setTimeout(()=>{
+    const r=Math.random();
+    if(r<0.33){
+      result.innerText="🟢 Ser lovande ut – kolla checklistan innan köp.";
+    }else if(r<0.66){
+      result.innerText="🟡 Kolla historik och skick först.";
+    }else{
+      result.innerText="🔴 Risk – undersök noggrant innan du går vidare.";
+    }
+  },800);
+}
+</script>
+
+</body>
+</html>
