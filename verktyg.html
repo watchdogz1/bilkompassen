@@ -5,378 +5,200 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Verktyg – Bilkompassen</title>
 
-<!-- FAVICON (add files later: favicon.ico + icon-192.png + icon-512.png) -->
 <link rel="icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="site.webmanifest">
 
 <style>
 :root{
-  --ink:#0f172a;
-  --muted:#475569;
+  --ink:#0b1220;
+  --muted:#516078;
   --brand:#1E3557;
   --accent:#E6A23C;
-  --line:#e8edf3;
-  --bg:#ffffff;
-  --soft:#f6f8fb;
-  --card:#ffffff;
-  --shadow: 0 10px 30px rgba(15,23,42,.08);
-  --radius:14px;
+  --line:rgba(15,23,42,.10);
+  --shadow: 0 18px 55px rgba(10,18,32,.10);
+  --radius:16px;
 }
 
 *{ box-sizing:border-box; }
 body{
   margin:0;
-  font-family:system-ui,Segoe UI,Arial;
-  background:linear-gradient(180deg, var(--soft) 0%, var(--bg) 45%);
+  font-family:system-ui,-apple-system,Segoe UI,Arial;
   color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 15% -10%, rgba(30,53,87,.12), transparent 60%),
+    radial-gradient(900px 420px at 85% -10%, rgba(230,162,60,.10), transparent 60%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 50%);
 }
-
-.container{
-  max-width:1080px;
-  margin:0 auto;
-  padding:0 20px;
-}
+.container{ max-width:1120px; margin:0 auto; padding:0 20px; }
 
 /* HEADER */
 .site-header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(255,255,255,.9);
-  backdrop-filter:saturate(140%) blur(10px);
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:saturate(160%) blur(12px);
   border-bottom:1px solid var(--line);
 }
-
 .header-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 0;
-  gap:14px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 0; gap:14px;
 }
-
-.logo-wrap{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-decoration:none;
-  min-width: 180px;
-}
-
+.logo-wrap{ display:flex; align-items:center; text-decoration:none; }
 .logo-img{
-  height:64px;
-  width:auto;
-  display:block;
+  height:78px; width:auto; display:block;
+  filter: drop-shadow(0 10px 24px rgba(30,53,87,.12));
 }
-
-.logo-text{
-  font-weight:800;
-  color:var(--brand);
-  font-size:18px;
-  line-height:1;
-  letter-spacing:.2px;
-}
-
-.nav{
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-
+.nav{ display:flex; align-items:center; gap:10px; }
 .nav a{
   text-decoration:none;
   color:var(--muted);
-  font-weight:600;
+  font-weight:700;
   font-size:14px;
-  padding:10px 10px;
-  border-radius:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  transition:.15s ease;
 }
+.nav a:hover{ background: rgba(30,53,87,.08); color:var(--brand); transform: translateY(-1px); }
 
-.nav a:hover{
-  background:var(--soft);
-  color:var(--brand);
-}
-
-/* Burger */
 .burger{
   display:none;
   border:1px solid var(--line);
   background:#fff;
-  border-radius:12px;
+  border-radius:14px;
   padding:10px 12px;
   cursor:pointer;
-  box-shadow:0 6px 18px rgba(15,23,42,.06);
+  box-shadow: 0 10px 26px rgba(10,18,32,.08);
 }
+.burger-lines{ display:flex; flex-direction:column; gap:5px; }
+.burger-lines span{ width:22px; height:2px; background:var(--brand); border-radius:2px; display:block; }
 
-.burger-lines{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-}
-
-.burger-lines span{
-  width:22px;
-  height:2px;
-  background:var(--brand);
-  display:block;
-  border-radius:2px;
-}
-
-/* Mobile menu panel */
-.mobile-nav{
-  display:none;
-  border-top:1px solid var(--line);
-  background:#fff;
-}
-
-.mobile-nav-inner{
-  padding:12px 0;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
+.mobile-nav{ display:none; border-top:1px solid var(--line); background:#fff; }
+.mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
 .mobile-nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:700;
-  padding:12px 12px;
-  border-radius:12px;
+  text-decoration:none; color:var(--muted); font-weight:800;
+  padding:12px 12px; border-radius:14px;
 }
-
-.mobile-nav a:hover{
-  background:var(--soft);
-  color:var(--brand);
-}
+.mobile-nav a:hover{ background:rgba(30,53,87,.08); color:var(--brand); }
 
 /* PAGE */
-.page{
-  padding:34px 0 44px;
-}
-
-.page-title{
-  margin:0 0 10px;
-  color:var(--brand);
-  font-weight:900;
-  letter-spacing:-.4px;
-  font-size:30px;
-}
-
-.lead{
-  margin:0 0 18px;
-  color:var(--muted);
-  line-height:1.6;
-  font-weight:600;
-}
+.page{ padding:34px 0 44px; }
+.page-title{ margin:0 0 10px; color:var(--brand); font-weight:1000; letter-spacing:-.4px; font-size:30px; }
+.lead{ margin:0 0 18px; color:var(--muted); line-height:1.65; font-weight:650; }
 
 .panel{
-  background:var(--card);
+  background: rgba(255,255,255,.92);
   border:1px solid var(--line);
   border-radius:var(--radius);
   padding:18px;
-  box-shadow:var(--shadow);
+  box-shadow: var(--shadow);
 }
 
 .tool-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
-  gap:16px;
+  gap:14px;
   align-items:start;
 }
 
-/* Inputs */
-.form-row{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-  margin-top:12px;
-}
-
+.form-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
 input{
   padding:12px 12px;
   font-size:16px;
   border:1px solid rgba(15,23,42,.14);
-  border-radius:12px;
-  width:240px;
+  border-radius:14px;
+  width:260px;
   outline:none;
   background:#fff;
 }
-
-input:focus{
-  border-color: rgba(30,53,87,.35);
-  box-shadow: 0 0 0 4px rgba(30,53,87,.10);
-}
+input:focus{ border-color: rgba(30,53,87,.35); box-shadow:0 0 0 4px rgba(30,53,87,.10); }
 
 button{
   padding:12px 16px;
-  background:var(--brand);
+  background: var(--brand);
   color:#fff;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   cursor:pointer;
   font-weight:900;
-  box-shadow:0 10px 22px rgba(30,53,87,.22);
+  box-shadow: 0 16px 34px rgba(30,53,87,.22);
+  transition: transform .15s ease;
 }
-
 button:hover{ transform: translateY(-1px); }
-button:active{ transform: translateY(0px); }
 
-/* COMPASS (more like logo vibe) */
-.compass-wrap{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  align-items:center;
-}
+.helper{ margin:0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.6; }
+.result{ margin-top:12px; font-weight:1000; color:var(--brand); min-height:44px; line-height:1.35; }
 
+/* COMPASS (logo-ish) */
+.compass-wrap{ display:flex; flex-direction:column; gap:12px; align-items:center; }
 .compass{
-  width:260px;
-  height:260px;
-  border-radius:50%;
+  width:280px; height:280px; border-radius:50%;
   position:relative;
   background:
-    radial-gradient(circle at center, #fff 0%, #fff 52%, #f0f4fb 100%);
+    radial-gradient(circle at center, #ffffff 0%, #ffffff 50%, #f0f4fb 100%);
   border:1px solid var(--line);
-  box-shadow: 0 18px 40px rgba(15,23,42,.10);
+  box-shadow: 0 22px 60px rgba(10,18,32,.12);
   overflow:hidden;
 }
-
-/* outer ring */
 .compass::before{
   content:"";
-  position:absolute;
-  inset:10px;
+  position:absolute; inset:12px;
   border-radius:50%;
-  border:2px solid rgba(30,53,87,.10);
+  border:2px solid rgba(30,53,87,.12);
 }
-
-/* subtle crosshair */
 .compass::after{
   content:"";
-  position:absolute;
-  inset:0;
+  position:absolute; inset:0;
   background:
-    linear-gradient(to right, transparent 49.6%, rgba(30,53,87,.08) 49.6%, rgba(30,53,87,.08) 50.4%, transparent 50.4%),
-    linear-gradient(to bottom, transparent 49.6%, rgba(30,53,87,.08) 49.6%, rgba(30,53,87,.08) 50.4%, transparent 50.4%);
+    linear-gradient(to right, transparent 49.65%, rgba(30,53,87,.10) 49.65%, rgba(30,53,87,.10) 50.35%, transparent 50.35%),
+    linear-gradient(to bottom, transparent 49.65%, rgba(30,53,87,.10) 49.65%, rgba(30,53,87,.10) 50.35%, transparent 50.35%);
   pointer-events:none;
   opacity:.9;
 }
-
-/* center hub */
 .hub{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:18px;
-  height:18px;
-  transform:translate(-50%,-50%);
+  position:absolute; left:50%; top:50%;
+  width:18px; height:18px; transform:translate(-50%,-50%);
   border-radius:50%;
-  background:var(--brand);
-  box-shadow: 0 8px 20px rgba(30,53,87,.25);
+  background: var(--brand);
+  box-shadow: 0 12px 28px rgba(30,53,87,.25);
   z-index:5;
 }
-
-/* needle as “road-needle” */
 .needle{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:120px;
-  height:10px;
+  position:absolute; top:50%; left:50%;
+  width:130px; height:10px;
   transform-origin:0% 50%;
   transform:rotate(30deg);
   border-radius:999px;
   z-index:4;
-  background:
-    linear-gradient(90deg, var(--accent) 0%, var(--accent) 70%, rgba(230,162,60,.25) 100%);
-  box-shadow: 0 12px 26px rgba(230,162,60,.22);
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 70%, rgba(230,162,60,.22) 100%);
+  box-shadow: 0 18px 34px rgba(230,162,60,.22);
 }
-
-/* needle tip */
 .needle::after{
   content:"";
-  position:absolute;
-  right:-10px;
-  top:50%;
-  width:0;
-  height:0;
+  position:absolute; right:-10px; top:50%;
   transform:translateY(-50%);
-  border-left:14px solid rgba(230,162,60,.8);
+  width:0; height:0;
+  border-left:14px solid rgba(230,162,60,.85);
   border-top:9px solid transparent;
   border-bottom:9px solid transparent;
 }
 
-.result{
-  margin-top:10px;
-  font-weight:900;
-  color:var(--brand);
-  text-align:center;
-  line-height:1.4;
-}
-
-.helper{
-  color:var(--muted);
-  font-weight:700;
-  font-size:13px;
-  line-height:1.6;
-  margin:0;
-}
-
-/* Footer */
-.footer{
-  border-top:1px solid var(--line);
-  background:#fff;
-  padding:26px 0;
-  color:var(--muted);
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns: 1.4fr .6fr .6fr;
-  gap:16px;
-  align-items:start;
-}
-
-.footer h4{
-  margin:0 0 8px;
-  color:var(--brand);
-  font-size:14px;
-  font-weight:900;
-}
-
-.footer a{
-  color:var(--muted);
-  text-decoration:none;
-  font-weight:700;
-  display:block;
-  padding:6px 0;
-}
-
+/* FOOTER */
+.footer{ border-top:1px solid var(--line); background: rgba(255,255,255,.86); padding:28px 0; }
+.footer-grid{ display:grid; grid-template-columns: 1.4fr .6fr .6fr; gap:16px; }
+.footer h4{ margin:0 0 8px; color:var(--brand); font-size:14px; font-weight:1000; }
+.footer a{ color:var(--muted); text-decoration:none; font-weight:800; display:block; padding:6px 0; }
 .footer a:hover{ color:var(--brand); }
-
-.footer small{
-  display:block;
-  margin-top:10px;
-  opacity:.9;
-  line-height:1.5;
-}
+.footer small{ display:block; margin-top:10px; opacity:.92; line-height:1.55; color:var(--muted); }
 
 /* Responsive */
-@media (max-width: 920px){
-  .tool-grid{ grid-template-columns:1fr; }
-}
-
+@media (max-width: 920px){ .tool-grid{ grid-template-columns:1fr; } }
 @media (max-width: 860px){
-  .nav{ display:none; }
-  .burger{ display:inline-flex; align-items:center; justify-content:center; }
-  .logo-img{ height:58px; }
+  .nav{ display:none; } .burger{ display:inline-flex; }
+  .logo-img{ height:72px; }
+  .compass{ width:260px; height:260px; }
 }
-
 @media (max-width: 420px){
-  .logo-text{ display:none; }
-  .logo-img{ height:56px; }
+  .logo-img{ height:68px; }
   .compass{ width:240px; height:240px; }
 }
 </style>
@@ -386,9 +208,8 @@ button:active{ transform: translateY(0px); }
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo-wrap">
-      <img src="logo_trimmed.png" alt="Bilkompassen logo" class="logo-img">
-      <div class="logo-text">Bilkompassen</div>
+    <a href="index.html" class="logo-wrap" aria-label="Bilkompassen hem">
+      <img src="logo_trimmed.png" alt="Bilkompassen" class="logo-img">
     </a>
 
     <nav class="nav" aria-label="Huvudmeny">
@@ -419,23 +240,23 @@ button:active{ transform: translateY(0px); }
 
 <main class="page">
   <div class="container">
-    <h1 class="page-title">Bilkompassen – Verktyg</h1>
-    <p class="lead">Skriv in ett registreringsnummer och klicka analysera. Du får ett snabbt beslutsstöd och vad du bör kontrollera innan nästa steg.</p>
+    <h1 class="page-title">Verktyg</h1>
+    <p class="lead">Skriv in ett registreringsnummer och få en snabb riktning. (Just nu är resultatet slumpmässigt – vi gör det deterministiskt per regnr senare.)</p>
 
     <div class="tool-grid">
       <section class="panel">
-        <h2 style="margin:0 0 8px; color:var(--brand); font-size:16px; font-weight:900;">Analysera regnr</h2>
-        <p class="helper">Tips: Testa med valfritt regnr just nu. Senare gör vi kompassen deterministisk per regnr.</p>
+        <h2 style="margin:0 0 8px; color:var(--brand); font-size:16px; font-weight:1000;">Analysera regnr</h2>
+        <p class="helper">Tips: Efter resultatet – gå direkt till köpchecklistan och följ punkterna innan du bestämmer dig.</p>
 
         <div class="form-row">
           <input id="reg" placeholder="ABC123" inputmode="text" autocomplete="off" aria-label="Registreringsnummer">
           <button onclick="analysera()">Analysera</button>
         </div>
 
-        <div id="result" class="result" style="min-height:44px;"></div>
+        <div id="result" class="result"></div>
 
-        <p class="helper" style="margin-top:10px;">
-          Nästa steg efter resultatet: öppna <a href="guider.html" style="color:var(--brand); font-weight:900; text-decoration:none;">Köpchecklistan</a> och följ punkterna innan du bestämmer dig.
+        <p class="helper" style="margin-top:8px;">
+          Nästa steg: <a href="guider.html" style="color:var(--brand); font-weight:1000; text-decoration:none;">Öppna köpchecklistan</a>.
         </p>
       </section>
 
@@ -444,8 +265,8 @@ button:active{ transform: translateY(0px); }
           <div id="needle" class="needle"></div>
           <div class="hub"></div>
         </div>
-        <p class="helper" style="text-align:center; max-width:360px;">
-          Kompassen är ett visuellt beslutsstöd. Den ersätter inte kontroll av historik, besiktning, skulder eller provkörning.
+        <p class="helper" style="text-align:center; max-width:380px;">
+          Kompassen är visuellt beslutsstöd – ersätter inte kontroll av historik, besiktning, skulder eller provkörning.
         </p>
       </section>
     </div>
@@ -456,13 +277,9 @@ button:active{ transform: translateY(0px); }
   <div class="container footer-grid">
     <div>
       <h4>Bilkompassen</h4>
-      <small>
-        En svensk beslutshjälp för dig som vill köpa begagnad bil tryggare.
-        Inga listningar – bara guider och enkla verktyg.
-      </small>
+      <small>Svensk beslutshjälp för begagnatköp. Inga listningar – bara guider och verktyg.</small>
       <small>© <span id="year"></span> Bilkompassen</small>
     </div>
-
     <div>
       <h4>Sidor</h4>
       <a href="verktyg.html">Verktyg</a>
@@ -470,7 +287,6 @@ button:active{ transform: translateY(0px); }
       <a href="about.html">Om</a>
       <a href="contact.html">Kontakt</a>
     </div>
-
     <div>
       <h4>Snabbt</h4>
       <a href="guider.html">Köpchecklista</a>
@@ -481,31 +297,25 @@ button:active{ transform: translateY(0px); }
 </footer>
 
 <script>
-/* Burger toggle */
 const burgerBtn = document.getElementById("burgerBtn");
 const mobileNav = document.getElementById("mobileNav");
-
 burgerBtn.addEventListener("click", () => {
   const isOpen = mobileNav.style.display === "block";
   mobileNav.style.display = isOpen ? "none" : "block";
   burgerBtn.setAttribute("aria-expanded", String(!isOpen));
 });
 
-/* Footer year */
 document.getElementById("year").textContent = new Date().getFullYear();
 
 function analysera(){
   const reg = document.getElementById("reg").value.trim();
   const result = document.getElementById("result");
-
   if(!reg){
     result.innerText="Skriv in ett regnr först.";
     return;
   }
 
   const needle = document.getElementById("needle");
-
-  // random direction for now
   const angle = Math.floor(Math.random()*360)+720;
   needle.style.transition="transform 1s ease";
   needle.style.transform="rotate("+angle+"deg)";
