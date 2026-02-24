@@ -15,13 +15,7 @@
   <script src="app.js" defer></script>
 
   <style>
-    /* Small local tweaks for the new form layout */
-    .form-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top:12px;
-    }
+    .form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px; }
     .form-grid .full{ grid-column: 1 / -1; }
     .select{
       width:100%;
@@ -33,20 +27,91 @@
       outline:none;
       background:#fff;
     }
-    .select:focus{
-      border-color: rgba(30,53,87,.42);
-      box-shadow:0 0 0 4px rgba(30,53,87,.12);
+    .select:focus{ border-color: rgba(30,53,87,.42); box-shadow:0 0 0 4px rgba(30,53,87,.12); }
+    .mini{ font-family: var(--mono); font-size: 12px; letter-spacing: .2px; color: var(--muted); margin-top: 6px; }
+    .meter{
+      margin-top:12px;
+      border:1px solid rgba(15,23,42,.16);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 10px 24px rgba(6,10,18,.06);
     }
-    .mini{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .2px;
-      color: var(--muted);
-      margin-top: 6px;
+    .meter-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .meter-title{ font-weight:1000; color: var(--brand); }
+    .meter-val{ font-family: var(--mono); font-weight:900; color: var(--muted); }
+    .bar{
+      margin-top:10px;
+      height:10px;
+      border-radius:999px;
+      background: rgba(30,53,87,.10);
+      overflow:hidden;
+      border:1px solid rgba(30,53,87,.14);
     }
-    @media (max-width: 720px){
-      .form-grid{ grid-template-columns: 1fr; }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(30,53,87,.65), rgba(230,162,60,.85));
+      transition: width .25s ease;
     }
+    .breakdown{
+      margin-top:14px;
+      border:1px solid rgba(15,23,42,.16);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(248,251,255,.92);
+    }
+    .breakdown h3{
+      margin:0 0 10px;
+      color: var(--brand);
+      font-size:13px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      text-transform: uppercase;
+    }
+    .rows{ display:flex; flex-direction:column; gap:8px; }
+    .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.10);
+    }
+    .row .left{ color: var(--muted); font-weight:750; font-size:13px; line-height:1.35; }
+    .row .right{ font-family: var(--mono); font-weight:900; font-size:12px; white-space:nowrap; }
+    .row.pos .right{ color: #1b7a4b; }
+    .row.neg .right{ color: #b22a2a; }
+    .row.neu .right{ color: var(--muted); }
+    .next-steps{
+      margin-top:12px;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.16);
+      background: rgba(255,255,255,.92);
+    }
+    .next-steps h3{
+      margin:0 0 8px;
+      color: var(--brand);
+      font-size:13px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      text-transform: uppercase;
+    }
+    .next-steps ul{ margin:0; padding-left:18px; }
+    .next-steps li{ margin:6px 0; }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight:1000;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.14);
+      background: rgba(255,255,255,.92);
+    }
+    .badge .dot{ width:10px; height:10px; border-radius:50%; }
+    @media (max-width: 720px){ .form-grid{ grid-template-columns: 1fr; } }
   </style>
 </head>
 
@@ -85,7 +150,7 @@
     <div class="container">
       <h1 class="page-title">Verktyg</h1>
       <p class="lead">
-        Snabb riktning baserat på det du vet just nu. Ju fler fält du fyller i, desto bättre blir kompassen.
+        Screening-läge: snabb riktning baserat på vad du vet nu. Resultatet blir starkare ju mer du fyller i.
       </p>
 
       <div class="grid-2">
@@ -94,9 +159,19 @@
 
           <div class="form-grid">
             <div class="full">
-              <div class="label">Registreringsnummer</div>
+              <div class="label">Registreringsnummer (valfritt)</div>
               <input class="input" id="regnr" placeholder="ABC123" aria-label="Registreringsnummer">
-              <div class="mini">Tips: du kan lämna tomt och bara köra på fälten nedan.</div>
+              <div class="mini">Layer 1 använder dina fält. Layer 2 kan senare hämta officiell data från regnr.</div>
+            </div>
+
+            <div>
+              <div class="label">Årsmodell</div>
+              <input class="input" id="year" inputmode="numeric" placeholder="t.ex. 2016" aria-label="Årsmodell">
+            </div>
+
+            <div>
+              <div class="label">Miltal (km)</div>
+              <input class="input" id="mileage" inputmode="numeric" placeholder="t.ex. 165000" aria-label="Miltal i km">
             </div>
 
             <div>
@@ -147,7 +222,7 @@
                 <option value="some">Några (t.ex. däck/rost/ljud)</option>
                 <option value="many">Flera (känns fel)</option>
               </select>
-              <div class="mini">Det här är “din magkänsla”-rad. Använd den.</div>
+              <div class="mini">Använd detta som “klinisk bedömning” när du står vid bilen.</div>
             </div>
 
             <div class="full" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
@@ -156,23 +231,48 @@
             </div>
           </div>
 
+          <!-- Confidence meter -->
+          <div class="meter" aria-live="polite">
+            <div class="meter-top">
+              <div class="meter-title">Confidence</div>
+              <div class="meter-val"><span id="confPct">0</span>% • <span id="confLabel">Low</span></div>
+            </div>
+            <div class="bar" aria-hidden="true"><div id="confBar"></div></div>
+            <div class="mini" id="confMini">Fyll i fler fält för att höja säkerheten i bedömningen.</div>
+          </div>
+
+          <!-- Status -->
           <div class="card" style="margin-top:14px; padding:14px; background: rgba(248,251,255,.92);">
             <h2 style="margin:0 0 6px;">Status</h2>
             <p id="statusText" style="margin:0;">Redo. Fyll i vad du vet och tryck “Analysera”.</p>
           </div>
 
-          <p class="helper">
-            Bilkompassen ger riktning — den ersätter inte en riktig kontroll. Följ checklistan innan du bestämmer dig.
-          </p>
+          <!-- Breakdown -->
+          <div class="breakdown" id="breakdownBox" style="display:none;">
+            <h3>Risk breakdown</h3>
+            <div class="rows" id="rows"></div>
+          </div>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn-ghost" href="guide-kopchecklista.html">Öppna köpchecklistan</a>
-            <a class="btn-ghost" href="guide-provkorning.html">Provkörningsguide</a>
+          <!-- Next steps -->
+          <div class="next-steps" id="nextSteps" style="display:none;">
+            <h3>Nästa steg</h3>
+            <ul id="steps"></ul>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+              <a class="btn-ghost" href="guide-kopchecklista.html">Öppna köpchecklistan</a>
+              <a class="btn-ghost" href="guide-provkorning.html">Provkörningsguide</a>
+            </div>
           </div>
         </section>
 
         <section class="card">
           <h2>Bilkompassen</h2>
+
+          <div class="mini" style="margin-bottom:10px;">
+            <span class="badge" id="riskBadge">
+              <span class="dot" id="riskDot" style="background: rgba(15,23,42,.25);"></span>
+              <span id="riskText">—</span>
+            </span>
+          </div>
 
           <div class="compass-wrap">
             <svg id="compassSvg" viewBox="0 0 420 420" role="img" aria-label="Bilkompassen">
@@ -209,12 +309,12 @@
               <circle cx="210" cy="210" r="10" fill="#0b1220"/>
               <circle cx="210" cy="210" r="22" fill="none" stroke="rgba(30,53,87,.20)" stroke-width="4"/>
 
-              <!-- Needle group (animated by JS) -->
+              <!-- Needle group (animated) -->
               <g id="needle" transform="rotate(10 210 210)">
                 <line x1="210" y1="210" x2="322" y2="210" stroke="#1E3557" stroke-width="10" stroke-linecap="round"/>
                 <line x1="210" y1="210" x2="322" y2="210" stroke="rgba(230,162,60,.70)" stroke-width="4" stroke-linecap="round"/>
 
-                <!-- Sportier car tip silhouette -->
+                <!-- Sporty car tip -->
                 <g transform="translate(318 210)">
                   <path d="M2 -10
                            C10 -12, 20 -12, 28 -8
@@ -226,7 +326,6 @@
                            L1 2
                            C0 -2, 0 -7, 2 -10 Z"
                         fill="#E6A23C"/>
-                  <!-- windshield cut -->
                   <path d="M10 -6 C16 -8, 22 -8, 26 -5 C22 -4, 16 -3, 10 -3 Z"
                         fill="rgba(255,255,255,.65)"/>
                   <circle cx="12" cy="15" r="3.6" fill="#0b1220"/>
@@ -237,7 +336,7 @@
           </div>
 
           <p class="helper" id="resultHint">
-            Grön = låg risk, Gul = osäkert, Röd = hög risk. Kompassen ger riktning — följ checklistan.
+            Screening: kompassen ger riktning baserat på dina uppgifter. Ju mer data, desto bättre.
           </p>
         </section>
       </div>
@@ -274,10 +373,108 @@
     const statusText = document.getElementById("statusText");
     const resultHint = document.getElementById("resultHint");
 
-    // ===== scoring (no external API yet) =====
-    // We turn user inputs into a score 0..100 where higher = better/greener.
+    const confPct = document.getElementById("confPct");
+    const confLabel = document.getElementById("confLabel");
+    const confBar = document.getElementById("confBar");
+    const confMini = document.getElementById("confMini");
+
+    const breakdownBox = document.getElementById("breakdownBox");
+    const rowsEl = document.getElementById("rows");
+
+    const nextSteps = document.getElementById("nextSteps");
+    const stepsEl = document.getElementById("steps");
+
+    const riskBadge = document.getElementById("riskBadge");
+    const riskDot = document.getElementById("riskDot");
+    const riskText = document.getElementById("riskText");
+
+    // ===== helpers =====
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function setCompassAngle(deg){
+      if(!needle) return;
+      needle.setAttribute("transform", `rotate(${deg} 210 210)`);
+    }
+
+    function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+    function animateTo(targetDeg){
+      const start = performance.now();
+      const duration = 1500;
+      const spins = 2.3;
+      const startDeg = Math.random()*40 - 20;
+      const total = spins * 360 + (targetDeg - startDeg);
+
+      function frame(now){
+        const t = clamp((now - start) / duration, 0, 1);
+        const e = easeOutCubic(t);
+        setCompassAngle(startDeg + total * e);
+        if(t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function parseIntSafe(v){
+      const n = parseInt(String(v||"").replace(/[^\d]/g,""), 10);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    // ===== confidence =====
+    function computeConfidence(){
+      // count filled signals (unknown doesn't count)
+      const year = parseIntSafe(document.getElementById("year")?.value);
+      const mileage = parseIntSafe(document.getElementById("mileage")?.value);
+
+      const service = document.getElementById("service")?.value || "unknown";
+      const inspection = document.getElementById("inspection")?.value || "unknown";
+      const owners = document.getElementById("owners")?.value || "unknown";
+      const pricefeel = document.getElementById("pricefeel")?.value || "unknown";
+      const redflags = document.getElementById("redflags")?.value || "unknown";
+
+      const signals = [
+        year !== null,
+        mileage !== null,
+        service !== "unknown",
+        inspection !== "unknown",
+        owners !== "unknown",
+        pricefeel !== "unknown",
+        redflags !== "unknown"
+      ];
+
+      const filled = signals.filter(Boolean).length;
+      const pct = Math.round((filled / signals.length) * 100);
+
+      let label = "Low";
+      if(pct >= 75) label = "High";
+      else if(pct >= 45) label = "Medium";
+
+      // update UI
+      if(confPct) confPct.textContent = String(pct);
+      if(confLabel) confLabel.textContent = label;
+      if(confBar) confBar.style.width = pct + "%";
+
+      if(confMini){
+        if(label === "High") confMini.textContent = "Hög säkerhet: du har fyllt i mycket relevant information.";
+        else if(label === "Medium") confMini.textContent = "Mellan: resultatet är användbart men kan förbättras med fler fält.";
+        else confMini.textContent = "Låg: fyll i fler fält för att höja säkerheten i bedömningen.";
+      }
+
+      return { pct, label, filled, total: signals.length };
+    }
+
+    // ===== scoring + explainability =====
+    function addRow(rows, text, delta){
+      const cls = delta > 0 ? "pos" : delta < 0 ? "neg" : "neu";
+      const sign = delta > 0 ? "+" : "";
+      rows.push({ text, delta, cls, label: `${sign}${delta}` });
+    }
+
     function scoreFromInputs(){
-      let score = 55; // neutral base
+      let score = 55; // baseline
+      const rows = [];
+
+      const year = parseIntSafe(document.getElementById("year")?.value);
+      const mileage = parseIntSafe(document.getElementById("mileage")?.value);
 
       const service = document.getElementById("service")?.value || "unknown";
       const inspection = document.getElementById("inspection")?.value || "unknown";
@@ -286,87 +483,172 @@
       const redflags = document.getElementById("redflags")?.value || "unknown";
 
       // Service
-      if(service === "full") score += 18;
-      else if(service === "partial") score += 6;
-      else if(service === "none") score -= 18;
+      if(service === "full"){ score += 18; addRow(rows, "Full servicehistorik", +18); }
+      else if(service === "partial"){ score += 6; addRow(rows, "Delvis servicehistorik", +6); }
+      else if(service === "none"){ score -= 18; addRow(rows, "Servicehistorik saknas", -18); }
+      else addRow(rows, "Servicehistorik: okänt", 0);
 
       // Inspection
-      if(inspection === "clean") score += 12;
-      else if(inspection === "notes") score -= 6;
-      else if(inspection === "expired") score -= 14;
+      if(inspection === "clean"){ score += 12; addRow(rows, "Besiktning utan anmärkningar", +12); }
+      else if(inspection === "notes"){ score -= 6; addRow(rows, "Besiktning med anmärkningar", -6); }
+      else if(inspection === "expired"){ score -= 14; addRow(rows, "Besiktning utgången / nära", -14); }
+      else addRow(rows, "Besiktning: okänt", 0);
 
       // Owners / history
-      if(owners === "few") score += 8;
-      else if(owners === "some") score -= 4;
-      else if(owners === "many") score -= 12;
+      if(owners === "few"){ score += 8; addRow(rows, "1–2 ägare", +8); }
+      else if(owners === "some"){ score -= 4; addRow(rows, "3–4 ägare", -4); }
+      else if(owners === "many"){ score -= 12; addRow(rows, "5+ ägare / oklar historik", -12); }
+      else addRow(rows, "Ägarhistorik: okänt", 0);
 
       // Price feel
-      if(pricefeel === "fair") score += 4;
-      else if(pricefeel === "high") score -= 6;
-      else if(pricefeel === "tooGood") score -= 14;
+      if(pricefeel === "fair"){ score += 4; addRow(rows, "Pris känns rimligt", +4); }
+      else if(pricefeel === "high"){ score -= 6; addRow(rows, "Pris känns högt", -6); }
+      else if(pricefeel === "tooGood"){ score -= 14; addRow(rows, "För bra för att vara sant", -14); }
+      else addRow(rows, "Prisnivå: okänt", 0);
 
       // Red flags
-      if(redflags === "none") score += 8;
-      else if(redflags === "some") score -= 10;
-      else if(redflags === "many") score -= 22;
+      if(redflags === "none"){ score += 8; addRow(rows, "Inga tydliga varningsflaggor", +8); }
+      else if(redflags === "some"){ score -= 10; addRow(rows, "Några varningsflaggor", -10); }
+      else if(redflags === "many"){ score -= 22; addRow(rows, "Flera varningsflaggor", -22); }
+      else addRow(rows, "Varningsflaggor: okänt", 0);
 
-      score = Math.max(0, Math.min(100, score));
-      return score;
+      // Mileage/year sanity (screening logic)
+      if(year !== null && mileage !== null){
+        const currentYear = new Date().getFullYear();
+        const age = clamp(currentYear - year, 0, 40);
+
+        // expected range ≈ 12k–20k km/year (very rough)
+        const expectedLow = age * 9000;
+        const expectedHigh = age * 23000;
+
+        if(age === 0){
+          addRow(rows, "Ny bil: mil/år ej relevant", 0);
+        } else {
+          if(mileage < expectedLow * 0.55){
+            score -= 8;
+            addRow(rows, "Miltal ovanligt lågt för ålder (verifiera)", -8);
+          } else if(mileage > expectedHigh * 1.25){
+            score -= 10;
+            addRow(rows, "Miltal högt för ålder (slitage risk)", -10);
+          } else {
+            score += 4;
+            addRow(rows, "Miltal rimligt för ålder", +4);
+          }
+        }
+      } else if(year !== null || mileage !== null){
+        addRow(rows, "Miltal/årsmodell delvis ifyllt", 0);
+      } else {
+        addRow(rows, "Miltal/årsmodell: ej angivet", 0);
+      }
+
+      score = clamp(Math.round(score), 0, 100);
+      return { score, rows };
     }
 
     function scoreToAngle(score){
-      // -40..+40 (feels more alive)
-      return -40 + (score/100)*80;
+      // wider sweep feels more like a real instrument
+      return -42 + (score/100)*84; // -42..+42
     }
 
-    function scoreToLabel(score){
-      if(score >= 67) return { label: "GRÖN", text: "Låg risk (utifrån din input). Fortsätt med checklistan.", hint: "Grön: fortsätt — men kontrollera." };
-      if(score >= 40) return { label: "GUL", text: "Osäkert läge. Kontrollera extra noga innan beslut.", hint: "Gul: samla mer info." };
-      return { label: "RÖD", text: "Hög risk. Pausa och verifiera eller välj annan bil.", hint: "Röd: pausa och verifiera." };
+    function classify(score){
+      if(score >= 67) return { key:"green", label:"🟢 Proceed with structured verification", dot:"#2bb673" };
+      if(score >= 40) return { key:"yellow", label:"🟡 Investigate before commitment", dot:"#d7b83a" };
+      return { key:"red", label:"🔴 High uncertainty / pause", dot:"#d24a4a" };
     }
 
-    function setCompassAngle(deg){
-      if(!needle) return;
-      needle.setAttribute("transform", `rotate(${deg} 210 210)`);
-    }
-
-    // ===== animation =====
-    // Spin a few turns, then land on final angle.
-    function animateTo(targetDeg){
-      const start = performance.now();
-      const duration = 1400; // ms
-      const spins = 2.2;     // how many full rotations before settling
-      const startDeg = Math.random()*40 - 20; // small random start
-      const total = spins * 360 + (targetDeg - startDeg);
-
-      function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
-
-      function frame(now){
-        const t = Math.min(1, (now - start) / duration);
-        const e = easeOutCubic(t);
-        const deg = startDeg + total * e;
-        setCompassAngle(deg);
-        if(t < 1) requestAnimationFrame(frame);
+    function nextStepsFor(score, conf){
+      // conf.pct influences guidance
+      const steps = [];
+      if(conf.pct < 45){
+        steps.push("Höj confidence: fyll i service, besiktning och varningsflaggor.");
+        steps.push("Be säljaren om servicekvitton och besiktningsprotokoll.");
       }
-      requestAnimationFrame(frame);
+
+      if(score >= 67){
+        steps.push("Fortsätt med köpchecklistan och provkör systematiskt.");
+        steps.push("Verifiera servicehistorik och matcha miltal mot dokument.");
+      } else if(score >= 40){
+        steps.push("Samla mer fakta innan du går vidare: historik, besiktning, ägare.");
+        steps.push("Om något känns off: pausa, jämför med en annan bil.");
+      } else {
+        steps.push("Pausa. Förhandla inte vidare förrän du kan verifiera problemen.");
+        steps.push("Välj annan bil om flera röda flaggor kvarstår efter kontroll.");
+      }
+
+      return steps;
     }
 
-    async function run(){
+    function renderBreakdown(rows){
+      rowsEl.innerHTML = "";
+      rows.forEach(r => {
+        const div = document.createElement("div");
+        div.className = `row ${r.cls}`;
+        div.innerHTML = `
+          <div class="left">${r.text}</div>
+          <div class="right">${r.label}</div>
+        `;
+        rowsEl.appendChild(div);
+      });
+      breakdownBox.style.display = "block";
+    }
+
+    function renderNextSteps(items){
+      stepsEl.innerHTML = "";
+      items.forEach(t => {
+        const li = document.createElement("li");
+        li.textContent = t;
+        stepsEl.appendChild(li);
+      });
+      nextSteps.style.display = "block";
+    }
+
+    // ===== live confidence update when typing/changing =====
+    const watchIds = ["year","mileage","service","inspection","owners","pricefeel","redflags"];
+    watchIds.forEach(id => {
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener("input", computeConfidence);
+      el.addEventListener("change", computeConfidence);
+    });
+
+    // init
+    computeConfidence();
+
+    // ===== run analysis =====
+    function run(){
+      const conf = computeConfidence();
+
       statusText.textContent = "Analyserar…";
+      riskText.textContent = "—";
+      riskDot.style.background = "rgba(15,23,42,.25)";
       if(resultHint) resultHint.textContent = "Beräknar riktning…";
 
-      // short delay so it feels like a system (and gives time for animation)
-      const score = scoreFromInputs();
+      const { score, rows } = scoreFromInputs();
       const target = scoreToAngle(score);
 
       animateTo(target);
 
-      // resolve text slightly after spin starts
+      // text update after animation starts
       setTimeout(() => {
-        const info = scoreToLabel(score);
-        statusText.textContent = `${info.label}. ${info.text}`;
-        if(resultHint) resultHint.textContent = info.hint;
-      }, 850);
+        const cls = classify(score);
+        riskText.textContent = cls.label;
+        riskDot.style.background = cls.dot;
+
+        // more “clinical” language
+        if(cls.key === "green"){
+          statusText.textContent = `GRÖN (${score}/100). Fortsätt – men verifiera enligt checklistan.`;
+          resultHint.textContent = "Grön: bra signaler, men genomför kontrollstegen innan beslut.";
+        } else if(cls.key === "yellow"){
+          statusText.textContent = `GUL (${score}/100). Osäkert – samla mer fakta innan beslut.`;
+          resultHint.textContent = "Gul: läget är oklart. Öka confidence och verifiera.";
+        } else {
+          statusText.textContent = `RÖD (${score}/100). Hög osäkerhet – pausa och verifiera.`;
+          resultHint.textContent = "Röd: flera riskindikatorer. Pausa och välj hellre bort.";
+        }
+
+        renderBreakdown(rows);
+        renderNextSteps(nextStepsFor(score, conf));
+      }, 900);
     }
 
     const btn = document.getElementById("analyseraBtn");
@@ -377,16 +659,35 @@
     if(resetBtn){
       resetBtn.addEventListener("click", () => {
         document.getElementById("regnr").value = "";
+        document.getElementById("year").value = "";
+        document.getElementById("mileage").value = "";
         document.getElementById("service").value = "unknown";
         document.getElementById("inspection").value = "unknown";
         document.getElementById("owners").value = "unknown";
         document.getElementById("pricefeel").value = "unknown";
         document.getElementById("redflags").value = "unknown";
+
+        breakdownBox.style.display = "none";
+        nextSteps.style.display = "none";
+        riskText.textContent = "—";
+        riskDot.style.background = "rgba(15,23,42,.25)";
+
         statusText.textContent = "Redo. Fyll i vad du vet och tryck “Analysera”.";
-        if(resultHint) resultHint.textContent = "Grön = låg risk, Gul = osäkert, Röd = hög risk. Kompassen ger riktning — följ checklistan.";
+        resultHint.textContent = "Screening: kompassen ger riktning baserat på dina uppgifter. Ju mer data, desto bättre.";
+
         setCompassAngle(10);
+        computeConfidence();
       });
     }
+
+    // Enter key on year/mileage triggers run
+    ["year","mileage","regnr"].forEach(id => {
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener("keydown", (e) => {
+        if(e.key === "Enter") run();
+      });
+    });
   </script>
 </body>
 </html>
