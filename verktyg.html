@@ -13,6 +13,41 @@
 
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
+
+  <style>
+    /* Small local tweaks for the new form layout */
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    .form-grid .full{ grid-column: 1 / -1; }
+    .select{
+      width:100%;
+      max-width:520px;
+      padding:12px 12px;
+      font-size:15px;
+      border:1px solid rgba(15,23,42,.16);
+      border-radius:14px;
+      outline:none;
+      background:#fff;
+    }
+    .select:focus{
+      border-color: rgba(30,53,87,.42);
+      box-shadow:0 0 0 4px rgba(30,53,87,.12);
+    }
+    .mini{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .2px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    @media (max-width: 720px){
+      .form-grid{ grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
@@ -49,27 +84,91 @@
   <main class="page">
     <div class="container">
       <h1 class="page-title">Verktyg</h1>
-      <p class="lead">Skriv in ett registreringsnummer och få en snabb riktning.</p>
+      <p class="lead">
+        Snabb riktning baserat på det du vet just nu. Ju fler fält du fyller i, desto bättre blir kompassen.
+      </p>
 
       <div class="grid-2">
         <section class="card">
-          <h2>Analysera bil</h2>
+          <h2>Inmatning</h2>
 
-          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-            <input class="input" id="regnr" placeholder="ABC123" aria-label="Registreringsnummer">
-            <button class="btn" id="analyseraBtn" type="button" style="margin-top:0;">Analysera</button>
+          <div class="form-grid">
+            <div class="full">
+              <div class="label">Registreringsnummer</div>
+              <input class="input" id="regnr" placeholder="ABC123" aria-label="Registreringsnummer">
+              <div class="mini">Tips: du kan lämna tomt och bara köra på fälten nedan.</div>
+            </div>
+
+            <div>
+              <div class="label">Servicehistorik</div>
+              <select class="select" id="service">
+                <option value="unknown" selected>Okänt</option>
+                <option value="full">Full / dokumenterad</option>
+                <option value="partial">Delvis</option>
+                <option value="none">Ingen / saknas</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="label">Besiktning</div>
+              <select class="select" id="inspection">
+                <option value="unknown" selected>Okänt</option>
+                <option value="clean">Utan anmärkningar</option>
+                <option value="notes">Med anmärkningar</option>
+                <option value="expired">Utgången / nära</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="label">Ägare & historik</div>
+              <select class="select" id="owners">
+                <option value="unknown" selected>Okänt</option>
+                <option value="few">1–2 ägare</option>
+                <option value="some">3–4 ägare</option>
+                <option value="many">5+ ägare / oklar historik</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="label">Prisnivå (känsla)</div>
+              <select class="select" id="pricefeel">
+                <option value="unknown" selected>Okänt</option>
+                <option value="fair">Rimligt</option>
+                <option value="high">Känns högt</option>
+                <option value="tooGood">För bra för att vara sant</option>
+              </select>
+            </div>
+
+            <div class="full">
+              <div class="label">Synliga varningsflaggor?</div>
+              <select class="select" id="redflags">
+                <option value="unknown" selected>Okänt</option>
+                <option value="none">Inga tydliga</option>
+                <option value="some">Några (t.ex. däck/rost/ljud)</option>
+                <option value="many">Flera (känns fel)</option>
+              </select>
+              <div class="mini">Det här är “din magkänsla”-rad. Använd den.</div>
+            </div>
+
+            <div class="full" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+              <button class="btn" id="analyseraBtn" type="button" style="margin-top:0;">Analysera</button>
+              <button class="btn-ghost" id="resetBtn" type="button" style="margin-top:0;">Nollställ</button>
+            </div>
           </div>
 
-          <div class="card" style="margin-top:12px; padding:14px; background: rgba(248,251,255,.9);">
+          <div class="card" style="margin-top:14px; padding:14px; background: rgba(248,251,255,.92);">
             <h2 style="margin:0 0 6px;">Status</h2>
-            <p id="statusText" style="margin:0;">Redo. Skriv in ett regnr och tryck på “Analysera”.</p>
+            <p id="statusText" style="margin:0;">Redo. Fyll i vad du vet och tryck “Analysera”.</p>
           </div>
 
           <p class="helper">
-            Detta är ett beslutsstöd. Vid osäkerhet: ta med någon kunnig eller boka en oberoende kontroll.
+            Bilkompassen ger riktning — den ersätter inte en riktig kontroll. Följ checklistan innan du bestämmer dig.
           </p>
 
-          <a class="btn-ghost" href="guide-kopchecklista.html">Öppna köpchecklistan</a>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn-ghost" href="guide-kopchecklista.html">Öppna köpchecklistan</a>
+            <a class="btn-ghost" href="guide-provkorning.html">Provkörningsguide</a>
+          </div>
         </section>
 
         <section class="card">
@@ -80,15 +179,18 @@
               <circle cx="210" cy="210" r="174" fill="none" stroke="rgba(30,53,87,.18)" stroke-width="14"/>
               <circle cx="210" cy="210" r="174" fill="none" stroke="rgba(15,23,42,.10)" stroke-width="2"/>
 
+              <!-- Risk arcs -->
               <path d="M210 36 A174 174 0 0 1 59 123" fill="none" stroke="#E57373" stroke-width="44"/>
               <path d="M59 123 A174 174 0 0 1 210 384" fill="none" stroke="#F2D674" stroke-width="44"/>
               <path d="M210 384 A174 174 0 0 1 361 123" fill="none" stroke="#78C989" stroke-width="44"/>
 
               <circle cx="210" cy="210" r="124" fill="rgba(255,255,255,.85)" stroke="rgba(30,53,87,.12)" stroke-width="2"/>
 
+              <!-- Crosshair -->
               <line x1="210" y1="76"  x2="210" y2="344" stroke="rgba(30,53,87,.18)" stroke-width="2"/>
               <line x1="76"  y1="210" x2="344" y2="210" stroke="rgba(30,53,87,.18)" stroke-width="2"/>
 
+              <!-- Tick marks -->
               <g stroke="rgba(30,53,87,.34)" stroke-width="4" stroke-linecap="round">
                 <line x1="210" y1="54" x2="210" y2="68"/>
                 <line x1="210" y1="74" x2="210" y2="82" opacity=".7"/>
@@ -103,32 +205,39 @@
                 <line x1="74" y1="210" x2="82" y2="210" opacity=".7"/>
               </g>
 
+              <!-- Center hub -->
               <circle cx="210" cy="210" r="10" fill="#0b1220"/>
               <circle cx="210" cy="210" r="22" fill="none" stroke="rgba(30,53,87,.20)" stroke-width="4"/>
 
+              <!-- Needle group (animated by JS) -->
               <g id="needle" transform="rotate(10 210 210)">
                 <line x1="210" y1="210" x2="322" y2="210" stroke="#1E3557" stroke-width="10" stroke-linecap="round"/>
                 <line x1="210" y1="210" x2="322" y2="210" stroke="rgba(230,162,60,.70)" stroke-width="4" stroke-linecap="round"/>
 
-                <g transform="translate(320 210)">
-                  <path d="M0 -10
-                           C6 -10, 10 -6, 12 -2
-                           L16 -2
-                           C20 -2, 22 0, 22 4
-                           L22 10
-                           C22 12, 20 14, 18 14
-                           L4 14
-                           C2 14, 0 12, 0 10
-                           Z" fill="#E6A23C"/>
-                  <circle cx="6" cy="14" r="3.5" fill="#0b1220"/>
-                  <circle cx="16" cy="14" r="3.5" fill="#0b1220"/>
+                <!-- Sportier car tip silhouette -->
+                <g transform="translate(318 210)">
+                  <path d="M2 -10
+                           C10 -12, 20 -12, 28 -8
+                           C34 -5, 36 -1, 38 4
+                           L40 10
+                           C41 13, 39 15, 36 15
+                           L10 15
+                           C6 15, 3 13, 2 10
+                           L1 2
+                           C0 -2, 0 -7, 2 -10 Z"
+                        fill="#E6A23C"/>
+                  <!-- windshield cut -->
+                  <path d="M10 -6 C16 -8, 22 -8, 26 -5 C22 -4, 16 -3, 10 -3 Z"
+                        fill="rgba(255,255,255,.65)"/>
+                  <circle cx="12" cy="15" r="3.6" fill="#0b1220"/>
+                  <circle cx="30" cy="15" r="3.6" fill="#0b1220"/>
                 </g>
               </g>
             </svg>
           </div>
 
           <p class="helper" id="resultHint">
-            Grön = låg risk, Gul = osäkert, Röd = hög risk. Kompassen ger riktning — följ checklistan för kontroll.
+            Grön = låg risk, Gul = osäkert, Röd = hög risk. Kompassen ger riktning — följ checklistan.
           </p>
         </section>
       </div>
@@ -162,62 +271,120 @@
 
   <script>
     const needle = document.getElementById("needle");
+    const statusText = document.getElementById("statusText");
+    const resultHint = document.getElementById("resultHint");
+
+    // ===== scoring (no external API yet) =====
+    // We turn user inputs into a score 0..100 where higher = better/greener.
+    function scoreFromInputs(){
+      let score = 55; // neutral base
+
+      const service = document.getElementById("service")?.value || "unknown";
+      const inspection = document.getElementById("inspection")?.value || "unknown";
+      const owners = document.getElementById("owners")?.value || "unknown";
+      const pricefeel = document.getElementById("pricefeel")?.value || "unknown";
+      const redflags = document.getElementById("redflags")?.value || "unknown";
+
+      // Service
+      if(service === "full") score += 18;
+      else if(service === "partial") score += 6;
+      else if(service === "none") score -= 18;
+
+      // Inspection
+      if(inspection === "clean") score += 12;
+      else if(inspection === "notes") score -= 6;
+      else if(inspection === "expired") score -= 14;
+
+      // Owners / history
+      if(owners === "few") score += 8;
+      else if(owners === "some") score -= 4;
+      else if(owners === "many") score -= 12;
+
+      // Price feel
+      if(pricefeel === "fair") score += 4;
+      else if(pricefeel === "high") score -= 6;
+      else if(pricefeel === "tooGood") score -= 14;
+
+      // Red flags
+      if(redflags === "none") score += 8;
+      else if(redflags === "some") score -= 10;
+      else if(redflags === "many") score -= 22;
+
+      score = Math.max(0, Math.min(100, score));
+      return score;
+    }
+
+    function scoreToAngle(score){
+      // -40..+40 (feels more alive)
+      return -40 + (score/100)*80;
+    }
+
+    function scoreToLabel(score){
+      if(score >= 67) return { label: "GRÖN", text: "Låg risk (utifrån din input). Fortsätt med checklistan.", hint: "Grön: fortsätt — men kontrollera." };
+      if(score >= 40) return { label: "GUL", text: "Osäkert läge. Kontrollera extra noga innan beslut.", hint: "Gul: samla mer info." };
+      return { label: "RÖD", text: "Hög risk. Pausa och verifiera eller välj annan bil.", hint: "Röd: pausa och verifiera." };
+    }
 
     function setCompassAngle(deg){
       if(!needle) return;
       needle.setAttribute("transform", `rotate(${deg} 210 210)`);
     }
 
-    function scoreToAngle(score){
-      // score 0..100 -> angle -35..+35
-      return -35 + (score/100)*70;
+    // ===== animation =====
+    // Spin a few turns, then land on final angle.
+    function animateTo(targetDeg){
+      const start = performance.now();
+      const duration = 1400; // ms
+      const spins = 2.2;     // how many full rotations before settling
+      const startDeg = Math.random()*40 - 20; // small random start
+      const total = spins * 360 + (targetDeg - startDeg);
+
+      function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+      function frame(now){
+        const t = Math.min(1, (now - start) / duration);
+        const e = easeOutCubic(t);
+        const deg = startDeg + total * e;
+        setCompassAngle(deg);
+        if(t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     }
 
-    function analyzeRegnr(reg){
-      // Placeholder scoring logic (replace later with real logic/data).
-      const clean = (reg||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
-      let s = 50;
-      if(clean.length <= 5) s = 70;
-      if(clean.length >= 7) s = 40;
-      if(/[0-9]{3,}/.test(clean)) s -= 10;
-      if(clean.startsWith("X")) s -= 20;
-      s = Math.max(0, Math.min(100, s));
-      return s;
-    }
+    async function run(){
+      statusText.textContent = "Analyserar…";
+      if(resultHint) resultHint.textContent = "Beräknar riktning…";
 
-    function scoreToLabel(score){
-      if(score >= 67) return { label: "GRÖN", text: "Låg risk (utifrån snabbbedömningen). Fortsätt med checklistan.", hint: "Grön: fortsätt — men kontrollera." };
-      if(score >= 40) return { label: "GUL", text: "Osäkert läge. Kontrollera extra noga innan beslut.", hint: "Gul: kontrollera mer." };
-      return { label: "RÖD", text: "Hög risk. Pausa och samla mer info eller välj annan bil.", hint: "Röd: pausa och verifiera." };
+      // short delay so it feels like a system (and gives time for animation)
+      const score = scoreFromInputs();
+      const target = scoreToAngle(score);
+
+      animateTo(target);
+
+      // resolve text slightly after spin starts
+      setTimeout(() => {
+        const info = scoreToLabel(score);
+        statusText.textContent = `${info.label}. ${info.text}`;
+        if(resultHint) resultHint.textContent = info.hint;
+      }, 850);
     }
 
     const btn = document.getElementById("analyseraBtn");
-    const regInput = document.getElementById("regnr");
-    const statusText = document.getElementById("statusText");
-    const resultHint = document.getElementById("resultHint");
-
-    function run(){
-      const reg = regInput?.value || "";
-      const clean = reg.toUpperCase().replace(/[^A-Z0-9]/g,"");
-
-      if(clean.length < 4){
-        statusText.textContent = "Skriv in ett giltigt registreringsnummer (minst 4 tecken).";
-        return;
-      }
-
-      const score = analyzeRegnr(clean);
-      const angle = scoreToAngle(score);
-      setCompassAngle(angle);
-
-      const info = scoreToLabel(score);
-      statusText.textContent = `${info.label}. ${info.text}`;
-      if(resultHint) resultHint.textContent = info.hint;
-    }
+    const resetBtn = document.getElementById("resetBtn");
 
     if(btn) btn.addEventListener("click", run);
-    if(regInput){
-      regInput.addEventListener("keydown", (e) => {
-        if(e.key === "Enter") run();
+
+    if(resetBtn){
+      resetBtn.addEventListener("click", () => {
+        document.getElementById("regnr").value = "";
+        document.getElementById("service").value = "unknown";
+        document.getElementById("inspection").value = "unknown";
+        document.getElementById("owners").value = "unknown";
+        document.getElementById("pricefeel").value = "unknown";
+        document.getElementById("redflags").value = "unknown";
+        statusText.textContent = "Redo. Fyll i vad du vet och tryck “Analysera”.";
+        if(resultHint) resultHint.textContent = "Grön = låg risk, Gul = osäkert, Röd = hög risk. Kompassen ger riktning — följ checklistan.";
+        setCompassAngle(10);
       });
     }
   </script>
