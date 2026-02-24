@@ -1,293 +1,151 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Verktyg – Bilkompassen</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Verktyg – Bilkompassen</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#1E3557">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1E3557">
 
-<style>
-:root{
-  --ink:#0b1220;
-  --muted:#516078;
-  --brand:#1E3557;
-  --accent:#E6A23C;
-  --line:rgba(15,23,42,.10);
-  --shadow:0 18px 55px rgba(10,18,32,.10);
-  --radius:16px;
-}
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 
-*{ box-sizing:border-box; }
+  <!-- Tool-specific styles only -->
+  <style>
+    .page{ padding:34px 0 44px; }
+    .page-title{
+      margin:0 0 10px;
+      color:var(--brand);
+      font-weight:1000;
+      letter-spacing:-.4px;
+      font-size:30px;
+    }
+    .lead{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.65;
+      font-weight:650;
+    }
 
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Arial;
-  color:var(--ink);
-  background:
-    radial-gradient(900px 420px at 15% -10%, rgba(30,53,87,.12), transparent 60%),
-    radial-gradient(900px 420px at 85% -10%, rgba(230,162,60,.10), transparent 60%),
-    linear-gradient(180deg, #f8fbff 0%, #ffffff 50%);
-}
-.container{ max-width:1120px; margin:0 auto; padding:0 20px; }
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
 
+    .tool-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      align-items:start;
+    }
 
+    .form-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+      align-items:center;
+    }
 
+    input{
+      padding:12px 12px;
+      font-size:16px;
+      border:1px solid rgba(15,23,42,.14);
+      border-radius:var(--radius-sm);
+      width:260px;
+      outline:none;
+      background:#fff;
+    }
+    input:focus{
+      border-color:rgba(30,53,87,.35);
+      box-shadow:0 0 0 4px rgba(30,53,87,.10);
+    }
 
+    button{
+      padding:12px 16px;
+      background:var(--brand);
+      color:#fff;
+      border:none;
+      border-radius:var(--radius-sm);
+      cursor:pointer;
+      font-weight:950;
+      box-shadow:0 16px 34px rgba(30,53,87,.22);
+      transition:transform .15s ease;
+    }
+    button:hover{ transform:translateY(-1px); }
 
+    .result{
+      margin-top:14px;
+      padding:14px;
+      border-radius:var(--radius-sm);
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#fff,#f6f9ff);
+      font-weight:850;
+      line-height:1.45;
+      min-height:92px;
+    }
+    .result strong{ display:block; color:var(--brand); }
+    .result small{ display:block; margin-top:6px; color:var(--muted); font-weight:650; }
 
-/* HEADER */
-.site-header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(255,255,255,.78);
-  backdrop-filter: blur(14px) saturate(150%);
-  border-bottom:1px solid var(--line);
-}
+    .compass-wrap{ display:flex; flex-direction:column; gap:12px; align-items:center; }
 
-.header-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:8px 0;
-  gap:18px;
-}
+    .compass{
+      width:280px; height:280px;
+      border-radius:50%;
+      position:relative;
+      background:
+        conic-gradient(
+          #7cc98f 0deg 120deg,
+          #f0d37a 120deg 240deg,
+          #e58a8a 240deg 360deg
+        ),
+        radial-gradient(circle at center,#fff 0%,#fff 50%,#f0f4fb 100%);
+      border:1px solid var(--line);
+      box-shadow:0 22px 60px rgba(10,18,32,.12);
+      overflow:hidden;
+    }
 
-/* LOGO PLATE — hides baked white background */
-.logo-wrap{
-  display:flex;
-  align-items:center;
-  text-decoration:none;
-  padding:6px 10px;
-  border-radius:14px;
+    .hub{
+      position:absolute; left:50%; top:50%;
+      width:18px; height:18px;
+      transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:var(--brand);
+      box-shadow:0 12px 28px rgba(30,53,87,.25);
+      z-index:5;
+    }
 
-  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(245,248,255,.92));
-  border:1px solid rgba(15,23,42,.08);
-  box-shadow:0 10px 30px rgba(10,18,32,.08);
-}
+    .needle{
+      position:absolute; top:50%; left:50%;
+      width:130px; height:10px;
+      transform-origin:0% 50%;
+      transform:rotate(0deg);
+      border-radius:999px;
+      z-index:4;
+      background:linear-gradient(90deg,var(--accent),rgba(230,162,60,.22));
+      box-shadow:0 18px 34px rgba(230,162,60,.22);
+    }
 
-.logo-img{
-  height:46px;            /* tight header */
-  width:auto;
-  display:block;
-}
-
-/* NAV */
-.nav{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:800;
-  font-size:14px;
-  padding:10px 12px;
-  border-radius:12px;
-  transition:.15s ease;
-}
-.nav a:hover{
-  background:rgba(30,53,87,.08);
-  color:var(--brand);
-  transform:translateY(-1px);
-}
-
-/* BURGER */
-.burger{
-  display:none;
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:14px;
-  padding:10px 12px;
-  cursor:pointer;
-  box-shadow:0 10px 26px rgba(10,18,32,.08);
-}
-.burger-lines{ display:flex; flex-direction:column; gap:5px; }
-.burger-lines span{
-  width:22px; height:2px;
-  background:var(--brand);
-  border-radius:2px;
-  display:block;
-}
-
-.mobile-nav{ display:none; border-top:1px solid var(--line); background:#fff; }
-.mobile-nav.open{ display:block; }
-.mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
-.mobile-nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:900;
-  padding:12px 12px;
-  border-radius:14px;
-}
-.mobile-nav a:hover{
-  background:rgba(30,53,87,.08);
-  color:var(--brand);
-}
-
-
-
-
-
-/* PAGE */
-.page{ padding:34px 0 44px; }
-.page-title{
-  margin:0 0 10px;
-  color:var(--brand);
-  font-weight:1000;
-  letter-spacing:-.4px;
-  font-size:30px;
-}
-.lead{
-  margin:0 0 18px;
-  color:var(--muted);
-  line-height:1.65;
-  font-weight:650;
-}
-
-.panel{
-  background:rgba(255,255,255,.92);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow:var(--shadow);
-}
-
-.tool-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  align-items:start;
-}
-
-.form-row{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:12px;
-  align-items:center;
-}
-
-input{
-  padding:12px 12px;
-  font-size:16px;
-  border:1px solid rgba(15,23,42,.14);
-  border-radius:14px;
-  width:260px;
-  outline:none;
-  background:#fff;
-}
-input:focus{
-  border-color:rgba(30,53,87,.35);
-  box-shadow:0 0 0 4px rgba(30,53,87,.10);
-}
-
-button{
-  padding:12px 16px;
-  background:var(--brand);
-  color:#fff;
-  border:none;
-  border-radius:14px;
-  cursor:pointer;
-  font-weight:950;
-  box-shadow:0 16px 34px rgba(30,53,87,.22);
-  transition:transform .15s ease;
-}
-button:hover{ transform:translateY(-1px); }
-
-/* RESULT */
-.result{
-  margin-top:14px;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,#fff,#f6f9ff);
-  font-weight:850;
-  line-height:1.45;
-  min-height:92px;
-}
-.result strong{ display:block; color:var(--brand); }
-.result small{ display:block; margin-top:6px; color:var(--muted); font-weight:650; }
-.result a{
-  color:var(--brand);
-  font-weight:900;
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-
-/* COMPASS */
-.compass-wrap{ display:flex; flex-direction:column; gap:12px; align-items:center; }
-
-.compass{
-  width:280px; height:280px;
-  border-radius:50%;
-  position:relative;
-  background:
-    conic-gradient(
-      #7cc98f 0deg 120deg,
-      #f0d37a 120deg 240deg,
-      #e58a8a 240deg 360deg
-    ),
-    radial-gradient(circle at center,#fff 0%,#fff 50%,#f0f4fb 100%);
-  border:1px solid var(--line);
-  box-shadow:0 22px 60px rgba(10,18,32,.12);
-  overflow:hidden;
-}
-
-.hub{
-  position:absolute; left:50%; top:50%;
-  width:18px; height:18px;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:var(--brand);
-  box-shadow:0 12px 28px rgba(30,53,87,.25);
-  z-index:5;
-}
-
-.needle{
-  position:absolute; top:50%; left:50%;
-  width:130px; height:10px;
-  transform-origin:0% 50%;
-  transform:rotate(0deg);
-  border-radius:999px;
-  z-index:4;
-  background:linear-gradient(90deg,var(--accent),rgba(230,162,60,.22));
-  box-shadow:0 18px 34px rgba(230,162,60,.22);
-}
-
-/* FOOTER */
-.footer{
-  border-top:1px solid var(--line);
-  background:rgba(255,255,255,.86);
-  padding:22px 0;
-}
-
-/* RESPONSIVE */
-@media (max-width:920px){ .tool-grid{ grid-template-columns:1fr; } }
-@media (max-width:860px){
-  .nav{ display:none; }
-  .burger{ display:inline-flex; }
-}
-</style>
+    @media (max-width:920px){ .tool-grid{ grid-template-columns:1fr; } }
+  </style>
 </head>
 
 <body>
 
 <header class="site-header">
   <div class="container header-inner">
-
-    <a href="index.html" class="logo-wrap">
-      <img src="logo_trimmed.png" alt="Bilkompassen" class="logo-img">
+    <a href="index.html" class="logo-wrap" aria-label="Bilkompassen hem">
+      <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen" class="logo-img">
     </a>
 
-    <nav class="nav">
+    <nav class="nav" aria-label="Huvudmeny">
       <a href="index.html">Start</a>
       <a href="verktyg.html">Verktyg</a>
       <a href="guider.html">Guider</a>
@@ -295,10 +153,11 @@ button:hover{ transform:translateY(-1px); }
       <a href="contact.html">Kontakt</a>
     </nav>
 
-    <button class="burger" id="burgerBtn">
-      <span class="burger-lines"><span></span><span></span><span></span></span>
+    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
+      <span class="burger-lines" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
     </button>
-
   </div>
 
   <div class="mobile-nav" id="mobileNav">
@@ -313,112 +172,126 @@ button:hover{ transform:translateY(-1px); }
 </header>
 
 <main class="page">
-<div class="container">
+  <div class="container">
+    <h1 class="page-title">Verktyg</h1>
+    <p class="lead">Skriv in ett registreringsnummer och få en snabb riktning.</p>
 
-<h1 class="page-title">Verktyg</h1>
-<p class="lead">Skriv in ett registreringsnummer och få en snabb riktning.</p>
+    <div class="tool-grid">
+      <section class="panel">
+        <div class="form-row">
+          <input id="reg" placeholder="ABC123" autocomplete="off" inputmode="text">
+          <button id="anBtn" type="button">Analysera</button>
+        </div>
 
-<div class="tool-grid">
+        <div id="result" class="result">
+          <strong>Redo.</strong>
+          <small>Skriv in ett regnr och tryck på “Analysera”.</small>
+        </div>
+      </section>
 
-<section class="panel">
-<div class="form-row">
-<input id="reg" placeholder="ABC123">
-<button id="anBtn">Analysera</button>
-</div>
-
-<div id="result" class="result">
-<strong>Redo.</strong>
-<small>Skriv in ett regnr och tryck på “Analysera”.</small>
-</div>
-</section>
-
-<section class="panel compass-wrap">
-<div class="compass">
-<div id="needle" class="needle"></div>
-<div class="hub"></div>
-</div>
-</section>
-
-</div>
-</div>
+      <section class="panel compass-wrap" aria-label="Kompass">
+        <div class="compass" role="img" aria-label="Bilkompass med zoner">
+          <div id="needle" class="needle"></div>
+          <div class="hub"></div>
+        </div>
+      </section>
+    </div>
+  </div>
 </main>
 
 <footer class="footer">
-<div class="container">
-<small>© <span id="year"></span> Bilkompassen</small>
-</div>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="bilkompassen_icon_transparent.png" alt="" class="footer-logo">
+        <div class="footer-text">
+          <strong>Bilkompassen</strong>
+          <small>Beslutstöd för begagnatköp i Sverige.</small>
+        </div>
+      </div>
+
+      <nav class="footer-links" aria-label="Sidnavigation">
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </nav>
+    </div>
+
+    <div class="footer-meta">
+      <span>© <span id="year"></span> Bilkompassen</span>
+      <span>Information och checklistor — inte juridisk rådgivning.</span>
+    </div>
+  </div>
 </footer>
 
+<!-- Tool logic (kept page-local) -->
 <script>
-const burgerBtn=document.getElementById("burgerBtn");
-const mobileNav=document.getElementById("mobileNav");
-if(burgerBtn&&mobileNav){
-burgerBtn.addEventListener("click",()=>mobileNav.classList.toggle("open"));
-}
+(() => {
+  const regInput = document.getElementById("reg");
+  const btn = document.getElementById("anBtn");
+  const needle = document.getElementById("needle");
+  const result = document.getElementById("result");
 
-document.getElementById("year").textContent=new Date().getFullYear();
+  if (!regInput || !btn || !needle || !result) return;
 
-const regInput=document.getElementById("reg");
-const btn=document.getElementById("anBtn");
-const needle=document.getElementById("needle");
-const result=document.getElementById("result");
+  function normalize(v){
+    return (v || "").replace(/\s+/g,"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+  }
 
-function normalize(v){
-return v.replace(/\s+/g,"").toUpperCase().replace(/[^A-Z0-9]/g,"");
-}
+  function valid(reg){
+    return reg.length >= 5 && reg.length <= 7 && /[A-Z]/.test(reg) && /[0-9]/.test(reg);
+  }
 
-function valid(reg){
-return reg.length>=5&&reg.length<=7&&/[A-Z]/.test(reg)&&/[0-9]/.test(reg);
-}
+  function hash(str){
+    let h = 0;
+    for (let i = 0; i < str.length; i++){
+      h = (h << 5) - h + str.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h);
+  }
 
-function hash(str){
-let h=0;
-for(let i=0;i<str.length;i++){
-h=(h<<5)-h+str.charCodeAt(i);
-h|=0;
-}
-return Math.abs(h);
-}
+  function analyze(){
+    const reg = normalize(regInput.value);
 
-function analyze(){
-let reg=normalize(regInput.value);
+    if(!reg){
+      result.innerHTML = "<strong>Skriv in ett regnr först.</strong>";
+      return;
+    }
 
-if(!reg){
-result.innerHTML="<strong>Skriv in ett regnr först.</strong>";
-return;
-}
+    if(!valid(reg)){
+      result.innerHTML = "<strong>Hittade inget regnr.</strong><small>Det ser inte ut som ett svenskt registreringsnummer.</small>";
+      return;
+    }
 
-if(!valid(reg)){
-result.innerHTML="<strong>Hittade inget regnr.</strong><small>Det ser inte ut som ett svenskt registreringsnummer.</small>";
-return;
-}
+    result.innerHTML = "<strong>Analyserar…</strong>";
 
-result.innerHTML="<strong>Analyserar…</strong>";
+    const h = hash(reg);
+    const zone = h % 3;
+    const base = [60, 180, 300][zone];
+    const angle = base + (h % 40 - 20);
 
-const h=hash(reg);
-const zone=h%3;
-const base=[60,180,300][zone];
-const angle=base+(h%40-20);
+    needle.style.transition = "transform 1s ease";
+    needle.style.transform = "rotate(" + (angle + 720) + "deg)";
 
-needle.style.transition="transform 1s ease";
-needle.style.transform="rotate("+(angle+720)+"deg)";
+    setTimeout(() => {
+      needle.style.transition = "transform .5s ease";
+      needle.style.transform = "rotate(" + angle + "deg)";
 
-setTimeout(()=>{
-needle.style.transition="transform .5s ease";
-needle.style.transform="rotate("+angle+"deg)";
+      const texts = [
+        ["🟢 Grön zon", "Ser ofta okej ut. Kontrollera ändå historik."],
+        ["🟡 Gul zon", "Kräver extra kontroll av dokumentation."],
+        ["🔴 Röd zon", "Högre risk. Granska noggrant innan beslut."]
+      ];
 
-const texts=[
-["🟢 Grön zon","Ser ofta okej ut. Kontrollera ändå historik."],
-["🟡 Gul zon","Kräver extra kontroll av dokumentation."],
-["🔴 Röd zon","Högre risk. Granska noggrant innan beslut."]
-];
+      result.innerHTML = "<strong>" + texts[zone][0] + "</strong><small>" + texts[zone][1] + "</small>";
+    }, 900);
+  }
 
-result.innerHTML="<strong>"+texts[zone][0]+"</strong><small>"+texts[zone][1]+"</small>";
-},900);
-}
-
-btn.onclick=analyze;
-regInput.onkeydown=e=>{ if(e.key==="Enter") analyze(); };
+  btn.addEventListener("click", analyze);
+  regInput.addEventListener("keydown", (e) => { if(e.key === "Enter") analyze(); });
+})();
 </script>
 
 </body>
