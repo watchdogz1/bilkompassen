@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Köpchecklista – Bilkompassen</title>
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1E3557">
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-wrap" aria-label="Bilkompassen – Start">
+        <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen" class="logo-img">
+      </a>
+
+      <nav class="nav" aria-label="Huvudnavigation">
+        <a href="index.html">Start</a>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </nav>
+
+      <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobileNav">
+        <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav">
+      <div class="container mobile-nav-inner">
+        <a href="index.html">Start</a>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="card">
+        <h1 class="page-title">Köpchecklista</h1>
+        <p class="lead">
+          En snabb men vass checklista du kan följa innan du betalar. Målet är att hitta röda flaggor tidigt.
+        </p>
+
+        <div class="pill-row">
+          <span class="pill">Dokument</span>
+          <span class="pill">Historik</span>
+          <span class="pill">Skick</span>
+          <span class="pill">Affär</span>
+        </div>
+
+        <h2>1) Innan du åker</h2>
+        <ul>
+          <li>Be om registreringsnummer och kontrollera grundinfo (modell/år/miltal).</li>
+          <li>Be om servicehistorik (kvitton eller digital servicebok).</li>
+          <li>Fråga om besiktning, anmärkningar och vad som åtgärdats.</li>
+          <li>Fråga om antal ägare och varför bilen säljs.</li>
+        </ul>
+
+        <h2 style="margin-top:16px;">2) På plats: dokument & identitet</h2>
+        <ul>
+          <li>Stäm av att säljaren kan visa ID och att namn matchar ägaruppgifter (om privatköp).</li>
+          <li>Kontrollera att VIN/chassinummer matchar handlingar (om möjligt).</li>
+          <li>Gå igenom service/kvitton: datum, miltal, vad som gjorts.</li>
+          <li>Om handlare: fråga om garanti (vad ingår/inte) och villkor.</li>
+        </ul>
+
+        <h2 style="margin-top:16px;">3) Skick: snabb kontroll runt bilen</h2>
+        <ul>
+          <li>Kaross: ojämna glipor, färgskillnader, lackdimma → kan tyda på krock/reparation.</li>
+          <li>Däck: mönsterdjup, ojämnt slitage (spårning/fjädring).</li>
+          <li>Rost: trösklar, hjulhus, baklucka/kanter, under dörrar.</li>
+          <li>Motorutrymme: läckage, “nytvättat” ovanligt rent kan vara misstänkt.</li>
+          <li>Interiör: slitage vs miltal (ratt/säte/pedaler).</li>
+        </ul>
+
+        <h2 style="margin-top:16px;">4) Provkörning (kort version)</h2>
+        <ul>
+          <li>Kallstart om möjligt: lyssna efter tick/knack och ojämn tomgång.</li>
+          <li>Testa broms: rak bromsning, vibrationer i ratt/pedal.</li>
+          <li>Testa styrning: drar bilen? glapp? vibrationer?</li>
+          <li>Testa växellåda: ryck/slir/konstiga ljud (auto och manuell).</li>
+        </ul>
+
+        <h2 style="margin-top:16px;">5) Affären: innan du betalar</h2>
+        <ul>
+          <li>Skriv alltid avtal och spara konversationen (sms/mejl).</li>
+          <li>Betala spårbart (banköverföring) – undvik kontant.</li>
+          <li>Gör ägarbyte direkt (digitalt om möjligt).</li>
+          <li>Om något känns fel: pausa. En bra affär tål kontroller.</li>
+        </ul>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+          <a class="btn" href="verktyg.html">Öppna verktyget</a>
+          <a class="btn-ghost" href="guide-provkorning.html">Läs provkörningsguiden</a>
+          <a class="btn-ghost" href="guider.html">Till guider</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <img src="bilkompassen_icon_transparent.png" alt="" style="width:28px; height:28px;">
+          <h4 style="margin:0;">Bilkompassen</h4>
+        </div>
+        <small>Beslutsstöd för att köpa begagnad bil.</small>
+        <small>© <span id="year"></span> Bilkompassen</small>
+      </div>
+
+      <div>
+        <h4>Innehåll</h4>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+      </div>
+
+      <div>
+        <h4>Mer</h4>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
