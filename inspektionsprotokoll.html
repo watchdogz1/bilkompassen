@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bilkompassen – Inspektionsprotokoll (A4)</title>
+
+  <style>
+    :root{
+      --ink:#0b1220;
+      --muted:#516078;
+      --line: rgba(15,23,42,.16);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--ink);
+      background:#fff;
+    }
+    .page{
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 14mm 14mm 12mm;
+    }
+    .hdr{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding-bottom:10px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+    }
+    .brand img{ height:18mm; width:auto; }
+    .title{
+      margin:0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      line-height:1.15;
+    }
+    .subtitle{
+      margin:3px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing:.2px;
+    }
+    .meta{
+      text-align:right;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
+      white-space:nowrap;
+    }
+
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
+    .block{
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:10px;
+    }
+    .block h2{
+      margin:0 0 8px;
+      font-size:12px;
+      letter-spacing:.2px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .fields{ display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+    .field{ display:flex; flex-direction:column; gap:4px; }
+    .label{ font-size:11px; color:var(--muted); }
+    .line{
+      height: 10mm;
+      border:1px solid var(--line);
+      border-radius:8px;
+    }
+
+    .checklist{ display:grid; grid-template-columns: 1fr 1fr; gap:6px 12px; }
+    .chk{ display:flex; align-items:flex-start; gap:8px; font-size:12px; line-height:1.25; }
+    .box{ width:4.5mm; height:4.5mm; border:1.6px solid var(--ink); margin-top:1px; flex: 0 0 auto; }
+
+    .notes .line{ height: 12mm; border-radius:8px; }
+    .notes .line + .line{ margin-top:6px; }
+
+    .tri{ display:flex; gap:10px; flex-wrap:wrap; }
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+    }
+    .pill .box{ margin-top:0; }
+
+    .footer{
+      margin-top:10px;
+      padding-top:8px;
+      border-top:1px solid var(--line);
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.35;
+      display:flex; justify-content:space-between; gap:10px;
+    }
+
+    /* PRINT */
+    @page{
+      size: A4;
+      margin: 12mm;
+    }
+    @media print{
+      body{ background:#fff; }
+      .page{ padding:0; width:auto; min-height:auto; }
+      a{ color:inherit; text-decoration:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="hdr">
+      <div class="brand">
+        <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen">
+        <div>
+          <h1 class="title">Inspektionsprotokoll – begagnad bil</h1>
+          <p class="subtitle">Strukturerad genomgång före beslut</p>
+        </div>
+      </div>
+      <div class="meta">
+        <div><strong>Version:</strong> v1.0</div>
+        <div><strong>Datum:</strong> ____________</div>
+      </div>
+    </header>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Grunduppgifter</h2>
+        <div class="fields">
+          <div class="field">
+            <div class="label">Märke / Modell</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Årsmodell</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Miltal (km)</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Registreringsnummer</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Säljare</div>
+            <div class="tri">
+              <div class="pill"><span class="box"></span>Privat</div>
+              <div class="pill"><span class="box"></span>Handlare</div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="label">Annonserat pris (SEK)</div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Beslutsstatus</h2>
+        <div class="tri" style="margin-bottom:8px;">
+          <div class="pill"><span class="box"></span>Gå vidare</div>
+          <div class="pill"><span class="box"></span>Utred mer</div>
+          <div class="pill"><span class="box"></span>Förhandla</div>
+          <div class="pill"><span class="box"></span>Avstå</div>
+        </div>
+        <div class="label">Motivering (kort)</div>
+        <div class="notes">
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Dokumentation & historik</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Servicebok finns</div>
+          <div class="chk"><span class="box"></span>Fullständig servicehistorik</div>
+          <div class="chk"><span class="box"></span>Kvitton på större åtgärder</div>
+          <div class="chk"><span class="box"></span>Senaste besiktningsprotokoll granskat</div>
+          <div class="chk"><span class="box"></span>Antal tidigare ägare verifierat</div>
+          <div class="chk"><span class="box"></span>Skulder / leasing kontrollerat</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Exteriör kontroll</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Olyckstecken (glipor/färgskillnader)</div>
+          <div class="chk"><span class="box"></span>Rost (hjulhus/trösklar/underrede)</div>
+          <div class="chk"><span class="box"></span>Vindruta utan sprickor</div>
+          <div class="chk"><span class="box"></span>Däck – jämnt slitage</div>
+          <div class="chk"><span class="box"></span>Fälgar – skador</div>
+          <div class="chk"><span class="box"></span>Belysning fungerar</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Interiör & funktion</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Varningslampor släckta</div>
+          <div class="chk"><span class="box"></span>AC / värme fungerar</div>
+          <div class="chk"><span class="box"></span>Elhissar / speglar fungerar</div>
+          <div class="chk"><span class="box"></span>Infotainment fungerar</div>
+          <div class="chk"><span class="box"></span>Onormala lukter (fukt/bränd)</div>
+          <div class="chk"><span class="box"></span>Slitage rimligt för miltal</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Motor & teknik (visuell)</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Oljeläckage synligt</div>
+          <div class="chk"><span class="box"></span>Kylvätskenivå korrekt</div>
+          <div class="chk"><span class="box"></span>Batteri i gott skick</div>
+          <div class="chk"><span class="box"></span>Onormala ljud vid tomgång</div>
+          <div class="chk"><span class="box"></span>Vibrationer</div>
+          <div class="chk"><span class="box"></span>Övrigt (ange)</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="margin-top:10px;">
+      <h2>Provkörning (snabb notering)</h2>
+      <div class="checklist" style="grid-template-columns: 1fr 1fr;">
+        <div class="chk"><span class="box"></span>Startar utan problem</div>
+        <div class="chk"><span class="box"></span>Stabil tomgång</div>
+        <div class="chk"><span class="box"></span>Växellåda fungerar mjukt</div>
+        <div class="chk"><span class="box"></span>Bromsar jämnt</div>
+        <div class="chk"><span class="box"></span>Inga missljud från hjulupphängning</div>
+        <div class="chk"><span class="box"></span>Ratten rak vid körning</div>
+        <div class="chk"><span class="box"></span>Ingen onormal rök</div>
+        <div class="chk"><span class="box"></span>Helhetsintryck dokumenterat</div>
+      </div>
+      <div class="label" style="margin-top:8px;">Noteringar</div>
+      <div class="notes">
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>Bilkompassen – Inspektionsprotokoll v1.0</div>
+      <div>Syfte: strukturerad genomgång före beslut och betalning.</div>
+    </div>
+  </div>
+</body>
+</html>
