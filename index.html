@@ -1,252 +1,18 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bilkompassen – Hitta rätt bil från början</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bilkompassen – Hitta rätt bil från början</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#1E3557">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1E3557">
 
-<style>
-:root{
-  --ink:#0b1220;
-  --muted:#516078;
-  --brand:#1E3557;
-  --accent:#E6A23C;
-  --line:rgba(15,23,42,.10);
-  --soft:#f6f8fb;
-  --card:#ffffff;
-  --shadow: 0 18px 55px rgba(10,18,32,.10);
-  --radius:16px;
-}
-
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Arial;
-  color:var(--ink);
-  background:
-    radial-gradient(900px 420px at 15% -10%, rgba(30,53,87,.12), transparent 60%),
-    radial-gradient(900px 420px at 85% -10%, rgba(230,162,60,.10), transparent 60%),
-    linear-gradient(180deg, #f8fbff 0%, #ffffff 50%);
-}
-
-.container{ max-width:1120px; margin:0 auto; padding:0 20px; }
-
-/* HEADER */
-.site-header{
-  position:sticky; top:0; z-index:50;
-  background:rgba(255,255,255,.82);
-  backdrop-filter:saturate(160%) blur(12px);
-  border-bottom:1px solid var(--line);
-}
-.header-inner{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 0; gap:14px;
-}
-
-.logo-wrap{ display:flex; align-items:center; text-decoration:none; }
-.logo-img{
-  height:78px; width:auto; display:block;
-  filter: drop-shadow(0 10px 24px rgba(30,53,87,.12));
-}
-
-.nav{ display:flex; align-items:center; gap:10px; }
-.nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:700;
-  font-size:14px;
-  padding:10px 12px;
-  border-radius:12px;
-  transition: background .15s ease, color .15s ease, transform .15s ease;
-}
-.nav a:hover{
-  background: rgba(30,53,87,.08);
-  color: var(--brand);
-  transform: translateY(-1px);
-}
-
-/* Burger */
-.burger{
-  display:none;
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:14px;
-  padding:10px 12px;
-  cursor:pointer;
-  box-shadow: 0 10px 26px rgba(10,18,32,.08);
-}
-.burger-lines{ display:flex; flex-direction:column; gap:5px; }
-.burger-lines span{
-  width:22px; height:2px; background:var(--brand); border-radius:2px; display:block;
-}
-
-/* Mobile menu */
-.mobile-nav{
-  display:none;
-  border-top:1px solid var(--line);
-  background:#fff;
-}
-.mobile-nav.open{ display:block; }
-
-.mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
-.mobile-nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:800;
-  padding:12px 12px;
-  border-radius:14px;
-}
-.mobile-nav a:hover{ background:rgba(30,53,87,.08); color:var(--brand); }
-
-/* HERO */
-.hero{ padding:48px 0 20px; }
-.hero-grid{
-  display:grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap:18px;
-  align-items:stretch;
-}
-.hero-card{
-  background: linear-gradient(180deg, rgba(255,255,255,.92) 0%, #ffffff 100%);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:26px;
-  box-shadow: var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-.hero-card:before{
-  content:"";
-  position:absolute; inset:-2px;
-  background:
-    radial-gradient(500px 180px at 25% 0%, rgba(30,53,87,.12), transparent 60%),
-    radial-gradient(500px 180px at 75% 0%, rgba(230,162,60,.10), transparent 60%);
-  pointer-events:none;
-}
-.hero-card > *{ position:relative; }
-
-.hero h1{
-  margin:0 0 12px;
-  font-size:46px;
-  line-height:1.05;
-  letter-spacing:-.8px;
-  color:var(--brand);
-}
-.hero p{
-  margin:0 0 16px;
-  color:var(--muted);
-  font-size:18px;
-  line-height:1.65;
-  font-weight:600;
-}
-
-.cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:10px;
-  padding:12px 16px;
-  background: var(--brand);
-  color:#fff;
-  text-decoration:none;
-  border-radius:14px;
-  font-weight:900;
-  box-shadow: 0 16px 34px rgba(30,53,87,.22);
-  transition: transform .15s ease;
-}
-.btn:hover{ transform: translateY(-1px); }
-
-.btn-ghost{
-  display:inline-flex; align-items:center; justify-content:center; gap:10px;
-  padding:12px 16px;
-  background: rgba(255,255,255,.85);
-  color: var(--brand);
-  text-decoration:none;
-  border-radius:14px;
-  font-weight:900;
-  border:1px solid rgba(30,53,87,.18);
-}
-
-.side-card{
-  background: rgba(255,255,255,.88);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:22px;
-  box-shadow: var(--shadow);
-}
-.side-title{ margin:0 0 10px; color:var(--brand); font-weight:1000; font-size:15px; }
-.side-list{ margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-weight:650; font-size:14px; }
-
-/* SECTIONS */
-.section{ padding:14px 0 46px; }
-.section-title{
-  margin:0 0 14px;
-  color:var(--brand);
-  font-size:18px;
-  font-weight:1000;
-  letter-spacing:-.2px;
-}
-.grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
-.card{
-  background: rgba(255,255,255,.92);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow: 0 16px 44px rgba(10,18,32,.08);
-}
-.card h3{ margin:0 0 6px; color:var(--brand); font-size:16px; }
-.card p{ margin:0; color:var(--muted); line-height:1.65; font-weight:650; font-size:14px; }
-
-/* FOOTER (simplified) */
-.footer{
-  border-top:1px solid var(--line);
-  background: rgba(255,255,255,.86);
-  padding:18px 0;
-}
-.footer-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.footer small{
-  color:var(--muted);
-  font-weight:650;
-}
-.footer-links{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.footer a{
-  color:var(--muted);
-  text-decoration:none;
-  font-weight:800;
-  padding:6px 8px;
-  border-radius:10px;
-}
-.footer a:hover{ color:var(--brand); background:rgba(30,53,87,.08); }
-
-/* RESPONSIVE */
-@media (max-width: 860px){
-  .hero-grid{ grid-template-columns:1fr; }
-  .grid-3{ grid-template-columns:1fr; }
-  .nav{ display:none; }
-  .burger{ display:inline-flex; }
-  .logo-img{ height:72px; }
-  .hero h1{ font-size:40px; }
-}
-@media (max-width: 420px){
-  .logo-img{ height:68px; }
-  .hero h1{ font-size:36px; }
-}
-</style>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 
 <body>
@@ -332,33 +98,30 @@ body{
 </main>
 
 <footer class="footer">
-  <div class="container footer-inner">
-    <small>© <span id="year"></span> Bilkompassen</small>
-    <div class="footer-links" aria-label="Sidnavigation">
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="bilkompassen_icon_transparent.png" alt="" class="footer-logo">
+        <div class="footer-text">
+          <strong>Bilkompassen</strong>
+          <small>Beslutstöd för begagnatköp i Sverige.</small>
+        </div>
+      </div>
+
+      <nav class="footer-links" aria-label="Sidnavigation">
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </nav>
+    </div>
+
+    <div class="footer-meta">
+      <span>© <span id="year"></span> Bilkompassen</span>
+      <span>Information och checklistor — inte juridisk rådgivning.</span>
     </div>
   </div>
 </footer>
-
-<script>
-const burgerBtn = document.getElementById("burgerBtn");
-const mobileNav = document.getElementById("mobileNav");
-
-if(burgerBtn && mobileNav){
-  burgerBtn.addEventListener("click", () => {
-    mobileNav.classList.toggle("open");
-    burgerBtn.setAttribute("aria-expanded", mobileNav.classList.contains("open"));
-  });
-}
-
-const yearEl = document.getElementById("year");
-if(yearEl){
-  yearEl.textContent = new Date().getFullYear();
-}
-</script>
 
 </body>
 </html>
