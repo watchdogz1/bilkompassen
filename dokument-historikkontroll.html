@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bilkompassen – Dokument- & historikkontroll (A4)</title>
+
+  <style>
+    :root{
+      --ink:#0b1220;
+      --muted:#516078;
+      --line: rgba(15,23,42,.16);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--ink);
+      background:#fff;
+    }
+    .page{
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 14mm 14mm 12mm;
+    }
+    .hdr{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding-bottom:10px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+    }
+    .brand img{ height:18mm; width:auto; }
+    .title{
+      margin:0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      line-height:1.15;
+    }
+    .subtitle{
+      margin:3px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing:.2px;
+    }
+    .meta{
+      text-align:right;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
+      white-space:nowrap;
+    }
+
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
+    .block{
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:10px;
+    }
+    .block h2{
+      margin:0 0 8px;
+      font-size:12px;
+      letter-spacing:.2px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .fields{ display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+    .field{ display:flex; flex-direction:column; gap:4px; }
+    .label{ font-size:11px; color:var(--muted); }
+    .line{
+      height: 10mm;
+      border:1px solid var(--line);
+      border-radius:8px;
+    }
+
+    .checklist{ display:grid; grid-template-columns: 1fr 1fr; gap:6px 12px; }
+    .chk{ display:flex; align-items:flex-start; gap:8px; font-size:12px; line-height:1.25; }
+    .box{ width:4.5mm; height:4.5mm; border:1.6px solid var(--ink); margin-top:1px; flex: 0 0 auto; }
+
+    .notes .line{ height: 12mm; border-radius:8px; }
+    .notes .line + .line{ margin-top:6px; }
+
+    .tri{ display:flex; gap:10px; flex-wrap:wrap; }
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+    }
+    .pill .box{ margin-top:0; }
+
+    .small{ font-size:11px; color:var(--muted); line-height:1.35; }
+
+    .footer{
+      margin-top:10px;
+      padding-top:8px;
+      border-top:1px solid var(--line);
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.35;
+      display:flex; justify-content:space-between; gap:10px;
+    }
+
+    /* PRINT */
+    @page{
+      size: A4;
+      margin: 12mm;
+    }
+    @media print{
+      body{ background:#fff; }
+      .page{ padding:0; width:auto; min-height:auto; }
+      a{ color:inherit; text-decoration:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="hdr">
+      <div class="brand">
+        <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen">
+        <div>
+          <h1 class="title">Dokument- & historikkontroll – begagnad bil</h1>
+          <p class="subtitle">Verifiering av uppgifter innan handpenning och kontrakt</p>
+        </div>
+      </div>
+      <div class="meta">
+        <div><strong>Version:</strong> v1.0</div>
+        <div><strong>Datum:</strong> ____________</div>
+      </div>
+    </header>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Grunduppgifter</h2>
+        <div class="fields">
+          <div class="field">
+            <div class="label">Märke / Modell</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Registreringsnummer</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">VIN / Chassinummer</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Miltal (km) enligt annons</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Säljare (namn/företag)</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Kontakt / ID verifierat</div>
+            <div class="tri">
+              <div class="pill"><span class="box"></span>Ja</div>
+              <div class="pill"><span class="box"></span>Nej</div>
+              <div class="pill"><span class="box"></span>Ej tillämpligt</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Beslutsstatus</h2>
+        <div class="tri" style="margin-bottom:8px;">
+          <div class="pill"><span class="box"></span>Godkänd för nästa steg</div>
+          <div class="pill"><span class="box"></span>Kräver komplettering</div>
+          <div class="pill"><span class="box"></span>Avstå</div>
+        </div>
+        <div class="label">Motivering (kort)</div>
+        <div class="notes">
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        <div class="small" style="margin-top:8px;">
+          Notera: Kontrollresultat gäller endast de källor och handlingar som faktiskt granskats.
+        </div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Källor & täckning</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Vägtrafikregister: grunddata</div>
+          <div class="chk"><span class="box"></span>Besiktningshistorik</div>
+          <div class="chk"><span class="box"></span>Ägarhistorik / antal brukare</div>
+          <div class="chk"><span class="box"></span>Skuld / kreditspärr / utmätning</div>
+          <div class="chk"><span class="box"></span>Leasing / återtagandeförbehåll</div>
+          <div class="chk"><span class="box"></span>Import / export-status</div>
+          <div class="chk"><span class="box"></span>Serviceunderlag (bok + kvitton)</div>
+          <div class="chk"><span class="box"></span>Skadeuppgifter (om tillgängligt)</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Kommentar om täckning / saknade datapunkter</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Identifiering & överensstämmelse</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Regnr matchar annons och handlingar</div>
+          <div class="chk"><span class="box"></span>VIN matchar fordon och dokument</div>
+          <div class="chk"><span class="box"></span>Nycklar: antal verifierat</div>
+          <div class="chk"><span class="box"></span>Utrustningsnivå stämmer med uppgift</div>
+          <div class="chk"><span class="box"></span>Viktiga avvikelser identifierade</div>
+          <div class="chk"><span class="box"></span>Oklarheter markerade för uppföljning</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Avvikelser (ange)</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Ägande, användning & status</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Antal ägare/brukare verifierat</div>
+          <div class="chk"><span class="box"></span>Tid i nuvarande ägo rimlig</div>
+          <div class="chk"><span class="box"></span>Brukandeform känd (privat/tjänst)</div>
+          <div class="chk"><span class="box"></span>Taxi/uthyrning (om känt) kontrollerat</div>
+          <div class="chk"><span class="box"></span>Avställd/påställd historik rimlig</div>
+          <div class="chk"><span class="box"></span>Fordonsskatteuppgift kontrollerad</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Finans, skulder & rättsliga hinder</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Inga uppenbara skulder kopplade till fordonet</div>
+          <div class="chk"><span class="box"></span>Ingen aktiv leasing (eller tydligt avslutad)</div>
+          <div class="chk"><span class="box"></span>Ingen kreditspärr/utmätning funnen</div>
+          <div class="chk"><span class="box"></span>Handlare: organisationsuppgift verifierad</div>
+          <div class="chk"><span class="box"></span>Privat: identitet verifierad</div>
+          <div class="chk"><span class="box"></span>Betalningssätt definierat (säker process)</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar / krav före affär</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="margin-top:10px;">
+      <h2>Besiktning, miltal & serviceunderlag</h2>
+
+      <div class="checklist" style="grid-template-columns: 1fr 1fr;">
+        <div class="chk"><span class="box"></span>Besiktningsdatum kontrollerat</div>
+        <div class="chk"><span class="box"></span>Eventuella anmärkningar dokumenterade</div>
+        <div class="chk"><span class="box"></span>Miltal från besiktning jämförda över tid</div>
+        <div class="chk"><span class="box"></span>Indikation på avvikande milhistorik</div>
+        <div class="chk"><span class="box"></span>Servicebok uppvisad</div>
+        <div class="chk"><span class="box"></span>Stämplar/kvitton bedömda som rimliga</div>
+        <div class="chk"><span class="box"></span>Större jobb styrkta (kamrem, växellåda, bromsar)</div>
+        <div class="chk"><span class="box"></span>Intervall följs (tid/mil)</div>
+      </div>
+
+      <div class="grid2" style="margin-top:10px;">
+        <div>
+          <div class="label">Viktiga datapunkter (ange datum/mil)</div>
+          <div class="notes">
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+        <div>
+          <div class="label">Planerade åtgärder / uppskattad kostnad</div>
+          <div class="notes">
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="margin-top:10px;">
+      <h2>Skador, import/export & återkallelser</h2>
+      <div class="checklist" style="grid-template-columns: 1fr 1fr;">
+        <div class="chk"><span class="box"></span>Skadehistorik kontrollerad (om tillgängligt)</div>
+        <div class="chk"><span class="box"></span>Tecken på större kollision flaggade</div>
+        <div class="chk"><span class="box"></span>Importstatus kontrollerad</div>
+        <div class="chk"><span class="box"></span>Ursprungsland/år verifierat</div>
+        <div class="chk"><span class="box"></span>Exportspärr / exportstatus kontrollerad</div>
+        <div class="chk"><span class="box"></span>Återkallelser (recalls) kontrollerade</div>
+        <div class="chk"><span class="box"></span>Återkallelser åtgärdade (styrkt)</div>
+        <div class="chk"><span class="box"></span>Miljöklass/utsläpp uppgift kontrollerad</div>
+      </div>
+
+      <div class="label" style="margin-top:8px;">Noteringar / åtgärdskrav</div>
+      <div class="notes">
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Bilagor som ska finnas</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Servicebok / digital servicehistorik</div>
+          <div class="chk"><span class="box"></span>Kvitton på större åtgärder</div>
+          <div class="chk"><span class="box"></span>Senaste besiktningsunderlag</div>
+          <div class="chk"><span class="box"></span>Vinter-/sommarhjul (spec)</div>
+          <div class="chk"><span class="box"></span>Extra nyckel</div>
+          <div class="chk"><span class="box"></span>Manualer / kodkort (om tillämpligt)</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Saknas / krävs innan affär</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Slutsats & nästa steg</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Alla kritiska punkter verifierade</div>
+          <div class="chk"><span class="box"></span>Minst en kritisk punkt ej verifierad</div>
+          <div class="chk"><span class="box"></span>Risk flaggad – kräver åtgärd innan affär</div>
+          <div class="chk"><span class="box"></span>Kontraktsvillkor definierade (skriftligt)</div>
+          <div class="chk"><span class="box"></span>Betalning planerad (spårbar och säker)</div>
+          <div class="chk"><span class="box"></span>Överlämning planerad (tid/plats)</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Åtgärdslista (kort)</div>
+        <div class="notes">
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>Bilkompassen – Dokument- & historikkontroll v1.0</div>
+      <div>Syfte: minska risken genom verifierad dokumentation före kontrakt och betalning.</div>
+    </div>
+  </div>
+</body>
+</html>
