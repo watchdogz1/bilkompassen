@@ -49,62 +49,52 @@
   <main class="page">
     <div class="container">
       <h1 class="page-title">Kontakt</h1>
-      <p class="lead">Tipsa om en guide, ett verktyg eller en förbättring — eller rapportera fel.</p>
+
+      <p class="lead">
+        Direktkommunikation med Bilkompassen.  
+        Använd chatten nedan för frågor, förbättringsförslag eller rapportering av fel.
+      </p>
 
       <div class="grid-2">
+
         <section class="card">
-          <h2>Skicka tips</h2>
+          <h2>Direktmeddelande</h2>
 
           <p>
-            Snabbast är e-post. Skriv gärna vilken bil (märke/modell/år), budget och vad du vill uppnå.
+            Chatten är avsedd för:
           </p>
 
-          <div class="card" style="padding:14px; margin-top:12px;">
-            <h2 style="margin:0 0 8px;">E-post</h2>
-            <p style="margin:0 0 10px;">
-              <a href="mailto:kontakt@bilkompassen.se?subject=Bilkompassen%20%E2%80%93%20tips%20eller%20fr%C3%A5ga"
-                 style="font-weight:950; text-decoration:none;">
-                kontakt@bilkompassen.se
-              </a>
-            </p>
-            <p style="margin:0;">
-              Svarstid: normalt inom <strong>1–3 vardagar</strong>.
-            </p>
-          </div>
-
-          <div class="label" style="margin-top:14px;">Mall att kopiera (valfritt)</div>
-          <textarea class="input" id="msgTemplate">Ämne: (tips / fel / förbättring)
-
-Länk (om det gäller en sida):
-—
-
-Bil (om relevant: märke/modell/år):
-—
-
-Budget (om relevant):
-—
-
-Beskrivning:
-—</textarea>
-
-          <button class="btn" id="copyBtn" type="button">Kopiera mall</button>
-          <p class="helper" id="status" aria-live="polite"></p>
-        </section>
-
-        <aside class="card">
-          <h2>Vad vi kan och inte kan hjälpa med</h2>
           <ul>
-            <li><strong>Kan:</strong> förklara guider/verktyg, ta emot förbättringsförslag, fixa fel.</li>
-            <li><strong>Kan inte:</strong> ge juridisk rådgivning eller garantera bilens skick.</li>
+            <li>Frågor om verktyget</li>
+            <li>Förslag på förbättringar</li>
+            <li>Rapportering av tekniska fel</li>
           </ul>
 
           <p style="margin-top:12px;">
-            Vid osäkerhet inför köp: ta med en kunnig person eller boka en oberoende kontroll.
+            För juridiska frågor eller teknisk fordonsdiagnostik rekommenderas oberoende fackperson.
           </p>
 
-          <a class="btn-ghost" href="guider.html">Till guider</a>
-          <a class="btn-ghost" href="verktyg.html">Till verktyg</a>
+          <div style="margin-top:18px;">
+            <button class="btn" onclick="openChat()">Starta chatt</button>
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>Kommunikationspolicy</h2>
+
+          <ul>
+            <li>Ingen personlig data krävs för grundläggande frågor.</li>
+            <li>Ingen rådgivning lämnas som juridiskt bindande rekommendation.</li>
+            <li>Svarstid varierar beroende på belastning.</li>
+          </ul>
+
+          <p style="margin-top:12px;">
+            Bilkompassen är ett beslutsstöd – inte en garant.
+          </p>
+
+          <a class="btn-ghost" href="verktyg.html">Till verktyget</a>
         </aside>
+
       </div>
     </div>
   </main>
@@ -116,7 +106,7 @@ Beskrivning:
           <img src="bilkompassen_icon_transparent.png" alt="" style="width:28px; height:28px;">
           <h4 style="margin:0;">Bilkompassen</h4>
         </div>
-        <small>Beslutsstöd för att köpa begagnad bil.</small>
+        <small>Beslutsstöd för köp av begagnad bil.</small>
         <small>© <span id="year"></span> Bilkompassen</small>
       </div>
 
@@ -134,21 +124,16 @@ Beskrivning:
     </div>
   </footer>
 
-  <script>
-    const copyBtn = document.getElementById("copyBtn");
-    const statusEl = document.getElementById("status");
-    const templateEl = document.getElementById("msgTemplate");
+  <!-- CHAT PROVIDER SCRIPT HERE -->
+  <!-- Example: Paste Tawk.to or Crisp script below -->
 
-    if (copyBtn && templateEl) {
-      copyBtn.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(templateEl.value);
-          if (statusEl) statusEl.textContent = "✅ Kopierat! Klistra in i ditt mejl.";
-        } catch (e) {
-          if (statusEl) statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Kopiera manuellt.";
-        }
-      });
+  <script>
+    function openChat(){
+      if (window.Tawk_API && window.Tawk_API.maximize) {
+        window.Tawk_API.maximize();
+      }
     }
   </script>
+
 </body>
 </html>
