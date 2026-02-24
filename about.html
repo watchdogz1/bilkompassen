@@ -11,14 +11,11 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1E3557">
 
-  <!-- Global theme -->
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
 </head>
 
 <body>
-
-  <!-- Shared header (app.js handles mobile + aria-current) -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo-wrap" aria-label="Bilkompassen – Start">
@@ -53,29 +50,23 @@
     <div class="container">
       <h1 class="page-title">Om Bilkompassen</h1>
       <p class="lead">
-        Bilkompassen är beslutsstöd för dig som ska köpa begagnad bil i Sverige — byggt för att göra rätt kontroller i rätt ordning.
+        Bilkompassen är ett beslutsinstrument för att köpa begagnad bil i Sverige — guider i rätt ordning + verktyg som ger riktning.
       </p>
 
       <div class="grid-2">
         <section class="card">
           <h2>Vad Bilkompassen är</h2>
-          <div class="pill-row" aria-label="Nyckelpunkter">
+          <div class="pill-row">
             <span class="pill">Guidat beslut</span>
             <span class="pill">Checklista i steg</span>
             <span class="pill">Praktiska verktyg</span>
             <span class="pill">Svenska förhållanden</span>
           </div>
-
           <p>
             Här finns guider, checklistor och enkla verktyg som hjälper dig bedöma risk innan du skriver på.
-            Tanken är att du snabbt ska kunna se vad som är viktigt att kontrollera — och vad som kan vänta.
+            Tanken är att du snabbt ska se vad som är viktigt att kontrollera — och vad som kan vänta.
           </p>
-
-          <p>
-            Börja gärna med guiderna (Steg 1–4) och gå sedan till verktygen när du står vid bilen.
-          </p>
-
-          <a class="btn" href="guider.html">Gå till guider (Steg 1–4)</a>
+          <a class="btn" href="guider.html">Öppna guider</a>
           <a class="btn-ghost" href="verktyg.html">Öppna verktyg</a>
         </section>
 
@@ -84,15 +75,13 @@
           <ul>
             <li>Ingen juridisk rådgivning eller garantiutfärdare.</li>
             <li>Ingen bilannons-sajt och inga “säljflöden”.</li>
-            <li>Ingen fullständig skade-/historikrapport (det kräver externa datakällor).</li>
+            <li>Ingen fullständig skade-/historikrapport (kräver externa datakällor).</li>
           </ul>
-
           <p style="margin-top:12px">
-            Bilkompassen ska hjälpa dig fatta bättre beslut — men slutbedömningen är alltid din. Vid osäkerhet:
-            ta med en kunnig person eller boka en oberoende kontroll.
+            Bilkompassen hjälper dig fatta bättre beslut — men slutbedömningen är alltid din.
+            Vid osäkerhet: ta med en kunnig person eller boka en oberoende kontroll.
           </p>
-
-          <a class="btn" href="contact.html">Kontakt & tipsa om guide</a>
+          <a class="btn" href="contact.html">Kontakt & tips</a>
         </aside>
       </div>
 
@@ -100,18 +89,17 @@
         <h2>Så används guider & verktyg</h2>
         <p>
           Guiderna är byggda som en väg: <strong>Planera → Filtrera → Kontrollera → Förhandla</strong>.
-          Verktygen är till för att göra snabba, konkreta bedömningar när du är nära köp.
+          Verktygen är till för snabba, konkreta bedömningar när du är nära köp.
         </p>
         <ul>
-          <li><strong>Innan du åker:</strong> använd budgetguiden och checklistan för att undvika fel biltyp.</li>
-          <li><strong>Vid bilen:</strong> följ “Köpchecklista” och “Provkörning” steg för steg.</li>
+          <li><strong>Innan du åker:</strong> bygg budget och sortera bort risk tidigt.</li>
+          <li><strong>Vid bilen:</strong> följ checklistan och provkörning steg för steg.</li>
           <li><strong>Efteråt:</strong> sammanfatta fynd och avgör om det är grön/gul/röd risk.</li>
         </ul>
       </section>
     </div>
   </main>
 
-  <!-- Shared product footer -->
   <footer class="footer">
     <div class="container footer-grid">
       <div>
@@ -125,22 +113,16 @@
 
       <div>
         <h4>Innehåll</h4>
-        <a href="guider.html">Guider</a>
         <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
       </div>
 
       <div>
-        <h4>Kontakt</h4>
-        <a href="contact.html">Kontakt & tips</a>
+        <h4>Mer</h4>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
       </div>
     </div>
   </footer>
-
-  <!-- Keep year fallback (app.js may also do it; safe to have) -->
-  <script>
-    const yearEl = document.getElementById("year");
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-  </script>
-
 </body>
 </html>
