@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bilkompassen – Provkörningsprotokoll (A4)</title>
+
+  <style>
+    :root{
+      --ink:#0b1220;
+      --muted:#516078;
+      --line: rgba(15,23,42,.16);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--ink);
+      background:#fff;
+    }
+    .page{
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 14mm 14mm 12mm;
+    }
+    .hdr{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding-bottom:10px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .brand{ display:flex; align-items:center; gap:10px; }
+    .brand img{ height:18mm; width:auto; }
+    .title{
+      margin:0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      line-height:1.15;
+    }
+    .subtitle{
+      margin:3px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing:.2px;
+    }
+    .meta{
+      text-align:right;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
+      white-space:nowrap;
+    }
+
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
+    .block{
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:10px;
+    }
+    .block h2{
+      margin:0 0 8px;
+      font-size:12px;
+      letter-spacing:.2px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .fields{ display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+    .field{ display:flex; flex-direction:column; gap:4px; }
+    .label{ font-size:11px; color:var(--muted); }
+    .line{
+      height: 10mm;
+      border:1px solid var(--line);
+      border-radius:8px;
+    }
+
+    .checklist{ display:grid; grid-template-columns: 1fr 1fr; gap:6px 12px; }
+    .chk{ display:flex; align-items:flex-start; gap:8px; font-size:12px; line-height:1.25; }
+    .box{ width:4.5mm; height:4.5mm; border:1.6px solid var(--ink); margin-top:1px; flex: 0 0 auto; }
+
+    .notes .line{ height: 12mm; border-radius:8px; }
+    .notes .line + .line{ margin-top:6px; }
+
+    .tri{ display:flex; gap:10px; flex-wrap:wrap; }
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+    }
+    .pill .box{ margin-top:0; }
+
+    .korta .line{ height: 9mm; }
+
+    .footer{
+      margin-top:10px;
+      padding-top:8px;
+      border-top:1px solid var(--line);
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.35;
+      display:flex; justify-content:space-between; gap:10px;
+    }
+
+    @page{
+      size: A4;
+      margin: 12mm;
+    }
+    @media print{
+      body{ background:#fff; }
+      .page{ padding:0; width:auto; min-height:auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="hdr">
+      <div class="brand">
+        <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen">
+        <div>
+          <h1 class="title">Provkörningsprotokoll</h1>
+          <p class="subtitle">Strukturerat körtest före beslut</p>
+        </div>
+      </div>
+      <div class="meta">
+        <div><strong>Version:</strong> v1.0</div>
+        <div><strong>Datum:</strong> ____________</div>
+      </div>
+    </header>
+
+    <section class="grid2">
+      <div class="block">
+        <h2>Grunduppgifter</h2>
+        <div class="fields">
+          <div class="field">
+            <div class="label">Märke / Modell</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Årsmodell</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Miltal (km)</div>
+            <div class="line"></div>
+          </div>
+          <div class="field">
+            <div class="label">Registreringsnummer</div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Provkörningsram</h2>
+        <div class="fields">
+          <div class="field">
+            <div class="label">Körsträcka (ca)</div>
+            <div class="line korta"></div>
+          </div>
+          <div class="field">
+            <div class="label">Miljö</div>
+            <div class="tri">
+              <div class="pill"><span class="box"></span>Stad</div>
+              <div class="pill"><span class="box"></span>Landsväg</div>
+              <div class="pill"><span class="box"></span>Motorväg</div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="label">Väder / underlag</div>
+            <div class="line korta"></div>
+          </div>
+          <div class="field">
+            <div class="label">Passagerare medverkade</div>
+            <div class="tri">
+              <div class="pill"><span class="box"></span>Ja</div>
+              <div class="pill"><span class="box"></span>Nej</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="margin-top:10px;">
+      <h2>Start & tomgång</h2>
+      <div class="checklist">
+        <div class="chk"><span class="box"></span>Startar direkt (kall)</div>
+        <div class="chk"><span class="box"></span>Startar direkt (varm)</div>
+        <div class="chk"><span class="box"></span>Stabil tomgång</div>
+        <div class="chk"><span class="box"></span>Inga varningslampor</div>
+        <div class="chk"><span class="box"></span>Inga onormala ljud</div>
+        <div class="chk"><span class="box"></span>Ingen onormal rök</div>
+      </div>
+      <div class="label" style="margin-top:8px;">Noteringar</div>
+      <div class="notes">
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <section class="grid2" style="margin-top:10px;">
+      <div class="block">
+        <h2>Acceleration & drivlina</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Respons vid gas (normal)</div>
+          <div class="chk"><span class="box"></span>Ryck / tvekan</div>
+          <div class="chk"><span class="box"></span>Vibrationer under last</div>
+          <div class="chk"><span class="box"></span>Motorljud (avvikande)</div>
+          <div class="chk"><span class="box"></span>Turbo (om relevant) uppträder normalt</div>
+          <div class="chk"><span class="box"></span>Drivlina missljud</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes"><div class="line"></div></div>
+      </div>
+
+      <div class="block">
+        <h2>Växellåda</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Växlar mjukt (kall)</div>
+          <div class="chk"><span class="box"></span>Växlar mjukt (varm)</div>
+          <div class="chk"><span class="box"></span>Slirning / tvekan</div>
+          <div class="chk"><span class="box"></span>Missljud vid växling</div>
+          <div class="chk"><span class="box"></span>Koppling tar normalt (manuell)</div>
+          <div class="chk"><span class="box"></span>Back fungerar normalt</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes"><div class="line"></div></div>
+      </div>
+    </section>
+
+    <section class="grid2" style="margin-top:10px;">
+      <div class="block">
+        <h2>Styrning & hjulupphängning</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Ratten rak vid körning</div>
+          <div class="chk"><span class="box"></span>Spårkänslighet / drag</div>
+          <div class="chk"><span class="box"></span>Knak / klonk i gupp</div>
+          <div class="chk"><span class="box"></span>Vibrationer i ratt</div>
+          <div class="chk"><span class="box"></span>Styrservo uppträder normalt</div>
+          <div class="chk"><span class="box"></span>Inga missljud vid fulla rattutslag</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes"><div class="line"></div></div>
+      </div>
+
+      <div class="block">
+        <h2>Bromsar</h2>
+        <div class="checklist">
+          <div class="chk"><span class="box"></span>Bromsar jämnt</div>
+          <div class="chk"><span class="box"></span>Puls / vibration vid inbromsning</div>
+          <div class="chk"><span class="box"></span>Drar åt sida</div>
+          <div class="chk"><span class="box"></span>Pedalkänsla normal</div>
+          <div class="chk"><span class="box"></span>Handbroms håller</div>
+          <div class="chk"><span class="box"></span>Bromsljud (avvikande)</div>
+        </div>
+        <div class="label" style="margin-top:8px;">Noteringar</div>
+        <div class="notes"><div class="line"></div></div>
+      </div>
+    </section>
+
+    <section class="block" style="margin-top:10px;">
+      <h2>Helhetsintryck</h2>
+      <div class="tri" style="margin-bottom:8px;">
+        <div class="pill"><span class="box"></span>Stabil</div>
+        <div class="pill"><span class="box"></span>Mindre avvikelser</div>
+        <div class="pill"><span class="box"></span>Tydliga problem</div>
+      </div>
+      <div class="label">Noteringar</div>
+      <div class="notes">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>Bilkompassen – Provkörningsprotokoll v1.0</div>
+      <div>Syfte: strukturerad provkörning före beslut och betalning.</div>
+    </div>
+  </div>
+</body>
+</html>
