@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Bilkompassen – Hitta rätt bil från början</title>
+  <title>Bilkompassen – Beslutsstöd för begagnat bilköp</title>
 
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/icon-192.png">
@@ -16,117 +16,109 @@
 </head>
 
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-wrap" aria-label="Bilkompassen – Start">
+        <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen" class="logo-img">
+      </a>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo-wrap" aria-label="Bilkompassen hem">
-      <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen" class="logo-img">
-    </a>
-
-    <nav class="nav" aria-label="Huvudmeny">
-      <a href="index.html">Start</a>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
-    </nav>
-
-    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
-      <span class="burger-lines" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </span>
-    </button>
-  </div>
-
-  <div class="mobile-nav" id="mobileNav">
-    <div class="container mobile-nav-inner">
-      <a href="index.html">Start</a>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
-    </div>
-  </div>
-</header>
-
-<main>
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-card">
-        <h1>Hitta rätt bil – utan dyra misstag</h1>
-        <p>
-          Bilkompassen ger beslutsstöd när du köper begagnad bil.
-          Här finns verktyg, guider och en tydlig checklista så du kan ta nästa steg med mer kontroll.
-        </p>
-
-        <div class="cta">
-          <a class="btn" href="verktyg.html">Testa verktyget</a>
-          <a class="btn-ghost" href="guider.html">Läs guider</a>
-        </div>
-      </div>
-
-      <aside class="side-card">
-        <p class="side-title">Snabbstart</p>
-        <ul class="side-list">
-          <li>Gå till <strong>Verktyg</strong> och testa kompassen.</li>
-          <li>Följ <strong>Köpchecklistan</strong> innan du betalar.</li>
-          <li>Dubbelkolla historik, besiktning och skulder.</li>
-        </ul>
-      </aside>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Det här hjälper Bilkompassen med</h2>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>Beslutsstöd</h3>
-          <p>Få en tydlig riktning: vad du ska kontrollera och när du bör pausa innan köp.</p>
-        </div>
-
-        <div class="card">
-          <h3>Köpchecklista</h3>
-          <p>En enkel lista som funkar för privatköp och bilhandlare – byggd för svenska regler.</p>
-        </div>
-
-        <div class="card">
-          <h3>Guider</h3>
-          <p>Praktiska guider om ekonomi, provkörning, vanliga fällor och ägandekostnad.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="container">
-
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="bilkompassen_icon_transparent.png" alt="" class="footer-logo">
-        <div class="footer-text">
-          <strong>Bilkompassen</strong>
-          <small>Beslutsstöd för att köpa begagnad bil.</small>
-        </div>
-      </div>
-
-      <nav class="footer-links" aria-label="Sidnavigation">
+      <nav class="nav" aria-label="Huvudnavigation">
+        <a href="index.html">Start</a>
         <a href="verktyg.html">Verktyg</a>
         <a href="guider.html">Guider</a>
         <a href="about.html">Om</a>
         <a href="contact.html">Kontakt</a>
       </nav>
+
+      <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobileNav">
+        <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
 
-    <div class="footer-meta">
-      <span>© <span id="year"></span> Bilkompassen</span>
-      <span>Information och checklistor — inte juridisk rådgivning.</span>
+    <div class="mobile-nav" id="mobileNav">
+      <div class="container mobile-nav-inner">
+        <a href="index.html">Start</a>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
     </div>
+  </header>
 
-  </div>
-</footer>
+  <main class="page">
+    <div class="container">
+      <div class="grid-2">
+        <section class="card">
+          <h1 class="page-title">Hitta rätt bil — utan dyra misstag</h1>
+          <p class="lead">
+            Bilkompassen är ett beslutsinstrument för begagnatköp: guider i rätt ordning + verktyg som ger en tydlig riktning.
+          </p>
 
+          <div class="pill-row">
+            <span class="pill">Planera</span>
+            <span class="pill">Filtrera</span>
+            <span class="pill">Kontrollera</span>
+            <span class="pill">Förhandla</span>
+          </div>
+
+          <a class="btn" href="verktyg.html">Testa verktyget</a>
+          <a class="btn-ghost" href="guider.html">Öppna guider</a>
+        </section>
+
+        <aside class="card">
+          <h2>Snabbstart</h2>
+          <ul>
+            <li>Gå till <strong>Verktyg</strong> och testa kompassen.</li>
+            <li>Följ <strong>Köpchecklistan</strong> innan du betalar.</li>
+            <li>Dubbelkolla historik, besiktning och skulder.</li>
+          </ul>
+          <a class="btn-ghost" href="guide-kopchecklista.html">Öppna köpchecklistan</a>
+        </aside>
+      </div>
+
+      <h2 style="margin:22px 0 12px; color:var(--brand); font-weight:1000;">Det här hjälper Bilkompassen med</h2>
+
+      <div class="grid-3">
+        <section class="card">
+          <h2>Beslutsstöd</h2>
+          <p>Få en tydlig riktning: vad du ska kontrollera och när du bör pausa innan köp.</p>
+        </section>
+        <section class="card">
+          <h2>Köpchecklista</h2>
+          <p>En enkel lista som funkar för privatköp och bilhandlare — byggd för svenska förhållanden.</p>
+        </section>
+        <section class="card">
+          <h2>Guider</h2>
+          <p>Praktiska guider om ekonomi, provkörning, fallgropar och ägandekostnad.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <img src="bilkompassen_icon_transparent.png" alt="" style="width:28px; height:28px;">
+          <h4 style="margin:0;">Bilkompassen</h4>
+        </div>
+        <small>Beslutsstöd för att köpa begagnad bil.</small>
+        <small>© <span id="year"></span> Bilkompassen</small>
+      </div>
+
+      <div>
+        <h4>Innehåll</h4>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+      </div>
+
+      <div>
+        <h4>Mer</h4>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
