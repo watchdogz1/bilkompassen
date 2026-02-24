@@ -8,13 +8,15 @@
   --bg0:#f8fbff;
   --bg1:#ffffff;
 
-  --line:rgba(15,23,42,.10);
+  /* softer borders */
+  --line:rgba(15,23,42,.08);
   --card:rgba(255,255,255,.92);
 
   --shadow: 0 18px 55px rgba(10,18,32,.10);
   --shadow-sm: 0 10px 26px rgba(10,18,32,.08);
 
-  --radius:16px;
+  /* a bit more modern */
+  --radius:18px;
   --radius-sm:14px;
 }
 
@@ -36,14 +38,22 @@ body{
 /* HEADER */
 .site-header{
   position:sticky; top:0; z-index:50;
-  background:rgba(255,255,255,.82);
-  backdrop-filter:saturate(160%) blur(12px);
+
+  /* slightly darker / more premium glass */
+  background:rgba(255,255,255,.72);
+  backdrop-filter:saturate(170%) blur(14px);
+
   border-bottom:1px solid var(--line);
+
+  /* subtle brand accent */
+  border-top:3px solid rgba(230,162,60,.35);
 }
+
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
   padding:10px 0; gap:14px;
 }
+
 .logo-wrap{ display:flex; align-items:center; text-decoration:none; gap:10px; }
 .logo-img{
   height:72px; width:auto; display:block;
@@ -195,7 +205,7 @@ body{
   border:1px solid var(--line);
   border-radius: var(--radius);
   padding:18px;
-  box-shadow: 0 16px 44px rgba(10,18,32,.08);
+  box-shadow: 0 18px 50px rgba(10,18,32,.09);
 }
 .card h3{ margin:0 0 6px; color:var(--brand); font-size:16px; }
 .card p{ margin:0; color:var(--muted); line-height:1.65; font-weight:650; font-size:14px; }
