@@ -1,212 +1,185 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Så provkör du rätt – Bilkompassen</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Guider – Bilkompassen</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#1E3557">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1E3557">
 
-<link rel="stylesheet" href="styles.css">
-<script src="app.js" defer></script>
-
-<style>
-.page{ padding:34px 0 52px; }
-.breadcrumb{ color:var(--muted); font-weight:750; font-size:13px; }
-.breadcrumb a{ color:var(--brand); text-decoration:none; font-weight:900; }
-.breadcrumb a:hover{ text-decoration:underline; }
-
-.article{
-  margin-top:12px;
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:22px;
-  box-shadow:var(--shadow);
-}
-h1{
-  margin:0 0 10px;
-  color:var(--brand);
-  font-weight:1000;
-  letter-spacing:-.4px;
-  font-size:30px;
-}
-.lead{
-  margin:0 0 18px;
-  color:var(--muted);
-  line-height:1.7;
-  font-weight:650;
-  max-width:75ch;
-}
-h2{
-  margin:22px 0 8px;
-  color:var(--brand);
-  font-size:17px;
-  font-weight:1000;
-}
-ul{ margin:10px 0 12px; padding-left:18px; line-height:1.8; }
-li{ margin:6px 0; }
-.callout{
-  margin-top:14px;
-  border:1px solid rgba(230,162,60,.22);
-  background:rgba(230,162,60,.10);
-  border-radius:var(--radius);
-  padding:14px;
-}
-.actions{
-  display:flex; gap:10px; flex-wrap:wrap;
-  margin-top:16px;
-}
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:12px 16px;
-  background:var(--brand);
-  color:#fff;
-  text-decoration:none;
-  border-radius:var(--radius-sm);
-  font-weight:950;
-  box-shadow:0 16px 34px rgba(30,53,87,.22);
-}
-.btn-ghost{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:12px 16px;
-  background:rgba(255,255,255,.85);
-  color:var(--brand);
-  text-decoration:none;
-  border-radius:var(--radius-sm);
-  font-weight:950;
-  border:1px solid rgba(30,53,87,.18);
-}
-</style>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-wrap" aria-label="Bilkompassen – Start">
+        <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen" class="logo-img">
+      </a>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo-wrap" aria-label="Bilkompassen hem">
-      <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen" class="logo-img">
-    </a>
-
-    <nav class="nav" aria-label="Huvudmeny">
-      <a href="index.html">Start</a>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
-    </nav>
-
-    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
-      <span class="burger-lines" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </span>
-    </button>
-  </div>
-
-  <div class="mobile-nav" id="mobileNav">
-    <div class="container mobile-nav-inner">
-      <a href="index.html">Start</a>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
-    </div>
-  </div>
-</header>
-
-<main class="page">
-  <div class="container">
-    <div class="breadcrumb"><a href="guider.html">Guider</a> · Steg 2</div>
-
-    <article class="article">
-      <h1>Så provkör du rätt</h1>
-      <p class="lead">
-        En provkörning ska göra två saker: avslöja problem och bekräfta att bilen känns rätt.
-        Här är en enkel rutin som funkar varje gång.
-      </p>
-
-      <div class="callout">
-        <b>Tips:</b> Be om att få starta bilen när den är kall om det går.
-        Många fel märks mest vid kallstart.
-      </div>
-
-      <h2>1) Innan du kör</h2>
-      <ul>
-        <li>Ställ in stol, speglar och ratt (du ska sitta stabilt).</li>
-        <li>Testa bromspedal (känns den fast eller svampig?).</li>
-        <li>Lyssna på tomgång: ojämn gång, tick/knack, ovanlig rök.</li>
-      </ul>
-
-      <h2>2) Stadskörning (låga hastigheter)</h2>
-      <ul>
-        <li>Lyssna efter klonk från fjädring vid gupp/kurvor.</li>
-        <li>Testa styrning: drar bilen åt sidan? känns den “lös”?</li>
-        <li>Testa lågfartsbroms: vibrationer eller gnissel?</li>
-      </ul>
-
-      <h2>3) Landsväg/motorväg</h2>
-      <ul>
-        <li>Accelerera upp till jämn fart och känn vibrationer i ratt/säte.</li>
-        <li>Lyssna på vind- och vägljud (kan indikera dåliga lister/lagringar/däck).</li>
-        <li>Testa lätt kurvtagning: stabilt eller “flytigt”?</li>
-      </ul>
-
-      <h2>4) Bromstest (kontrollerat och säkert)</h2>
-      <ul>
-        <li>Bromsa bestämt från högre fart på rak väg.</li>
-        <li>Känn om den drar åt sidan eller om ratten vibrerar.</li>
-      </ul>
-
-      <h2>5) Automatlåda/manuell</h2>
-      <ul>
-        <li><b>Automat:</b> växlar den mjukt? ryck? fördröjning?</li>
-        <li><b>Manuell:</b> koppling tar jämnt? slirar? svår att få i växel?</li>
-      </ul>
-
-      <h2>6) Efter provkörning</h2>
-      <ul>
-        <li>Kolla om det luktar bränt (koppling/bromsar).</li>
-        <li>Titta under bilen efter dropp/läckage.</li>
-        <li>Fråga säljaren om allt du reagerade på.</li>
-      </ul>
-
-      <div class="actions">
-        <a class="btn" href="guide-kopchecklista.html">Öppna köpchecklistan</a>
-        <a class="btn-ghost" href="verktyg.html">Testa verktyget</a>
-      </div>
-    </article>
-  </div>
-</main>
-
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="bilkompassen_icon_transparent.png" alt="" class="footer-logo">
-        <div class="footer-text">
-          <strong>Bilkompassen</strong>
-          <small>Beslutsstöd för att köpa begagnad bil.</small>
-        </div>
-      </div>
-
-      <nav class="footer-links" aria-label="Sidnavigation">
+      <nav class="nav" aria-label="Huvudnavigation">
+        <a href="index.html">Start</a>
         <a href="verktyg.html">Verktyg</a>
         <a href="guider.html">Guider</a>
         <a href="about.html">Om</a>
         <a href="contact.html">Kontakt</a>
       </nav>
+
+      <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobileNav">
+        <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
 
-    <div class="footer-meta">
-      <span>© <span id="year"></span> Bilkompassen</span>
-      <span>Information och checklistor — inte juridisk rådgivning.</span>
+    <div class="mobile-nav" id="mobileNav">
+      <div class="container mobile-nav-inner">
+        <a href="index.html">Start</a>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
     </div>
-  </div>
-</footer>
+  </header>
 
+  <main class="page">
+    <div class="container">
+      <h1 class="page-title">Guider</h1>
+      <p class="lead">Följ stegen i ordning. Öppna en panel i taget, gör klart, fortsätt.</p>
+
+      <section class="card">
+        <h2>Steg 1–4</h2>
+        <p>Det här är en process — inte en artikel. Målet är att minska risken innan du betalar.</p>
+
+        <div class="accordion" id="accordion">
+          <div class="acc-item open">
+            <button class="acc-btn" type="button">
+              <span>
+                <span class="acc-icon">1</span>
+                Planera
+                <span class="acc-badge">Budget & behov</span>
+              </span>
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>Bygg din budget och välj biltyp som matchar din vardag.</p>
+              <div class="pill-row">
+                <span class="pill">Budget</span>
+                <span class="pill">Ägandekostnad</span>
+                <span class="pill">Biltyp</span>
+              </div>
+              <a class="btn" href="guide-budget.html">Öppna budgetguiden</a>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-btn" type="button">
+              <span>
+                <span class="acc-icon">2</span>
+                Filtrera
+                <span class="acc-badge">Sortera bort risk</span>
+              </span>
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>Sållar snabbt: historik, dokument, besiktning, skulder och varningssignaler.</p>
+              <div class="pill-row">
+                <span class="pill">Historik</span>
+                <span class="pill">Dokument</span>
+                <span class="pill">Varningsflaggor</span>
+              </div>
+              <a class="btn" href="guide-kopchecklista.html">Öppna köpchecklistan</a>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-btn" type="button">
+              <span>
+                <span class="acc-icon">3</span>
+                Kontrollera
+                <span class="acc-badge">Provkörning</span>
+              </span>
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>Provkör systematiskt: ljud, vibrationer, broms, styrning och växellåda.</p>
+              <div class="pill-row">
+                <span class="pill">Test</span>
+                <span class="pill">Symptom</span>
+                <span class="pill">Frågor</span>
+              </div>
+              <a class="btn" href="guide-provkorning.html">Öppna provkörningsguiden</a>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-btn" type="button">
+              <span>
+                <span class="acc-icon">4</span>
+                Förhandla
+                <span class="acc-badge">Beslut & nästa steg</span>
+              </span>
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>Sammanfatta fynd, sätt prisram och avgör: köp, pausa eller avstå.</p>
+              <div class="pill-row">
+                <span class="pill">Pris</span>
+                <span class="pill">Risk</span>
+                <span class="pill">Beslut</span>
+              </div>
+              <a class="btn" href="verktyg.html">Öppna verktyget</a>
+              <a class="btn-ghost" href="contact.html">Tipsa om nästa guide</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <img src="bilkompassen_icon_transparent.png" alt="" style="width:28px; height:28px;">
+          <h4 style="margin:0;">Bilkompassen</h4>
+        </div>
+        <small>Beslutsstöd för att köpa begagnad bil.</small>
+        <small>© <span id="year"></span> Bilkompassen</small>
+      </div>
+
+      <div>
+        <h4>Innehåll</h4>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+      </div>
+
+      <div>
+        <h4>Mer</h4>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion: only one open at a time
+    const acc = document.getElementById("accordion");
+    if(acc){
+      acc.querySelectorAll(".acc-item").forEach(item => {
+        const btn = item.querySelector(".acc-btn");
+        if(!btn) return;
+        btn.addEventListener("click", () => {
+          const isOpen = item.classList.contains("open");
+          acc.querySelectorAll(".acc-item").forEach(i => i.classList.remove("open"));
+          if(!isOpen) item.classList.add("open");
+        });
+      });
+    }
+  </script>
 </body>
 </html>
