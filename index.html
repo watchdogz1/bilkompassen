@@ -172,17 +172,6 @@ body{
   border:1px solid rgba(30,53,87,.18);
 }
 
-.pills{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
-.pill{
-  font-size:13px;
-  font-weight:900;
-  color:var(--brand);
-  background: rgba(30,53,87,.08);
-  border:1px solid rgba(30,53,87,.12);
-  padding:8px 10px;
-  border-radius:999px;
-}
-
 .side-card{
   background: rgba(255,255,255,.88);
   border:1px solid var(--line);
@@ -213,28 +202,36 @@ body{
 .card h3{ margin:0 0 6px; color:var(--brand); font-size:16px; }
 .card p{ margin:0; color:var(--muted); line-height:1.65; font-weight:650; font-size:14px; }
 
-/* FOOTER */
+/* FOOTER (simplified) */
 .footer{
   border-top:1px solid var(--line);
   background: rgba(255,255,255,.86);
-  padding:28px 0;
+  padding:18px 0;
 }
-.footer-grid{
-  display:grid;
-  grid-template-columns: 1.4fr .6fr .6fr;
-  gap:16px;
-  align-items:start;
+.footer-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
 }
-.footer h4{ margin:0 0 8px; color:var(--brand); font-size:14px; font-weight:1000; }
+.footer small{
+  color:var(--muted);
+  font-weight:650;
+}
+.footer-links{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
 .footer a{
   color:var(--muted);
   text-decoration:none;
   font-weight:800;
-  display:block;
-  padding:6px 0;
+  padding:6px 8px;
+  border-radius:10px;
 }
-.footer a:hover{ color:var(--brand); }
-.footer small{ display:block; margin-top:10px; opacity:.92; line-height:1.55; color:var(--muted); }
+.footer a:hover{ color:var(--brand); background:rgba(30,53,87,.08); }
 
 /* RESPONSIVE */
 @media (max-width: 860px){
@@ -300,12 +297,6 @@ body{
           <a class="btn" href="verktyg.html">Testa verktyget</a>
           <a class="btn-ghost" href="guider.html">Läs guider</a>
         </div>
-
-        <div class="pills">
-          <span class="pill">0 kr tills det bär sig</span>
-          <span class="pill">Svenskt fokus</span>
-          <span class="pill">Praktiskt, inget fluff</span>
-        </div>
       </div>
 
       <aside class="side-card">
@@ -341,26 +332,13 @@ body{
 </main>
 
 <footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <h4>Bilkompassen</h4>
-      <small>
-        Svensk beslutshjälp för begagnatköp. Inga listningar – bara guider och verktyg.
-      </small>
-      <small>© <span id="year"></span> Bilkompassen</small>
-    </div>
-    <div>
-      <h4>Sidor</h4>
+  <div class="container footer-inner">
+    <small>© <span id="year"></span> Bilkompassen</small>
+    <div class="footer-links" aria-label="Sidnavigation">
       <a href="verktyg.html">Verktyg</a>
       <a href="guider.html">Guider</a>
       <a href="about.html">Om</a>
       <a href="contact.html">Kontakt</a>
-    </div>
-    <div>
-      <h4>Snabbt</h4>
-      <a href="guider.html">Köpchecklista</a>
-      <a href="verktyg.html">Testa kompassen</a>
-      <a href="contact.html">Tipsa oss</a>
     </div>
   </div>
 </footer>
