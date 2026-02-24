@@ -18,11 +18,12 @@
   --brand:#1E3557;
   --accent:#E6A23C;
   --line:rgba(15,23,42,.10);
-  --shadow: 0 18px 55px rgba(10,18,32,.10);
+  --shadow:0 18px 55px rgba(10,18,32,.10);
   --radius:16px;
 }
 
 *{ box-sizing:border-box; }
+
 body{
   margin:0;
   font-family:system-ui,-apple-system,Segoe UI,Arial;
@@ -34,36 +35,71 @@ body{
 }
 .container{ max-width:1120px; margin:0 auto; padding:0 20px; }
 
+
+
+
+
+
 /* HEADER */
 .site-header{
-  position:sticky; top:0; z-index:50;
-  background:rgba(255,255,255,.82);
-  backdrop-filter:saturate(160%) blur(12px);
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.78);
+  backdrop-filter: blur(14px) saturate(150%);
   border-bottom:1px solid var(--line);
 }
+
 .header-inner{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 0; gap:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 0;
+  gap:18px;
 }
-.logo-wrap{ display:flex; align-items:center; text-decoration:none; }
+
+/* LOGO PLATE — hides baked white background */
+.logo-wrap{
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+  padding:6px 10px;
+  border-radius:14px;
+
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(245,248,255,.92));
+  border:1px solid rgba(15,23,42,.08);
+  box-shadow:0 10px 30px rgba(10,18,32,.08);
+}
+
 .logo-img{
-  height:74px;
+  height:46px;            /* tight header */
   width:auto;
   display:block;
-  filter: drop-shadow(0 10px 24px rgba(30,53,87,.12));
 }
-.nav{ display:flex; align-items:center; gap:10px; }
+
+/* NAV */
+.nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
 .nav a{
   text-decoration:none;
   color:var(--muted);
-  font-weight:700;
+  font-weight:800;
   font-size:14px;
   padding:10px 12px;
   border-radius:12px;
   transition:.15s ease;
 }
-.nav a:hover{ background: rgba(30,53,87,.08); color:var(--brand); transform: translateY(-1px); }
+.nav a:hover{
+  background:rgba(30,53,87,.08);
+  color:var(--brand);
+  transform:translateY(-1px);
+}
 
+/* BURGER */
 .burger{
   display:none;
   border:1px solid var(--line);
@@ -71,41 +107,73 @@ body{
   border-radius:14px;
   padding:10px 12px;
   cursor:pointer;
-  box-shadow: 0 10px 26px rgba(10,18,32,.08);
+  box-shadow:0 10px 26px rgba(10,18,32,.08);
 }
 .burger-lines{ display:flex; flex-direction:column; gap:5px; }
-.burger-lines span{ width:22px; height:2px; background:var(--brand); border-radius:2px; display:block; }
+.burger-lines span{
+  width:22px; height:2px;
+  background:var(--brand);
+  border-radius:2px;
+  display:block;
+}
 
 .mobile-nav{ display:none; border-top:1px solid var(--line); background:#fff; }
 .mobile-nav.open{ display:block; }
 .mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
 .mobile-nav a{
-  text-decoration:none; color:var(--muted); font-weight:800;
-  padding:12px 12px; border-radius:14px;
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:900;
+  padding:12px 12px;
+  border-radius:14px;
 }
-.mobile-nav a:hover{ background:rgba(30,53,87,.08); color:var(--brand); }
+.mobile-nav a:hover{
+  background:rgba(30,53,87,.08);
+  color:var(--brand);
+}
+
+
+
+
 
 /* PAGE */
 .page{ padding:34px 0 44px; }
-.page-title{ margin:0 0 10px; color:var(--brand); font-weight:1000; letter-spacing:-.4px; font-size:30px; }
-.lead{ margin:0 0 18px; color:var(--muted); line-height:1.65; font-weight:650; }
+.page-title{
+  margin:0 0 10px;
+  color:var(--brand);
+  font-weight:1000;
+  letter-spacing:-.4px;
+  font-size:30px;
+}
+.lead{
+  margin:0 0 18px;
+  color:var(--muted);
+  line-height:1.65;
+  font-weight:650;
+}
 
 .panel{
-  background: rgba(255,255,255,.92);
+  background:rgba(255,255,255,.92);
   border:1px solid var(--line);
   border-radius:var(--radius);
   padding:18px;
-  box-shadow: var(--shadow);
+  box-shadow:var(--shadow);
 }
 
 .tool-grid{
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:1fr 1fr;
   gap:14px;
   align-items:start;
 }
 
-.form-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center; }
+.form-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+  align-items:center;
+}
 
 input{
   padding:12px 12px;
@@ -116,42 +184,50 @@ input{
   outline:none;
   background:#fff;
 }
-input:focus{ border-color: rgba(30,53,87,.35); box-shadow:0 0 0 4px rgba(30,53,87,.10); }
+input:focus{
+  border-color:rgba(30,53,87,.35);
+  box-shadow:0 0 0 4px rgba(30,53,87,.10);
+}
 
 button{
   padding:12px 16px;
-  background: var(--brand);
+  background:var(--brand);
   color:#fff;
   border:none;
   border-radius:14px;
   cursor:pointer;
-  font-weight:900;
-  box-shadow: 0 16px 34px rgba(30,53,87,.22);
-  transition: transform .15s ease;
+  font-weight:950;
+  box-shadow:0 16px 34px rgba(30,53,87,.22);
+  transition:transform .15s ease;
 }
-button:hover{ transform: translateY(-1px); }
+button:hover{ transform:translateY(-1px); }
 
-/* Structured result box */
+/* RESULT */
 .result{
   margin-top:14px;
   padding:14px;
   border-radius:14px;
   border:1px solid var(--line);
   background:linear-gradient(180deg,#fff,#f6f9ff);
-  font-weight:800;
+  font-weight:850;
   line-height:1.45;
-  min-height:84px;
+  min-height:92px;
 }
 .result strong{ display:block; color:var(--brand); }
 .result small{ display:block; margin-top:6px; color:var(--muted); font-weight:650; }
-.result a{ color:var(--brand); font-weight:900; text-decoration:underline; text-underline-offset:3px; }
-.result a:hover{ opacity:.9; }
+.result a{
+  color:var(--brand);
+  font-weight:900;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
 
 /* COMPASS */
 .compass-wrap{ display:flex; flex-direction:column; gap:12px; align-items:center; }
 
 .compass{
-  width:280px; height:280px; border-radius:50%;
+  width:280px; height:280px;
+  border-radius:50%;
   position:relative;
   background:
     conic-gradient(
@@ -161,25 +237,17 @@ button:hover{ transform: translateY(-1px); }
     ),
     radial-gradient(circle at center,#fff 0%,#fff 50%,#f0f4fb 100%);
   border:1px solid var(--line);
-  box-shadow: 0 22px 60px rgba(10,18,32,.12);
+  box-shadow:0 22px 60px rgba(10,18,32,.12);
   overflow:hidden;
-}
-
-.compass::before{
-  content:"";
-  position:absolute; inset:12px;
-  border-radius:50%;
-  border:2px solid rgba(30,53,87,.12);
-  background: radial-gradient(circle at center, rgba(255,255,255,.82) 0%, rgba(255,255,255,.92) 55%, rgba(255,255,255,.0) 100%);
-  pointer-events:none;
 }
 
 .hub{
   position:absolute; left:50%; top:50%;
-  width:18px; height:18px; transform:translate(-50%,-50%);
+  width:18px; height:18px;
+  transform:translate(-50%,-50%);
   border-radius:50%;
-  background: var(--brand);
-  box-shadow: 0 12px 28px rgba(30,53,87,.25);
+  background:var(--brand);
+  box-shadow:0 12px 28px rgba(30,53,87,.25);
   z-index:5;
 }
 
@@ -190,32 +258,22 @@ button:hover{ transform: translateY(-1px); }
   transform:rotate(0deg);
   border-radius:999px;
   z-index:4;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 70%, rgba(230,162,60,.22) 100%);
-  box-shadow: 0 18px 34px rgba(230,162,60,.22);
-}
-.needle::after{
-  content:"";
-  position:absolute; right:-10px; top:50%;
-  transform:translateY(-50%);
-  width:0; height:0;
-  border-left:14px solid rgba(230,162,60,.85);
-  border-top:9px solid transparent;
-  border-bottom:9px solid transparent;
+  background:linear-gradient(90deg,var(--accent),rgba(230,162,60,.22));
+  box-shadow:0 18px 34px rgba(230,162,60,.22);
 }
 
 /* FOOTER */
-.footer{ border-top:1px solid var(--line); background: rgba(255,255,255,.86); padding:28px 0; }
+.footer{
+  border-top:1px solid var(--line);
+  background:rgba(255,255,255,.86);
+  padding:22px 0;
+}
 
+/* RESPONSIVE */
 @media (max-width:920px){ .tool-grid{ grid-template-columns:1fr; } }
 @media (max-width:860px){
   .nav{ display:none; }
   .burger{ display:inline-flex; }
-  .logo-img{ height:70px; }
-  .compass{ width:260px; height:260px; }
-}
-@media (max-width:420px){
-  .logo-img{ height:66px; }
-  .compass{ width:240px; height:240px; }
 }
 </style>
 </head>
@@ -224,6 +282,7 @@ button:hover{ transform: translateY(-1px); }
 
 <header class="site-header">
   <div class="container header-inner">
+
     <a href="index.html" class="logo-wrap">
       <img src="logo_trimmed.png" alt="Bilkompassen" class="logo-img">
     </a>
@@ -236,9 +295,10 @@ button:hover{ transform: translateY(-1px); }
       <a href="contact.html">Kontakt</a>
     </nav>
 
-    <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false">
+    <button class="burger" id="burgerBtn">
       <span class="burger-lines"><span></span><span></span><span></span></span>
     </button>
+
   </div>
 
   <div class="mobile-nav" id="mobileNav">
@@ -253,170 +313,112 @@ button:hover{ transform: translateY(-1px); }
 </header>
 
 <main class="page">
-  <div class="container">
-    <h1 class="page-title">Verktyg</h1>
-    <p class="lead">Skriv in ett registreringsnummer och få en snabb riktning.</p>
+<div class="container">
 
-    <div class="tool-grid">
-      <section class="panel">
-        <div class="form-row">
-          <input id="reg" placeholder="ABC123" inputmode="text" autocomplete="off" aria-label="Registreringsnummer">
-          <button id="anBtn" type="button">Analysera</button>
-        </div>
+<h1 class="page-title">Verktyg</h1>
+<p class="lead">Skriv in ett registreringsnummer och få en snabb riktning.</p>
 
-        <div id="result" class="result">
-          <strong>Redo.</strong>
-          <small>Skriv in ett regnr och tryck på “Analysera”.</small>
-          <small>Det här är en snabb riktning – inte en garanti.</small>
-        </div>
-      </section>
+<div class="tool-grid">
 
-      <section class="panel compass-wrap">
-        <div class="compass" aria-label="Kompass med riskzoner">
-          <div id="needle" class="needle"></div>
-          <div class="hub"></div>
-        </div>
-      </section>
-    </div>
-  </div>
+<section class="panel">
+<div class="form-row">
+<input id="reg" placeholder="ABC123">
+<button id="anBtn">Analysera</button>
+</div>
+
+<div id="result" class="result">
+<strong>Redo.</strong>
+<small>Skriv in ett regnr och tryck på “Analysera”.</small>
+</div>
+</section>
+
+<section class="panel compass-wrap">
+<div class="compass">
+<div id="needle" class="needle"></div>
+<div class="hub"></div>
+</div>
+</section>
+
+</div>
+</div>
 </main>
 
 <footer class="footer">
-  <div class="container">
-    <small>© <span id="year"></span> Bilkompassen</small>
-  </div>
+<div class="container">
+<small>© <span id="year"></span> Bilkompassen</small>
+</div>
 </footer>
 
 <script>
-/* Safe mobile nav (toggle via .open class only) */
-(() => {
-  const burgerBtn = document.getElementById("burgerBtn");
-  const mobileNav = document.getElementById("mobileNav");
-  if(!burgerBtn || !mobileNav) return;
+const burgerBtn=document.getElementById("burgerBtn");
+const mobileNav=document.getElementById("mobileNav");
+if(burgerBtn&&mobileNav){
+burgerBtn.addEventListener("click",()=>mobileNav.classList.toggle("open"));
+}
 
-  const setExpanded = (v) => burgerBtn.setAttribute("aria-expanded", v ? "true" : "false");
+document.getElementById("year").textContent=new Date().getFullYear();
 
-  burgerBtn.addEventListener("click", () => {
-    const isOpen = mobileNav.classList.toggle("open");
-    setExpanded(isOpen);
-  });
+const regInput=document.getElementById("reg");
+const btn=document.getElementById("anBtn");
+const needle=document.getElementById("needle");
+const result=document.getElementById("result");
 
-  document.addEventListener("keydown", (e) => {
-    if(e.key === "Escape" && mobileNav.classList.contains("open")){
-      mobileNav.classList.remove("open");
-      setExpanded(false);
-    }
-  });
-})();
+function normalize(v){
+return v.replace(/\s+/g,"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+}
 
-/* Year */
-(() => {
-  const yearEl = document.getElementById("year");
-  if(yearEl) yearEl.textContent = new Date().getFullYear();
-})();
+function valid(reg){
+return reg.length>=5&&reg.length<=7&&/[A-Z]/.test(reg)&&/[0-9]/.test(reg);
+}
 
-/* Compass v1 deterministic logic */
-(() => {
-  const regInput = document.getElementById("reg");
-  const btn = document.getElementById("anBtn");
-  const needle = document.getElementById("needle");
-  const result = document.getElementById("result");
-  if(!regInput || !btn || !needle || !result) return;
+function hash(str){
+let h=0;
+for(let i=0;i<str.length;i++){
+h=(h<<5)-h+str.charCodeAt(i);
+h|=0;
+}
+return Math.abs(h);
+}
 
-  function normalizeReg(v){
-    return String(v || "")
-      .replace(/\s+/g,"")
-      .toUpperCase()
-      .replace(/[^A-Z0-9]/g,"");
-  }
+function analyze(){
+let reg=normalize(regInput.value);
 
-  function hashReg(str){
-    let h = 0;
-    for(let i=0;i<str.length;i++){
-      h = (h<<5) - h + str.charCodeAt(i);
-      h |= 0;
-    }
-    return Math.abs(h);
-  }
+if(!reg){
+result.innerHTML="<strong>Skriv in ett regnr först.</strong>";
+return;
+}
 
-  function zoneText(zone){
-    if(zone === 0){
-      return {
-        title: "🟢 Grön zon",
-        body: "Läget ser ofta okej ut på ytan. Verifiera ändå servicehistorik, besiktning och ägarbild.",
-        tip: "Fortsätt med checklistan innan du bestämmer dig."
-      };
-    }
-    if(zone === 1){
-      return {
-        title: "🟡 Gul zon",
-        body: "Det finns saker att kontrollera extra noga. Gå igenom miltal, dokumentation och senaste åtgärder.",
-        tip: "Ta hjälp av guiden och kolla vanliga fallgropar."
-      };
-    }
-    return {
-      title: "🔴 Röd zon",
-      body: "Högre risk-signal. Granska skadehistorik, kostnadsbild och papper noggrant innan du går vidare.",
-      tip: "Överväg oberoende test/inspektion."
-    };
-  }
+if(!valid(reg)){
+result.innerHTML="<strong>Hittade inget regnr.</strong><small>Det ser inte ut som ett svenskt registreringsnummer.</small>";
+return;
+}
 
-  function computeAngleWithinZone(zone, h){
-    // conic-gradient segments:
-    // Green: 0–120, Yellow: 120–240, Red: 240–360
-    const margin = 18; // keep needle away from borders
-    let start = 0, end = 120;
-    if(zone === 1){ start = 120; end = 240; }
-    if(zone === 2){ start = 240; end = 360; }
+result.innerHTML="<strong>Analyserar…</strong>";
 
-    const span = (end - start) - margin*2;
-    const offset = (h % 1000) / 1000; // 0..0.999 deterministic
-    return start + margin + (span * offset);
-  }
+const h=hash(reg);
+const zone=h%3;
+const base=[60,180,300][zone];
+const angle=base+(h%40-20);
 
-  function analyze(){
-    const reg = normalizeReg(regInput.value);
-    if(!reg){
-      result.innerHTML =
-        "<strong>Skriv in ett regnr först.</strong>" +
-        "<small>Exempel: ABC123</small>" +
-        "<small>Det här är en snabb riktning – inte en garanti.</small>";
-      return;
-    }
+needle.style.transition="transform 1s ease";
+needle.style.transform="rotate("+(angle+720)+"deg)";
 
-    // show processing while scan happens (keeps result/needle synced)
-    result.innerHTML =
-      "<strong>Analyserar…</strong>" +
-      "<small>Det här är en snabb riktning – inte en garanti.</small>";
+setTimeout(()=>{
+needle.style.transition="transform .5s ease";
+needle.style.transform="rotate("+angle+"deg)";
 
-    const h = hashReg(reg);
-    const zone = h % 3; // 0 green, 1 yellow, 2 red
-    const finalAngle = computeAngleWithinZone(zone, h);
+const texts=[
+["🟢 Grön zon","Ser ofta okej ut. Kontrollera ändå historik."],
+["🟡 Gul zon","Kräver extra kontroll av dokumentation."],
+["🔴 Röd zon","Högre risk. Granska noggrant innan beslut."]
+];
 
-    // scan animation (deterministic end state)
-    const scanAngle = finalAngle + 720;
-    needle.style.transition = "transform 1s ease";
-    needle.style.transform = "rotate(" + scanAngle + "deg)";
+result.innerHTML="<strong>"+texts[zone][0]+"</strong><small>"+texts[zone][1]+"</small>";
+},900);
+}
 
-    // update result after needle settles
-    window.setTimeout(() => {
-      needle.style.transition = "transform .55s ease";
-      needle.style.transform = "rotate(" + finalAngle + "deg)";
-
-      const t = zoneText(zone);
-      result.innerHTML =
-        "<strong>" + t.title + "</strong>" +
-        "<small>" + t.body + "</small>" +
-        "<small>" + t.tip + "</small>" +
-        "<small>→ <a href='guider.html'>Öppna köpar-checklista</a></small>";
-    }, 950);
-  }
-
-  btn.addEventListener("click", analyze);
-  regInput.addEventListener("keydown", (e) => {
-    if(e.key === "Enter") analyze();
-  });
-})();
+btn.onclick=analyze;
+regInput.onkeydown=e=>{ if(e.key==="Enter") analyze(); };
 </script>
 
 </body>
