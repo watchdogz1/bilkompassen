@@ -29,6 +29,7 @@
     }
     .select:focus{ border-color: rgba(30,53,87,.42); box-shadow:0 0 0 4px rgba(30,53,87,.12); }
     .mini{ font-family: var(--mono); font-size: 12px; letter-spacing: .2px; color: var(--muted); margin-top: 6px; }
+
     .meter{
       margin-top:12px;
       border:1px solid rgba(15,23,42,.16);
@@ -54,6 +55,36 @@
       background: linear-gradient(90deg, rgba(30,53,87,.65), rgba(230,162,60,.85));
       transition: width .25s ease;
     }
+
+    .domains{
+      margin-top:12px;
+      border:1px solid rgba(15,23,42,.16);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(255,255,255,.92);
+    }
+    .domains h3{
+      margin:0 0 10px;
+      color: var(--brand);
+      font-size:13px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      text-transform: uppercase;
+    }
+    .drow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(248,251,255,.92);
+      border:1px solid rgba(15,23,42,.10);
+      margin-top:8px;
+    }
+    .drow .left{ color: var(--muted); font-weight:800; font-size:13px; }
+    .drow .right{ font-family: var(--mono); font-weight:900; font-size:12px; white-space:nowrap; color: var(--muted); }
+
     .breakdown{
       margin-top:14px;
       border:1px solid rgba(15,23,42,.16);
@@ -85,6 +116,7 @@
     .row.pos .right{ color: #1b7a4b; }
     .row.neg .right{ color: #b22a2a; }
     .row.neu .right{ color: var(--muted); }
+
     .next-steps{
       margin-top:12px;
       padding:12px;
@@ -102,6 +134,7 @@
     }
     .next-steps ul{ margin:0; padding-left:18px; }
     .next-steps li{ margin:6px 0; }
+
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       font-weight:1000;
@@ -149,8 +182,11 @@
   <main class="page">
     <div class="container">
       <h1 class="page-title">Verktyg</h1>
+      <p class="mini" style="margin-top:-6px;">
+        Bilkompassen Screeningmodell v1.0 • Lager 1: heuristisk bedömning • Lager 2: registerberikad bedömning (planerad)
+      </p>
       <p class="lead">
-        Screening-läge: snabb riktning baserat på vad du vet nu. Resultatet blir starkare ju mer du fyller i.
+        Screening-läge: riktning baserad på dina uppgifter. Bedömningen stärks när datatäckningen ökar.
       </p>
 
       <div class="grid-2">
@@ -161,7 +197,7 @@
             <div class="full">
               <div class="label">Registreringsnummer (valfritt)</div>
               <input class="input" id="regnr" placeholder="ABC123" aria-label="Registreringsnummer">
-              <div class="mini">Layer 1 använder dina fält. Layer 2 kan senare hämta officiell data från regnr.</div>
+              <div class="mini">Lager 1 använder dina fält. Lager 2 kan senare hämta officiell data via regnr.</div>
             </div>
 
             <div>
@@ -172,6 +208,12 @@
             <div>
               <div class="label">Miltal (km)</div>
               <input class="input" id="mileage" inputmode="numeric" placeholder="t.ex. 165000" aria-label="Miltal i km">
+            </div>
+
+            <div>
+              <div class="label">Annonserat pris (SEK)</div>
+              <input class="input" id="price" inputmode="numeric" placeholder="t.ex. 129000" aria-label="Annonserat pris i SEK">
+              <div class="mini">Används i riskdomänen Marknadsrisk (heuristiskt i Lager 1).</div>
             </div>
 
             <div>
@@ -205,7 +247,7 @@
             </div>
 
             <div>
-              <div class="label">Prisnivå (känsla)</div>
+              <div class="label">Prisnivå (subjektiv)</div>
               <select class="select" id="pricefeel">
                 <option value="unknown" selected>Okänt</option>
                 <option value="fair">Rimligt</option>
@@ -222,7 +264,7 @@
                 <option value="some">Några (t.ex. däck/rost/ljud)</option>
                 <option value="many">Flera (känns fel)</option>
               </select>
-              <div class="mini">Använd detta som “klinisk bedömning” när du står vid bilen.</div>
+              <div class="mini">Använd som screening vid bilen: observationer vägs in som riskindikatorer.</div>
             </div>
 
             <div class="full" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
@@ -231,25 +273,33 @@
             </div>
           </div>
 
-          <!-- Confidence meter -->
+          <!-- Data Coverage Index -->
           <div class="meter" aria-live="polite">
             <div class="meter-top">
-              <div class="meter-title">Confidence</div>
-              <div class="meter-val"><span id="confPct">0</span>% • <span id="confLabel">Low</span></div>
+              <div class="meter-title">Datatäckningsindex</div>
+              <div class="meter-val"><span id="confPct">0</span>% • <span id="confLabel">Låg</span></div>
             </div>
             <div class="bar" aria-hidden="true"><div id="confBar"></div></div>
-            <div class="mini" id="confMini">Fyll i fler fält för att höja säkerheten i bedömningen.</div>
+            <div class="mini" id="confMini">Öka datatäckningen för mer robust screening.</div>
           </div>
 
-          <!-- Status -->
+          <!-- Assessment Result -->
           <div class="card" style="margin-top:14px; padding:14px; background: rgba(248,251,255,.92);">
-            <h2 style="margin:0 0 6px;">Status</h2>
+            <h2 style="margin:0 0 6px;">Bedömningsresultat</h2>
             <p id="statusText" style="margin:0;">Redo. Fyll i vad du vet och tryck “Analysera”.</p>
           </div>
 
-          <!-- Breakdown -->
+          <!-- Risk Domains -->
+          <div class="domains" id="domainsBox" style="display:none;">
+            <h3>Riskdomäner</h3>
+            <div class="drow"><div class="left">Strukturell tillförlitlighet</div><div class="right"><span id="domStruct">—</span>/100</div></div>
+            <div class="drow"><div class="left">Ägar- & historikstabilitet</div><div class="right"><span id="domHist">—</span>/100</div></div>
+            <div class="drow"><div class="left">Marknadsrisk</div><div class="right"><span id="domMarket">—</span>/100</div></div>
+          </div>
+
+          <!-- Risk Contribution Analysis -->
           <div class="breakdown" id="breakdownBox" style="display:none;">
-            <h3>Risk breakdown</h3>
+            <h3>Riskbidragsanalys</h3>
             <div class="rows" id="rows"></div>
           </div>
 
@@ -336,7 +386,7 @@
           </div>
 
           <p class="helper" id="resultHint">
-            Screening: kompassen ger riktning baserat på dina uppgifter. Ju mer data, desto bättre.
+            Screening: kompassen ger riktning baserat på dina uppgifter. Ju högre datatäckning, desto bättre beslutsunderlag.
           </p>
         </section>
       </div>
@@ -384,18 +434,17 @@
     const nextSteps = document.getElementById("nextSteps");
     const stepsEl = document.getElementById("steps");
 
-    const riskBadge = document.getElementById("riskBadge");
     const riskDot = document.getElementById("riskDot");
     const riskText = document.getElementById("riskText");
 
-    // ===== helpers =====
+    const domainsBox = document.getElementById("domainsBox");
+    const domStructEl = document.getElementById("domStruct");
+    const domHistEl = document.getElementById("domHist");
+    const domMarketEl = document.getElementById("domMarket");
+
+    // helpers
     function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-
-    function setCompassAngle(deg){
-      if(!needle) return;
-      needle.setAttribute("transform", `rotate(${deg} 210 210)`);
-    }
-
+    function setCompassAngle(deg){ if(needle) needle.setAttribute("transform", `rotate(${deg} 210 210)`); }
     function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
 
     function animateTo(targetDeg){
@@ -419,11 +468,11 @@
       return Number.isFinite(n) ? n : null;
     }
 
-    // ===== confidence =====
+    // Datatäckningsindex
     function computeConfidence(){
-      // count filled signals (unknown doesn't count)
       const year = parseIntSafe(document.getElementById("year")?.value);
       const mileage = parseIntSafe(document.getElementById("mileage")?.value);
+      const price = parseIntSafe(document.getElementById("price")?.value);
 
       const service = document.getElementById("service")?.value || "unknown";
       const inspection = document.getElementById("inspection")?.value || "unknown";
@@ -434,6 +483,7 @@
       const signals = [
         year !== null,
         mileage !== null,
+        price !== null,
         service !== "unknown",
         inspection !== "unknown",
         owners !== "unknown",
@@ -444,25 +494,24 @@
       const filled = signals.filter(Boolean).length;
       const pct = Math.round((filled / signals.length) * 100);
 
-      let label = "Low";
-      if(pct >= 75) label = "High";
-      else if(pct >= 45) label = "Medium";
+      let label = "Låg";
+      if(pct >= 75) label = "Hög";
+      else if(pct >= 45) label = "Måttlig";
 
-      // update UI
       if(confPct) confPct.textContent = String(pct);
       if(confLabel) confLabel.textContent = label;
       if(confBar) confBar.style.width = pct + "%";
 
       if(confMini){
-        if(label === "High") confMini.textContent = "Hög säkerhet: du har fyllt i mycket relevant information.";
-        else if(label === "Medium") confMini.textContent = "Mellan: resultatet är användbart men kan förbättras med fler fält.";
-        else confMini.textContent = "Låg: fyll i fler fält för att höja säkerheten i bedömningen.";
+        if(label === "Hög") confMini.textContent = "Hög täckning: screening bygger på flera oberoende indikatorer.";
+        else if(label === "Måttlig") confMini.textContent = "Måttlig täckning: resultatet är användbart men kan stärkas med fler fält.";
+        else confMini.textContent = "Låg täckning: öka datatäckningen innan du drar långtgående slutsatser.";
       }
 
       return { pct, label, filled, total: signals.length };
     }
 
-    // ===== scoring + explainability =====
+    // scoring + explainability
     function addRow(rows, text, delta){
       const cls = delta > 0 ? "pos" : delta < 0 ? "neg" : "neu";
       const sign = delta > 0 ? "+" : "";
@@ -470,11 +519,16 @@
     }
 
     function scoreFromInputs(){
-      let score = 55; // baseline
+      // domäner (0–100), start i mitten
+      let structural = 50;
+      let history = 50;
+      let market = 50;
+
       const rows = [];
 
       const year = parseIntSafe(document.getElementById("year")?.value);
       const mileage = parseIntSafe(document.getElementById("mileage")?.value);
+      const price = parseIntSafe(document.getElementById("price")?.value);
 
       const service = document.getElementById("service")?.value || "unknown";
       const inspection = document.getElementById("inspection")?.value || "unknown";
@@ -482,42 +536,20 @@
       const pricefeel = document.getElementById("pricefeel")?.value || "unknown";
       const redflags = document.getElementById("redflags")?.value || "unknown";
 
-      // Service
-      if(service === "full"){ score += 18; addRow(rows, "Full servicehistorik", +18); }
-      else if(service === "partial"){ score += 6; addRow(rows, "Delvis servicehistorik", +6); }
-      else if(service === "none"){ score -= 18; addRow(rows, "Servicehistorik saknas", -18); }
+      // Strukturell tillförlitlighet
+      if(service === "full"){ structural += 18; addRow(rows, "Full servicehistorik", +18); }
+      else if(service === "partial"){ structural += 6; addRow(rows, "Delvis servicehistorik", +6); }
+      else if(service === "none"){ structural -= 18; addRow(rows, "Servicehistorik saknas", -18); }
       else addRow(rows, "Servicehistorik: okänt", 0);
 
-      // Inspection
-      if(inspection === "clean"){ score += 12; addRow(rows, "Besiktning utan anmärkningar", +12); }
-      else if(inspection === "notes"){ score -= 6; addRow(rows, "Besiktning med anmärkningar", -6); }
-      else if(inspection === "expired"){ score -= 14; addRow(rows, "Besiktning utgången / nära", -14); }
+      if(inspection === "clean"){ structural += 12; addRow(rows, "Besiktning utan anmärkningar", +12); }
+      else if(inspection === "notes"){ structural -= 6; addRow(rows, "Besiktning med anmärkningar", -6); }
+      else if(inspection === "expired"){ structural -= 14; addRow(rows, "Besiktning utgången / nära", -14); }
       else addRow(rows, "Besiktning: okänt", 0);
 
-      // Owners / history
-      if(owners === "few"){ score += 8; addRow(rows, "1–2 ägare", +8); }
-      else if(owners === "some"){ score -= 4; addRow(rows, "3–4 ägare", -4); }
-      else if(owners === "many"){ score -= 12; addRow(rows, "5+ ägare / oklar historik", -12); }
-      else addRow(rows, "Ägarhistorik: okänt", 0);
-
-      // Price feel
-      if(pricefeel === "fair"){ score += 4; addRow(rows, "Pris känns rimligt", +4); }
-      else if(pricefeel === "high"){ score -= 6; addRow(rows, "Pris känns högt", -6); }
-      else if(pricefeel === "tooGood"){ score -= 14; addRow(rows, "För bra för att vara sant", -14); }
-      else addRow(rows, "Prisnivå: okänt", 0);
-
-      // Red flags
-      if(redflags === "none"){ score += 8; addRow(rows, "Inga tydliga varningsflaggor", +8); }
-      else if(redflags === "some"){ score -= 10; addRow(rows, "Några varningsflaggor", -10); }
-      else if(redflags === "many"){ score -= 22; addRow(rows, "Flera varningsflaggor", -22); }
-      else addRow(rows, "Varningsflaggor: okänt", 0);
-
-      // Mileage/year sanity (screening logic)
       if(year !== null && mileage !== null){
         const currentYear = new Date().getFullYear();
         const age = clamp(currentYear - year, 0, 40);
-
-        // expected range ≈ 12k–20k km/year (very rough)
         const expectedLow = age * 9000;
         const expectedHigh = age * 23000;
 
@@ -525,13 +557,13 @@
           addRow(rows, "Ny bil: mil/år ej relevant", 0);
         } else {
           if(mileage < expectedLow * 0.55){
-            score -= 8;
+            structural -= 8;
             addRow(rows, "Miltal ovanligt lågt för ålder (verifiera)", -8);
           } else if(mileage > expectedHigh * 1.25){
-            score -= 10;
-            addRow(rows, "Miltal högt för ålder (slitage risk)", -10);
+            structural -= 10;
+            addRow(rows, "Miltal högt för ålder (slitage)", -10);
           } else {
-            score += 4;
+            structural += 4;
             addRow(rows, "Miltal rimligt för ålder", +4);
           }
         }
@@ -541,40 +573,68 @@
         addRow(rows, "Miltal/årsmodell: ej angivet", 0);
       }
 
-      score = clamp(Math.round(score), 0, 100);
-      return { score, rows };
+      // Ägar- & historikstabilitet
+      if(owners === "few"){ history += 8; addRow(rows, "1–2 ägare", +8); }
+      else if(owners === "some"){ history -= 4; addRow(rows, "3–4 ägare", -4); }
+      else if(owners === "many"){ history -= 12; addRow(rows, "5+ ägare / oklar historik", -12); }
+      else addRow(rows, "Ägarhistorik: okänt", 0);
+
+      if(redflags === "none"){ history += 8; addRow(rows, "Inga tydliga varningsflaggor", +8); }
+      else if(redflags === "some"){ history -= 10; addRow(rows, "Några varningsflaggor", -10); }
+      else if(redflags === "many"){ history -= 22; addRow(rows, "Flera varningsflaggor", -22); }
+      else addRow(rows, "Varningsflaggor: okänt", 0);
+
+      // Marknadsrisk
+      if(price !== null){
+        market += 2;
+        addRow(rows, "Annonserat pris angivet", +2);
+      } else {
+        addRow(rows, "Annonserat pris: ej angivet", 0);
+      }
+
+      if(pricefeel === "fair"){ market += 4; addRow(rows, "Prisnivå bedöms rimlig", +4); }
+      else if(pricefeel === "high"){ market -= 6; addRow(rows, "Prisnivå bedöms hög", -6); }
+      else if(pricefeel === "tooGood"){ market -= 14; addRow(rows, "Prisnivå: för bra för att vara sant", -14); }
+      else addRow(rows, "Prisnivå: okänt", 0);
+
+      // clamp domains
+      structural = clamp(Math.round(structural), 0, 100);
+      history = clamp(Math.round(history), 0, 100);
+      market = clamp(Math.round(market), 0, 100);
+
+      // total (viktad)
+      const score = clamp(Math.round(0.45*structural + 0.35*history + 0.20*market), 0, 100);
+
+      return { score, rows, domains: { structural, history, market } };
     }
 
     function scoreToAngle(score){
-      // wider sweep feels more like a real instrument
       return -42 + (score/100)*84; // -42..+42
     }
 
     function classify(score){
-      if(score >= 67) return { key:"green", label:"🟢 Proceed with structured verification", dot:"#2bb673" };
-      if(score >= 40) return { key:"yellow", label:"🟡 Investigate before commitment", dot:"#d7b83a" };
-      return { key:"red", label:"🔴 High uncertainty / pause", dot:"#d24a4a" };
+      if(score >= 67) return { key:"green", label:"🟢 Låg riskexponering – fortsätt med verifiering", dot:"#2bb673" };
+      if(score >= 40) return { key:"yellow", label:"🟡 Måttlig riskexponering – utred vidare före beslut", dot:"#d7b83a" };
+      return { key:"red", label:"🔴 Förhöjd riskexponering – avvakta och verifiera", dot:"#d24a4a" };
     }
 
     function nextStepsFor(score, conf){
-      // conf.pct influences guidance
       const steps = [];
       if(conf.pct < 45){
-        steps.push("Höj confidence: fyll i service, besiktning och varningsflaggor.");
-        steps.push("Be säljaren om servicekvitton och besiktningsprotokoll.");
+        steps.push("Öka datatäckningen: fyll i service, besiktning, ägarhistorik och varningsflaggor.");
+        steps.push("Begär dokumentation: serviceunderlag, besiktningsprotokoll, kvitton vid större åtgärder.");
       }
 
       if(score >= 67){
-        steps.push("Fortsätt med köpchecklistan och provkör systematiskt.");
-        steps.push("Verifiera servicehistorik och matcha miltal mot dokument.");
+        steps.push("Genomför köpchecklistan och provkör strukturerat.");
+        steps.push("Verifiera miltal och service mot dokumentation innan beslut.");
       } else if(score >= 40){
-        steps.push("Samla mer fakta innan du går vidare: historik, besiktning, ägare.");
-        steps.push("Om något känns off: pausa, jämför med en annan bil.");
+        steps.push("Utred vidare: historik, besiktning, ägare och avvikande signaler.");
+        steps.push("Jämför med alternativt objekt om osäkerheter kvarstår.");
       } else {
-        steps.push("Pausa. Förhandla inte vidare förrän du kan verifiera problemen.");
-        steps.push("Välj annan bil om flera röda flaggor kvarstår efter kontroll.");
+        steps.push("Avvakta: gå inte vidare utan att riskorsakerna kan verifieras/avfärdas.");
+        steps.push("Välj annat objekt om flera riskindikatorer kvarstår efter kontroll.");
       }
-
       return steps;
     }
 
@@ -592,6 +652,13 @@
       breakdownBox.style.display = "block";
     }
 
+    function renderDomains(dom){
+      domStructEl.textContent = String(dom.structural);
+      domHistEl.textContent = String(dom.history);
+      domMarketEl.textContent = String(dom.market);
+      domainsBox.style.display = "block";
+    }
+
     function renderNextSteps(items){
       stepsEl.innerHTML = "";
       items.forEach(t => {
@@ -602,8 +669,8 @@
       nextSteps.style.display = "block";
     }
 
-    // ===== live confidence update when typing/changing =====
-    const watchIds = ["year","mileage","service","inspection","owners","pricefeel","redflags"];
+    // live update
+    const watchIds = ["year","mileage","price","service","inspection","owners","pricefeel","redflags"];
     watchIds.forEach(id => {
       const el = document.getElementById(id);
       if(!el) return;
@@ -611,41 +678,38 @@
       el.addEventListener("change", computeConfidence);
     });
 
-    // init
     computeConfidence();
 
-    // ===== run analysis =====
     function run(){
       const conf = computeConfidence();
 
       statusText.textContent = "Analyserar…";
       riskText.textContent = "—";
       riskDot.style.background = "rgba(15,23,42,.25)";
-      if(resultHint) resultHint.textContent = "Beräknar riktning…";
+      if(resultHint) resultHint.textContent = "Beräknar bedömning…";
 
-      const { score, rows } = scoreFromInputs();
+      const { score, rows, domains } = scoreFromInputs();
       const target = scoreToAngle(score);
 
       animateTo(target);
 
-      // text update after animation starts
       setTimeout(() => {
         const cls = classify(score);
         riskText.textContent = cls.label;
         riskDot.style.background = cls.dot;
 
-        // more “clinical” language
         if(cls.key === "green"){
-          statusText.textContent = `GRÖN (${score}/100). Fortsätt – men verifiera enligt checklistan.`;
-          resultHint.textContent = "Grön: bra signaler, men genomför kontrollstegen innan beslut.";
+          statusText.textContent = `Låg riskexponering (${score}/100). Fortsätt med strukturerad verifiering.`;
+          resultHint.textContent = "Grön: indikativt god bild – genomför kontrollsteg innan beslut.";
         } else if(cls.key === "yellow"){
-          statusText.textContent = `GUL (${score}/100). Osäkert – samla mer fakta innan beslut.`;
-          resultHint.textContent = "Gul: läget är oklart. Öka confidence och verifiera.";
+          statusText.textContent = `Måttlig riskexponering (${score}/100). Utred vidare före beslut.`;
+          resultHint.textContent = "Gul: begränsat beslutsunderlag. Öka datatäckning och verifiera uppgifter.";
         } else {
-          statusText.textContent = `RÖD (${score}/100). Hög osäkerhet – pausa och verifiera.`;
-          resultHint.textContent = "Röd: flera riskindikatorer. Pausa och välj hellre bort.";
+          statusText.textContent = `Förhöjd riskexponering (${score}/100). Avvakta och verifiera.`;
+          resultHint.textContent = "Röd: flera riskindikatorer. Avvakta och prioritera verifiering eller välj bort.";
         }
 
+        renderDomains(domains);
         renderBreakdown(rows);
         renderNextSteps(nextStepsFor(score, conf));
       }, 900);
@@ -653,7 +717,6 @@
 
     const btn = document.getElementById("analyseraBtn");
     const resetBtn = document.getElementById("resetBtn");
-
     if(btn) btn.addEventListener("click", run);
 
     if(resetBtn){
@@ -661,6 +724,7 @@
         document.getElementById("regnr").value = "";
         document.getElementById("year").value = "";
         document.getElementById("mileage").value = "";
+        document.getElementById("price").value = "";
         document.getElementById("service").value = "unknown";
         document.getElementById("inspection").value = "unknown";
         document.getElementById("owners").value = "unknown";
@@ -669,24 +733,23 @@
 
         breakdownBox.style.display = "none";
         nextSteps.style.display = "none";
+        domainsBox.style.display = "none";
+
         riskText.textContent = "—";
         riskDot.style.background = "rgba(15,23,42,.25)";
 
         statusText.textContent = "Redo. Fyll i vad du vet och tryck “Analysera”.";
-        resultHint.textContent = "Screening: kompassen ger riktning baserat på dina uppgifter. Ju mer data, desto bättre.";
+        resultHint.textContent = "Screening: kompassen ger riktning baserat på dina uppgifter. Ju högre datatäckning, desto bättre beslutsunderlag.";
 
         setCompassAngle(10);
         computeConfidence();
       });
     }
 
-    // Enter key on year/mileage triggers run
-    ["year","mileage","regnr"].forEach(id => {
+    ["year","mileage","price","regnr"].forEach(id => {
       const el = document.getElementById(id);
       if(!el) return;
-      el.addEventListener("keydown", (e) => {
-        if(e.key === "Enter") run();
-      });
+      el.addEventListener("keydown", (e) => { if(e.key === "Enter") run(); });
     });
   </script>
 </body>
