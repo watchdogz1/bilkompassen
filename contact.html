@@ -1,261 +1,179 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kontakt – Bilkompassen</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kontakt – Bilkompassen</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#1E3557">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1E3557">
 
-<style>
-:root{
-  --ink:#0b1220;
-  --muted:#516078;
-  --brand:#1E3557;
-  --accent:#E6A23C;
-  --line:rgba(15,23,42,.10);
-  --shadow: 0 18px 55px rgba(10,18,32,.10);
-  --radius:16px;
-}
-
-*{ box-sizing:border-box; }
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Arial;
-  color:var(--ink);
-  background:
-    radial-gradient(900px 420px at 15% -10%, rgba(30,53,87,.12), transparent 60%),
-    radial-gradient(900px 420px at 85% -10%, rgba(230,162,60,.10), transparent 60%),
-    linear-gradient(180deg, #f8fbff 0%, #ffffff 50%);
-}
-.container{ max-width:1120px; margin:0 auto; padding:0 20px; }
-
-/* HEADER */
-.site-header{
-  position:sticky; top:0; z-index:50;
-  background:rgba(255,255,255,.82);
-  backdrop-filter:saturate(160%) blur(12px);
-  border-bottom:1px solid var(--line);
-}
-.header-inner{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 0; gap:14px;
-}
-.logo-wrap{ display:flex; align-items:center; text-decoration:none; }
-.logo-img{
-  height:78px; width:auto; display:block;
-  filter: drop-shadow(0 10px 24px rgba(30,53,87,.12));
-}
-.nav{ display:flex; align-items:center; gap:10px; }
-.nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:700;
-  font-size:14px;
-  padding:10px 12px;
-  border-radius:12px;
-  transition:.15s ease;
-}
-.nav a:hover{ background: rgba(30,53,87,.08); color:var(--brand); transform: translateY(-1px); }
-
-.burger{
-  display:none;
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:14px;
-  padding:10px 12px;
-  cursor:pointer;
-  box-shadow: 0 10px 26px rgba(10,18,32,.08);
-}
-.burger-lines{ display:flex; flex-direction:column; gap:5px; }
-.burger-lines span{ width:22px; height:2px; background:var(--brand); border-radius:2px; display:block; }
-
-.mobile-nav{
-  display:none;
-  border-top:1px solid var(--line);
-  background:#fff;
-}
-.mobile-nav.open{ display:block; }
-
-.mobile-nav-inner{ padding:12px 0; display:flex; flex-direction:column; gap:6px; }
-.mobile-nav a{
-  text-decoration:none; color:var(--muted); font-weight:800;
-  padding:12px 12px; border-radius:14px;
-}
-.mobile-nav a:hover{ background:rgba(30,53,87,.08); color:var(--brand); }
-
-/* PAGE */
-.page{ padding:34px 0 44px; }
-.page-title{ margin:0 0 10px; color:var(--brand); font-weight:1000; letter-spacing:-.4px; font-size:30px; }
-.lead{ margin:0 0 18px; color:var(--muted); line-height:1.65; font-weight:650; }
-
-.grid-2{ display:grid; grid-template-columns: 1.05fr .95fr; gap:14px; align-items:start; }
-.card{
-  background: rgba(255,255,255,.92);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow: var(--shadow);
-}
-.card h2{ margin:0 0 10px; color:var(--brand); font-size:16px; font-weight:1000; }
-.card p{ margin:0 0 12px; color:var(--muted); line-height:1.65; font-weight:650; font-size:14px; }
-.card p:last-child{ margin-bottom:0; }
-
-.label{ font-size:12px; font-weight:900; color:var(--muted); margin:10px 0 6px; }
-.input{
-  width:100%;
-  max-width:520px;
-  padding:12px 12px;
-  font-size:15px;
-  border:1px solid rgba(15,23,42,.14);
-  border-radius:14px;
-  outline:none;
-  background:#fff;
-}
-textarea.input{ min-height:120px; resize:vertical; }
-.input:focus{ border-color: rgba(30,53,87,.35); box-shadow:0 0 0 4px rgba(30,53,87,.10); }
-
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:10px;
-  margin-top:12px;
-  padding:12px 16px;
-  background: var(--brand);
-  color:#fff;
-  text-decoration:none;
-  border-radius:14px;
-  font-weight:900;
-  box-shadow: 0 16px 34px rgba(30,53,87,.22);
-  border:none;
-  cursor:pointer;
-  transition: transform .15s ease;
-}
-.btn:hover{ transform: translateY(-1px); }
-
-.btn-ghost{
-  display:inline-flex; align-items:center; justify-content:center; gap:10px;
-  margin-top:12px;
-  padding:12px 16px;
-  background: rgba(255,255,255,.85);
-  color: var(--brand);
-  text-decoration:none;
-  border-radius:14px;
-  font-weight:900;
-  border:1px solid rgba(30,53,87,.18);
-}
-
-.helper{ margin:10px 0 0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.6; }
-
-/* FOOTER */
-.footer{ border-top:1px solid var(--line); background: rgba(255,255,255,.86); padding:28px 0; }
-.footer-grid{ display:grid; grid-template-columns: 1.4fr .6fr .6fr; gap:16px; }
-.footer h4{ margin:0 0 8px; color:var(--brand); font-size:14px; font-weight:1000; }
-.footer a{ color:var(--muted); text-decoration:none; font-weight:800; display:block; padding:6px 0; }
-.footer a:hover{ color:var(--brand); }
-.footer small{ display:block; margin-top:10px; opacity:.92; line-height:1.55; color:var(--muted); }
-
-@media (max-width: 920px){ .grid-2{ grid-template-columns:1fr; } }
-@media (max-width: 860px){
-  .nav{ display:none; } .burger{ display:inline-flex; }
-  .logo-img{ height:72px; }
-}
-@media (max-width: 420px){ .logo-img{ height:68px; } }
-</style>
+  <!-- Global theme -->
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 
 <body>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo-wrap">
-      <img src="logo_trimmed.png" alt="Bilkompassen" class="logo-img">
-    </a>
+  <!-- Shared header (app.js handles mobile + aria-current) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-wrap" aria-label="Bilkompassen – Start">
+        <img src="bilkompassen_logo_transparent.png" alt="Bilkompassen" class="logo-img">
+      </a>
 
-    <nav class="nav">
-      <a href="index.html">Start</a>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
-    </nav>
+      <nav class="nav" aria-label="Huvudnavigation">
+        <a href="index.html">Start</a>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </nav>
 
-    <button class="burger" id="burgerBtn">
-      <span class="burger-lines"><span></span><span></span><span></span></span>
-    </button>
-  </div>
-
-  <div class="mobile-nav" id="mobileNav">
-    <div class="container mobile-nav-inner">
-      <a href="index.html">Start</a>
-      <a href="verktyg.html">Verktyg</a>
-      <a href="guider.html">Guider</a>
-      <a href="about.html">Om</a>
-      <a href="contact.html">Kontakt</a>
+      <button class="burger" id="burgerBtn" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobileNav">
+        <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
-  </div>
-</header>
 
-<main class="page">
-  <div class="container">
-    <h1 class="page-title">Kontakt</h1>
-    <p class="lead">Tipsa om en guide eller funktion du vill se.</p>
-
-    <div class="grid-2">
-      <section class="card">
-        <h2>Tipsa oss</h2>
-
-        <div class="label">Din e-post (valfritt)</div>
-        <input class="input" id="email">
-
-        <div class="label">Meddelande</div>
-        <textarea class="input" id="msg"></textarea>
-
-        <button class="btn" id="copyBtn">Kopiera text</button>
-        <p class="helper" id="status"></p>
-      </section>
+    <div class="mobile-nav" id="mobileNav">
+      <div class="container mobile-nav-inner">
+        <a href="index.html">Start</a>
+        <a href="verktyg.html">Verktyg</a>
+        <a href="guider.html">Guider</a>
+        <a href="about.html">Om</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
     </div>
-  </div>
-</main>
+  </header>
 
-<footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <h4>Bilkompassen</h4>
-      <small>© <span id="year"></span> Bilkompassen</small>
+  <main class="page">
+    <div class="container">
+      <h1 class="page-title">Kontakt</h1>
+      <p class="lead">
+        Tipsa om en guide, ett verktyg eller en förbättring — eller säg till om något på sidan känns otydligt.
+      </p>
+
+      <div class="grid-2">
+        <section class="card">
+          <h2>Skicka tips</h2>
+
+          <p>
+            Snabbast är e-post. För att vi ska kunna hjälpa dig bättre: skriv gärna vilken bil (märke/modell/år),
+            budget och vad du vill uppnå.
+          </p>
+
+          <div class="pill-row" aria-label="Vanliga ämnen">
+            <span class="pill">Tipsa om guide</span>
+            <span class="pill">Buggar / fel</span>
+            <span class="pill">Nytt verktyg</span>
+            <span class="pill">Förslag på förbättring</span>
+          </div>
+
+          <!-- Email block -->
+          <div class="card" style="padding:14px; margin-top:12px;">
+            <h2 style="margin:0 0 8px;">E-post</h2>
+            <p style="margin:0 0 10px;">
+              <a href="mailto:kontakt@bilkompassen.se?subject=Bilkompassen%20%E2%80%93%20tips%20eller%20fr%C3%A5ga"
+                 style="font-weight:900; text-decoration:none;">
+                kontakt@bilkompassen.se
+              </a>
+            </p>
+            <p style="margin:0;">
+              Svarstid: normalt inom <strong>1–3 vardagar</strong>. (Under uppbyggnad kan det ta lite längre.)
+            </p>
+          </div>
+
+          <!-- Optional helper: copy a structured message -->
+          <div class="label" style="margin-top:14px;">Mall att kopiera (valfritt)</div>
+          <textarea class="input" id="msgTemplate" aria-label="Meddelandemall">Ämne: (tips / fel / förbättring)
+
+Länk (om det gäller en sida):
+—
+
+Bil (om relevant: märke/modell/år):
+—
+
+Budget (om relevant):
+—
+
+Beskrivning:
+—</textarea>
+
+          <button class="btn" id="copyBtn" type="button">Kopiera mall</button>
+          <p class="helper" id="status" aria-live="polite"></p>
+
+          <p class="helper">
+            Tips: Om du vill tipsa om en guide — skriv gärna rubrik-idén och vilka frågor guiden ska hjälpa till att besvara.
+          </p>
+        </section>
+
+        <aside class="card">
+          <h2>Vad vi kan och inte kan hjälpa med</h2>
+          <ul>
+            <li><strong>Kan:</strong> förklara guider/verktyg, ta emot förbättringsförslag, fixa fel.</li>
+            <li><strong>Kan inte:</strong> ge juridisk rådgivning eller garantera bilens skick.</li>
+          </ul>
+
+          <p style="margin-top:12px;">
+            Vid osäkerhet inför köp: ta med en kunnig person eller boka en oberoende kontroll.
+          </p>
+
+          <a class="btn-ghost" href="guider.html">Till guider (Steg 1–4)</a>
+          <a class="btn-ghost" href="verktyg.html">Till verktyg</a>
+        </aside>
+      </div>
     </div>
-  </div>
-</footer>
+  </main>
 
-<script>
-const burgerBtn=document.getElementById("burgerBtn");
-const mobileNav=document.getElementById("mobileNav");
-if(burgerBtn && mobileNav){
-  burgerBtn.addEventListener("click",()=>{
-    mobileNav.classList.toggle("open");
-  });
-}
+  <!-- Shared product footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <img src="bilkompassen_icon_transparent.png" alt="" style="width:28px; height:28px;">
+          <h4 style="margin:0;">Bilkompassen</h4>
+        </div>
+        <small>Beslutsstöd för att köpa begagnad bil.</small>
+        <small>© <span id="year"></span> Bilkompassen</small>
+      </div>
 
-const yearEl=document.getElementById("year");
-if(yearEl){ yearEl.textContent=new Date().getFullYear(); }
+      <div>
+        <h4>Innehåll</h4>
+        <a href="guider.html">Guider</a>
+        <a href="verktyg.html">Verktyg</a>
+      </div>
 
-const btn=document.getElementById("copyBtn");
-if(btn){
-  btn.addEventListener("click",()=>{
-    const email=document.getElementById("email")?.value.trim()||"(inte angivet)";
-    const msg=document.getElementById("msg")?.value.trim()||"(tomt)";
-    const text=`Bilkompassen tips\nE-post: ${email}\n\nMeddelande:\n${msg}`;
+      <div>
+        <h4>Mer</h4>
+        <a href="about.html">Om Bilkompassen</a>
+      </div>
+    </div>
+  </footer>
 
-    navigator.clipboard.writeText(text).then(()=>{
-      document.getElementById("status").textContent="✅ Kopierat!";
-    }).catch(()=>{
-      document.getElementById("status").textContent="⚠️ Kopiera manuellt.";
-    });
-  });
-}
-</script>
+  <script>
+    // Year fallback (safe even if app.js also sets it)
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // Copy template helper
+    const copyBtn = document.getElementById("copyBtn");
+    const statusEl = document.getElementById("status");
+    const templateEl = document.getElementById("msgTemplate");
+
+    if (copyBtn && templateEl) {
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(templateEl.value);
+          if (statusEl) statusEl.textContent = "✅ Kopierat! Klistra in i ditt mejl.";
+        } catch (e) {
+          if (statusEl) statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Markera texten och kopiera manuellt.";
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
